@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>
+        Write-up LeHack 2019 - Forensic - WorldGolfChampion (50pts) - HackMD
+    </title>
+    <link rel="icon" type="image/png" href="https://hackmd.io/favicon.png">
+    <link rel="apple-touch-icon" href="https://hackmd.io/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" integrity="sha256-3iu9jgsy9TpTwXKb7bNQzqWekRX7pPK+2OLj3R922fo=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css" integrity="sha256-QiWfLIsCT02Sdwkogf6YMiQlj4NE84MKkzEMkZnMGdg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism.min.css" integrity="sha256-vtR0hSWRc3Tb26iuN2oZHt3KRUomwTufNIf5/4oeCyg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojify.js/1.1.0/css/basic/emojify.min.css" integrity="sha256-UOrvMOsSDSrW6szVLe8ZDZezBxh5IoIfgTwdNDgTjiU=" crossorigin="anonymous" />
+    <style>
+        @charset "UTF-8";@import url(https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i|Source+Code+Pro:300,400,500|Source+Sans+Pro:300,300i,400,400i,600,600i|Source+Serif+Pro&subset=latin-ext);.hljs{display:block;background:#fff;padding:.5em;color:#333;overflow-x:auto}.hljs-comment,.hljs-meta{color:#969896}.hljs-emphasis,.hljs-quote,.hljs-string,.hljs-strong,.hljs-template-variable,.hljs-variable{color:#df5000}.hljs-keyword,.hljs-selector-tag,.hljs-type{color:#a71d5d}.hljs-attribute,.hljs-bullet,.hljs-literal,.hljs-number,.hljs-symbol{color:#0086b3}.hljs-built_in,.hljs-builtin-name{color:#005cc5}.hljs-name,.hljs-section{color:#63a35c}.hljs-tag{color:#333}.hljs-attr,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id,.hljs-selector-pseudo,.hljs-title{color:#795da3}.hljs-addition{color:#55a532;background-color:#eaffea}.hljs-deletion{color:#bd2c00;background-color:#ffecec}.hljs-link{text-decoration:underline}.markdown-body{font-size:16px;line-height:1.5;word-wrap:break-word}.markdown-body:after,.markdown-body:before{display:table;content:""}.markdown-body:after{clear:both}.markdown-body>:first-child{margin-top:0!important}.markdown-body>:last-child{margin-bottom:0!important}.markdown-body a:not([href]){color:inherit;text-decoration:none}.markdown-body .absent{color:#c00}.markdown-body .anchor{float:left;padding-right:4px;margin-left:-20px;line-height:1}.markdown-body .anchor:focus{outline:none}.markdown-body blockquote,.markdown-body dl,.markdown-body ol,.markdown-body p,.markdown-body pre,.markdown-body table,.markdown-body ul{margin-top:0;margin-bottom:16px}.markdown-body hr{height:.25em;padding:0;margin:24px 0;background-color:#e7e7e7;border:0}.markdown-body blockquote{font-size:16px;padding:0 1em;color:#777;border-left:.25em solid #ddd}.markdown-body blockquote>:first-child{margin-top:0}.markdown-body blockquote>:last-child{margin-bottom:0}.markdown-body kbd,.popover kbd{display:inline-block;padding:3px 5px;font-size:11px;line-height:10px;color:#555;vertical-align:middle;background-color:#fcfcfc;border:1px solid #ccc;border-bottom-color:#bbb;border-radius:3px;box-shadow:inset 0 -1px 0 #bbb}.markdown-body .loweralpha{list-style-type:lower-alpha}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{margin-top:24px;margin-bottom:16px;font-weight:600;line-height:1.25}.markdown-body h1 .octicon-link,.markdown-body h2 .octicon-link,.markdown-body h3 .octicon-link,.markdown-body h4 .octicon-link,.markdown-body h5 .octicon-link,.markdown-body h6 .octicon-link{color:#000;vertical-align:middle;visibility:hidden}.markdown-body h1:hover .anchor,.markdown-body h2:hover .anchor,.markdown-body h3:hover .anchor,.markdown-body h4:hover .anchor,.markdown-body h5:hover .anchor,.markdown-body h6:hover .anchor{text-decoration:none}.markdown-body h1:hover .anchor .octicon-link,.markdown-body h2:hover .anchor .octicon-link,.markdown-body h3:hover .anchor .octicon-link,.markdown-body h4:hover .anchor .octicon-link,.markdown-body h5:hover .anchor .octicon-link,.markdown-body h6:hover .anchor .octicon-link{visibility:visible}.markdown-body h1 code,.markdown-body h1 tt,.markdown-body h2 code,.markdown-body h2 tt,.markdown-body h3 code,.markdown-body h3 tt,.markdown-body h4 code,.markdown-body h4 tt,.markdown-body h5 code,.markdown-body h5 tt,.markdown-body h6 code,.markdown-body h6 tt{font-size:inherit}.markdown-body h1{font-size:2em}.markdown-body h1,.markdown-body h2{padding-bottom:.3em;border-bottom:1px solid #eee}.markdown-body h2{font-size:1.5em}.markdown-body h3{font-size:1.25em}.markdown-body h4{font-size:1em}.markdown-body h5{font-size:.875em}.markdown-body h6{font-size:.85em;color:#777}.markdown-body ol,.markdown-body ul{padding-left:2em}.markdown-body ol.no-list,.markdown-body ul.no-list{padding:0;list-style-type:none}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:0;margin-bottom:0}.markdown-body li>p{margin-top:16px}.markdown-body li+li{margin-top:.25em}.markdown-body dl{padding:0}.markdown-body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}.markdown-body dl dd{padding:0 16px;margin-bottom:16px}.markdown-body table{display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}.markdown-body table th{font-weight:700}.markdown-body table td,.markdown-body table th{padding:6px 13px;border:1px solid #ddd}.markdown-body table tr{background-color:#fff;border-top:1px solid #ccc}.markdown-body table tr:nth-child(2n){background-color:#f8f8f8}.markdown-body img{max-width:100%;box-sizing:content-box;background-color:#fff}.markdown-body img[align=right]{padding-left:20px}.markdown-body img[align=left]{padding-right:20px}.markdown-body .emoji{max-width:none;vertical-align:text-top;background-color:transparent}.markdown-body span.frame{display:block;overflow:hidden}.markdown-body span.frame>span{display:block;float:left;width:auto;padding:7px;margin:13px 0 0;overflow:hidden;border:1px solid #ddd}.markdown-body span.frame span img{display:block;float:left}.markdown-body span.frame span span{display:block;padding:5px 0 0;clear:both;color:#333}.markdown-body span.align-center{display:block;overflow:hidden;clear:both}.markdown-body span.align-center>span{display:block;margin:13px auto 0;overflow:hidden;text-align:center}.markdown-body span.align-center span img{margin:0 auto;text-align:center}.markdown-body span.align-right{display:block;overflow:hidden;clear:both}.markdown-body span.align-right>span{display:block;margin:13px 0 0;overflow:hidden;text-align:right}.markdown-body span.align-right span img{margin:0;text-align:right}.markdown-body span.float-left{display:block;float:left;margin-right:13px;overflow:hidden}.markdown-body span.float-left span{margin:13px 0 0}.markdown-body span.float-right{display:block;float:right;margin-left:13px;overflow:hidden}.markdown-body span.float-right>span{display:block;margin:13px auto 0;overflow:hidden;text-align:right}.markdown-body code,.markdown-body tt{padding:0;padding-top:.2em;padding-bottom:.2em;margin:0;font-size:85%;background-color:rgba(0,0,0,.04);border-radius:3px}.markdown-body code:after,.markdown-body code:before,.markdown-body tt:after,.markdown-body tt:before{letter-spacing:-.2em;content:"\00a0"}.markdown-body code br,.markdown-body tt br{display:none}.markdown-body del code{text-decoration:inherit}.markdown-body pre{word-wrap:normal}.markdown-body pre>code{padding:0;margin:0;font-size:100%;word-break:normal;white-space:pre;background:transparent;border:0}.markdown-body .highlight{margin-bottom:16px}.markdown-body .highlight pre{margin-bottom:0;word-break:normal}.markdown-body .highlight pre,.markdown-body pre{padding:16px;overflow:auto;font-size:85%;line-height:1.45;background-color:#f7f7f7;border-radius:3px}.markdown-body pre code,.markdown-body pre tt{display:inline;max-width:auto;padding:0;margin:0;overflow:visible;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}.markdown-body pre code:after,.markdown-body pre code:before,.markdown-body pre tt:after,.markdown-body pre tt:before{content:normal}.markdown-body .csv-data td,.markdown-body .csv-data th{padding:5px;overflow:hidden;font-size:12px;line-height:1;text-align:left;white-space:nowrap}.markdown-body .csv-data .blob-line-num{padding:10px 8px 9px;text-align:right;background:#fff;border:0}.markdown-body .csv-data tr{border-top:0}.markdown-body .csv-data th{font-weight:700;background:#f8f8f8;border-top:0}.news .alert .markdown-body blockquote{padding:0 0 0 40px;border:0 none}.activity-tab .news .alert .commits,.activity-tab .news .markdown-body blockquote{padding-left:0}.task-list-item{list-style-type:none}.task-list-item label{font-weight:400}.task-list-item.enabled label{cursor:pointer}.task-list-item+.task-list-item{margin-top:3px}.task-list-item-checkbox{float:left;margin:.31em 0 .2em -1.3em!important;vertical-align:middle;cursor:default!important}.markdown-body{padding-top:40px;padding-bottom:40px;max-width:758px;overflow:visible!important}.markdown-body .emoji{vertical-align:top}.markdown-body pre{border:inherit!important}.markdown-body code{color:inherit!important}.markdown-body pre code .wrapper{display:-moz-inline-flex;display:-ms-inline-flex;display:-o-inline-flex;display:inline-flex}.markdown-body pre code .gutter{float:left;overflow:hidden;-webkit-user-select:none;user-select:none}.markdown-body pre code .gutter.linenumber{text-align:right;position:relative;display:inline-block;cursor:default;z-index:4;padding:0 8px 0 0;min-width:20px;box-sizing:content-box;color:#afafaf!important;border-right:3px solid #6ce26c!important}.markdown-body pre code .gutter.linenumber>span:before{content:attr(data-linenumber)}.markdown-body pre code .code{float:left;margin:0 0 0 16px}.markdown-body .gist .line-numbers{border-left:none;border-top:none;border-bottom:none}.markdown-body .gist .line-data{border:none}.markdown-body .gist table{border-spacing:0;border-collapse:inherit!important}.markdown-body code[data-gist-id]{background:none;padding:0}.markdown-body code[data-gist-id]:after,.markdown-body code[data-gist-id]:before{content:""}.markdown-body code[data-gist-id] .blob-num{border:unset}.markdown-body code[data-gist-id] table{overflow:unset;margin-bottom:unset}.markdown-body code[data-gist-id] table tr{background:unset}.markdown-body[dir=rtl] pre{direction:ltr}.markdown-body[dir=rtl] code{direction:ltr;unicode-bidi:embed}.markdown-body .alert>p{margin-bottom:0}.markdown-body pre.abc,.markdown-body pre.flow-chart,.markdown-body pre.graphviz,.markdown-body pre.mermaid,.markdown-body pre.sequence-diagram{text-align:center;background-color:inherit;border-radius:0;white-space:inherit}.markdown-body pre.abc>code,.markdown-body pre.flow-chart>code,.markdown-body pre.graphviz>code,.markdown-body pre.mermaid>code,.markdown-body pre.sequence-diagram>code{text-align:left}.markdown-body pre.abc>svg,.markdown-body pre.flow-chart>svg,.markdown-body pre.graphviz>svg,.markdown-body pre.mermaid>svg,.markdown-body pre.sequence-diagram>svg{max-width:100%;height:100%}.markdown-body pre>code.wrap{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word}.markdown-body .alert>p,.markdown-body .alert>ul{margin-bottom:0}.markdown-body summary{display:list-item}.markdown-body summary:focus{outline:none}.markdown-body details summary{cursor:pointer}.markdown-body details:not([open])>:not(summary){display:none}.markdown-body figure{margin:1em 40px}.markdown-body .mark,.markdown-body mark{background-color:#fff1a7}.vimeo,.youtube{cursor:pointer;display:table;text-align:center;background-position:50%;background-repeat:no-repeat;background-size:contain;background-color:#000;overflow:hidden}.vimeo,.youtube{position:relative;width:100%}.youtube{padding-bottom:56.25%}.vimeo img{width:100%;object-fit:contain;z-index:0}.youtube img{object-fit:cover;z-index:0}.vimeo iframe,.youtube iframe,.youtube img{width:100%;height:100%;position:absolute;top:0;left:0}.vimeo iframe,.youtube iframe{vertical-align:middle;z-index:1}.vimeo .icon,.youtube .icon{position:absolute;height:auto;width:auto;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;opacity:.3;transition:opacity .2s;z-index:0}.vimeo:hover .icon,.youtube:hover .icon{opacity:.6;transition:opacity .2s}.slideshare .inner,.speakerdeck .inner{position:relative;width:100%}.slideshare .inner iframe,.speakerdeck .inner iframe{position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%}.MJX_Assistive_MathML{display:none}.ui-infobar{position:relative;z-index:2;max-width:760px;margin:25px auto -25px;padding:0 15px;color:#777}.toc .invisable-node{list-style-type:none}.ui-toc{position:fixed;bottom:20px;z-index:998}.ui-toc-label{opacity:.3;background-color:#ccc;border:none;transition:opacity .2s}.ui-toc .open .ui-toc-label{opacity:1;color:#fff;transition:opacity .2s}.ui-toc-label:focus{opacity:.3;background-color:#ccc;color:#000}.ui-toc-label:hover{opacity:1;background-color:#ccc;transition:opacity .2s}.ui-toc-dropdown{margin-top:23px;margin-bottom:20px;padding-left:10px;padding-right:10px;max-width:45vw;width:25vw;max-height:70vh;overflow:auto;text-align:inherit}.ui-toc-dropdown>.toc{max-height:calc(70vh - 100px);overflow:auto}.ui-toc-dropdown[dir=rtl] .nav{padding-right:0;letter-spacing:.0029em}.ui-toc-dropdown a{overflow:hidden;text-overflow:ellipsis;white-space:pre}.ui-toc-dropdown .nav>li>a{display:block;padding:4px 20px;font-size:13px;font-weight:500;color:#767676}.ui-toc-dropdown .nav>li:first-child:last-child > ul,.ui-toc-dropdown .toc.expand ul{display:block}.ui-toc-dropdown .nav>li>a:focus,.ui-toc-dropdown .nav>li>a:hover{padding-left:19px;color:#000;text-decoration:none;background-color:transparent;border-left:1px solid #000}.ui-toc-dropdown[dir=rtl] .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav>li>a:hover{padding-right:19px;border-left:none;border-right:1px solid #000}.ui-toc-dropdown .nav>.active:focus>a,.ui-toc-dropdown .nav>.active:hover>a,.ui-toc-dropdown .nav>.active>a{padding-left:18px;font-weight:700;color:#000;background-color:transparent;border-left:2px solid #000}.ui-toc-dropdown[dir=rtl] .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav>.active>a{padding-right:18px;border-left:none;border-right:2px solid #000}.ui-toc-dropdown .nav .nav{display:none;padding-bottom:10px}.ui-toc-dropdown .nav>.active>ul{display:block}.ui-toc-dropdown .nav .nav>li>a{padding-top:1px;padding-bottom:1px;padding-left:30px;font-size:12px;font-weight:400}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a{padding-right:30px}.ui-toc-dropdown .nav .nav>li>ul>li>a{padding-top:1px;padding-bottom:1px;padding-left:40px;font-size:12px;font-weight:400}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a{padding-right:40px}.ui-toc-dropdown .nav .nav>li>a:focus,.ui-toc-dropdown .nav .nav>li>a:hover{padding-left:29px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:hover{padding-right:29px}.ui-toc-dropdown .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown .nav .nav>li>ul>li>a:hover{padding-left:39px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:hover{padding-right:39px}.ui-toc-dropdown .nav .nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>a{padding-left:28px;font-weight:500}.ui-toc-dropdown[dir=rtl] .nav .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>a{padding-right:28px}.ui-toc-dropdown .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active>a{padding-left:38px;font-weight:500}.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active>a{padding-right:38px}.markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif}html[lang^=ja] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}html .markdown-body[lang^=ja]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html .markdown-body[lang=zh-tw]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html .markdown-body[lang=zh-cn]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}html[lang^=ja] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ\ Ｐゴシック,sans-serif}html[lang=zh-tw] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html[lang=zh-cn] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}html .ui-toc-dropdown[lang^=ja]{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ\ Ｐゴシック,sans-serif}html .ui-toc-dropdown[lang=zh-tw]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html .ui-toc-dropdown[lang=zh-cn]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}.ui-affix-toc{position:fixed;top:0;max-width:15vw;max-height:70vh;overflow:auto}.back-to-top,.expand-toggle,.go-to-bottom{display:block;padding:4px 10px;margin-top:10px;margin-left:10px;font-size:12px;font-weight:500;color:#999}.back-to-top:focus,.back-to-top:hover,.expand-toggle:focus,.expand-toggle:hover,.go-to-bottom:focus,.go-to-bottom:hover{color:#563d7c;text-decoration:none}.back-to-top,.go-to-bottom{margin-top:0}.ui-user-icon{width:20px;height:20px;display:block;border-radius:3px;margin-top:2px;margin-bottom:2px;margin-right:5px;background-position:50%;background-repeat:no-repeat;background-size:cover}.ui-user-icon.small{width:18px;height:18px;display:inline-block;vertical-align:middle;margin:0 0 .2em}.ui-infobar>small>span{line-height:22px}.ui-infobar>small .dropdown{display:inline-block}.ui-infobar>small .dropdown a:focus,.ui-infobar>small .dropdown a:hover{text-decoration:none}.ui-published-note{color:#337ab7}.ui-published-note .fa{font-size:20px;vertical-align:top}.unselectable{-webkit-user-select:none;-o-user-select:none;user-select:none}@media print{blockquote,div,img,pre,table{page-break-inside:avoid!important}a[href]:after{font-size:12px!important}}.markdown-body.slides{position:relative;z-index:1;color:#222}.markdown-body.slides:before{content:"";display:block;position:absolute;top:0;left:0;right:0;bottom:0;z-index:-1;background-color:currentColor;box-shadow:0 0 0 50vw}.markdown-body.slides section[data-markdown]{position:relative;margin-bottom:1.5em;background-color:#fff;text-align:center}.markdown-body.slides section[data-markdown] code{text-align:left}.markdown-body.slides section[data-markdown]:before{content:"";display:block;padding-bottom:56.23%}.markdown-body.slides section[data-markdown]>div:first-child{position:absolute;top:50%;left:1em;right:1em;transform:translateY(-50%);max-height:100%;overflow:hidden}.markdown-body.slides section[data-markdown]>ul{display:inline-block}.markdown-body.slides>section>section+section:after{content:"";position:absolute;top:-1.5em;right:1em;height:1.5em;border:3px solid #777}body{font-smoothing:subpixel-antialiased!important;-webkit-font-smoothing:subpixel-antialiased!important;-moz-osx-font-smoothing:auto!important;text-shadow:0 0 1em transparent,1px 1px 1.2px rgba(0,0,0,.004);-webkit-overflow-scrolling:touch;letter-spacing:.025em}.focus,:focus{outline:none!important}::-moz-focus-inner{border:0!important}body{font-family:Source Sans Pro,Helvetica,Arial,sans-serif}html[lang^=ja] body{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}abbr[data-original-title],abbr[title]{cursor:help}body.modal-open{overflow-y:auto;padding-right:0!important}
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g=" crossorigin="anonymous"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js" integrity="sha256-g6iAfvZp+nDQ2TdTR/VVKJf3bGro4ub5fvWSWVRi2NE=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js" integrity="sha256-8E4Is26QH0bD52WoQpcB+R/tcWQtpzlCojrybUd7Mxo=" crossorigin="anonymous"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true"><h1 id="Write-up-LeHack-2019---Forensic---WorldGolfChampion-50pts"><a class="anchor hidden-xs" href="#Write-up-LeHack-2019---Forensic---WorldGolfChampion-50pts" title="Write-up-LeHack-2019---Forensic---WorldGolfChampion-50pts"><span class="octicon octicon-link"></span></a>Write-up LeHack 2019 - Forensic - WorldGolfChampion (50pts)</h1><p>Written by <a href="https://twitter.com/Maltemo" target="_blank" rel="noopener">Maltemo</a>, member of team <a href="https://sinhack.blog/" target="_blank" rel="noopener">SinHack</a>.<br>
+Challenge solved with the help of Angarod.</p><p>As the challenge was achieved in a LAN, I didn’t keep the description given with the challenge.</p><p><span class="toc"><ul>
+<li><a href="#Write-up-LeHack-2019---Forensic---WorldGolfChampion-50pts" title="Write-up LeHack 2019 - Forensic - WorldGolfChampion (50pts)">Write-up LeHack 2019 - Forensic - WorldGolfChampion (50pts)</a><ul>
+<li><a href="#Analysis" title="Analysis">Analysis</a></li>
+<li><a href="#Solution" title="Solution">Solution</a></li>
+<li><a href="#Easter-Egg" title="Easter Egg">Easter Egg</a></li>
+</ul>
+</li>
+</ul>
+</span></p><h2 id="Analysis"><a class="anchor hidden-xs" href="#Analysis" title="Analysis"><span class="octicon octicon-link"></span></a>Analysis</h2><p>The challenge started with a <code>.pcap</code> file (file of network capture).</p><p>The first step was opening the network capture file with the tool called wireshark.</p><p>By looking quickly at the protocol packet’s type, we find TELNET, TCP and MDNS.</p><p>TELNET packets seems interesting because :</p><blockquote>
+<p>“Telnet is a protocol used on the Internet or local area network to provide a bidirectional interactive text-oriented communication facility using a virtual terminal connection.”<br>
+<small><i class="fa fa-user"></i> Wikipedia</small></p>
+</blockquote><p>This means that we are going to be able to see every commands that were written in the user’s terminal.</p><p>In order to make it easy to read, I right clicked on the first packet of TELNET (you can do it on any TELNET packet), then I chose the option <code>Follow &gt; TCP Flow</code>.</p><p>This opened a window with all the commands that were written by the user <code>tiger</code> on a debian machine (found via <code>tiger@debian:</code>) :</p><pre><code class="hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span>
+<span data-linenumber="2"></span>
+<span data-linenumber="3"></span>
+<span data-linenumber="4"></span>
+<span data-linenumber="5"></span>
+<span data-linenumber="6"></span>
+<span data-linenumber="7"></span>
+<span data-linenumber="8"></span>
+<span data-linenumber="9"></span>
+<span data-linenumber="10"></span>
+<span data-linenumber="11"></span>
+<span data-linenumber="12"></span>
+<span data-linenumber="13"></span>
+<span data-linenumber="14"></span>
+<span data-linenumber="15"></span>
+<span data-linenumber="16"></span>
+<span data-linenumber="17"></span>
+<span data-linenumber="18"></span>
+<span data-linenumber="19"></span>
+<span data-linenumber="20"></span>
+<span data-linenumber="21"></span>
+<span data-linenumber="22"></span>
+<span data-linenumber="23"></span>
+<span data-linenumber="24"></span>
+<span data-linenumber="25"></span>
+<span data-linenumber="26"></span>
+<span data-linenumber="27"></span>
+<span data-linenumber="28"></span>
+<span data-linenumber="29"></span>
+<span data-linenumber="30"></span>
+<span data-linenumber="31"></span>
+<span data-linenumber="32"></span>
+<span data-linenumber="33"></span>
+<span data-linenumber="34"></span>
+<span data-linenumber="35"></span>
+<span data-linenumber="36"></span>
+<span data-linenumber="37"></span>
+<span data-linenumber="38"></span>
+<span data-linenumber="39"></span>
+<span data-linenumber="40"></span>
+<span data-linenumber="41"></span>
+<span data-linenumber="42"></span>
+<span data-linenumber="43"></span>
+<span data-linenumber="44"></span>
+<span data-linenumber="45"></span>
+<span data-linenumber="46"></span>
+<span data-linenumber="47"></span>
+<span data-linenumber="48"></span>
+<span data-linenumber="49"></span>
+<span data-linenumber="50"></span>
+<span data-linenumber="51"></span>
+<span data-linenumber="52"></span>
+<span data-linenumber="53"></span>
+<span data-linenumber="54"></span>
+<span data-linenumber="55"></span>
+<span data-linenumber="56"></span>
+<span data-linenumber="57"></span>
+<span data-linenumber="58"></span>
+<span data-linenumber="59"></span>
+<span data-linenumber="60"></span>
+<span data-linenumber="61"></span>
+<span data-linenumber="62"></span>
+<span data-linenumber="63"></span>
+<span data-linenumber="64"></span>
+<span data-linenumber="65"></span>
+<span data-linenumber="66"></span>
+<span data-linenumber="67"></span>
+<span data-linenumber="68"></span>
+<span data-linenumber="69"></span>
+<span data-linenumber="70"></span>
+<span data-linenumber="71"></span>
+<span data-linenumber="72"></span>
+<span data-linenumber="73"></span>
+<span data-linenumber="74"></span>
+<span data-linenumber="75"></span>
+<span data-linenumber="76"></span>
+<span data-linenumber="77"></span>
+<span data-linenumber="78"></span>
+<span data-linenumber="79"></span>
+<span data-linenumber="80"></span>
+<span data-linenumber="81"></span>
+<span data-linenumber="82"></span>
+<span data-linenumber="83"></span>
+<span data-linenumber="84"></span>
+<span data-linenumber="85"></span>
+<span data-linenumber="86"></span>
+<span data-linenumber="87"></span>
+<span data-linenumber="88"></span>
+<span data-linenumber="89"></span>
+<span data-linenumber="90"></span>
+<span data-linenumber="91"></span>
+<span data-linenumber="92"></span>
+<span data-linenumber="93"></span>
+<span data-linenumber="94"></span>
+<span data-linenumber="95"></span>
+<span data-linenumber="96"></span>
+<span data-linenumber="97"></span>
+<span data-linenumber="98"></span>
+<span data-linenumber="99"></span>
+<span data-linenumber="100"></span>
+<span data-linenumber="101"></span>
+<span data-linenumber="102"></span>
+<span data-linenumber="103"></span>
+<span data-linenumber="104"></span>
+<span data-linenumber="105"></span>
+<span data-linenumber="106"></span>
+<span data-linenumber="107"></span>
+<span data-linenumber="108"></span>
+<span data-linenumber="109"></span>
+<span data-linenumber="110"></span>
+<span data-linenumber="111"></span></div><div class="code">........... ..!.."..'.....#..... ..#..'........!.."..... .....#.....'.............h.8.... .38400,38400....#.localhost:0....'..DISPLAY.localhost:0.USER.tiger......xterm-256color..............Password: woods1275
+.
+Last login: Fri Jun 14 10:07:48 CDT 2019 from 192.168.56.1 on pts/1
+Linux debian 4.9.0-9-amd64 #1 SMP Debian 4.9.168-1+deb9u2 (2019-05-13) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+You have new mail.
+.]0;tiger@debian: ~..[01;32mtiger@debian.[00m:.[01;34m~.[00m$ firefox https://www.qwant.com/?q=Ashley%20Madisonfirefox https://www.qwant.com/?q=Ashley%20Madison
+.
+.]0;tiger@debian: ~..[01;32mtiger@debian.[00m:.[01;34m~.[00m$ ppii...[Kkkiillll  ffiirreeccoo...[K...[Kffooxx
+.
+.]0;tiger@debian: ~..[01;32mtiger@debian.[00m:.[01;34m~.[00m$ kkeeeeppaassssxx...[K--ccllii
+.
+-bash: keepass-cli: command not found
+.]0;tiger@debian: ~..[01;32mtiger@debian.[00m:.[01;34m~.[00m$ kk	.pp	cli 	.----hheellpp
+.
+Usage: kpcli [--kdb=&lt;file.kdb&gt;] [--key=&lt;file.key&gt;]
+
+  --kdb         Optional KeePass database file to open (must exist).
+  --key         Optional KeePass key file (must exist).
+  --pwfiles     Read master password from file instead of console.
+  --histfile    Specify your history file (or perhaps /dev/null).
+  --readonly    Run in read-only mode; no changes will be allowed.
+  --timeout=i   Lock interface after i seconds of inactivity.
+  --command     Run single command and exit (no interactive session).
+  --no-recycle  Don't store entry changes in /Backup or "/Recycle Bin".
+  --help        This message.
+
+Run kpcli with no options and type 'help' at its command prompt to learn
+about kpcli's commands.
+.]0;tiger@debian: ~..[01;32mtiger@debian.[00m:.[01;34m~.[00m$ kkppccllii  ----kkddbb==mmyysseeccrreett..kkbbddxx
+.
+There were errors:
+  for option --kdb=&lt;file.kbd&gt;, the file must exist.
+
+Usage: kpcli [--kdb=&lt;file.kdb&gt;] [--key=&lt;file.key&gt;]
+
+  --kdb         Optional KeePass database file to open (must exist).
+  --key         Optional KeePass key file (must exist).
+  --pwfiles     Read master password from file instead of console.
+  --histfile    Specify your history file (or perhaps /dev/null).
+  --readonly    Run in read-only mode; no changes will be allowed.
+  --timeout=i   Lock interface after i seconds of inactivity.
+  --command     Run single command and exit (no interactive session).
+  --no-recycle  Don't store entry changes in /Backup or "/Recycle Bin".
+  --help        This message.
+
+Run kpcli with no options and type 'help' at its command prompt to learn
+about kpcli's commands.
+.]0;tiger@debian: ~..[01;32mtiger@debian.[00m:.[01;34m~.[00m$ .[Akpcli --kdb=mysecret.kbdx...[K...[K...[Kbb...[Kddbbxx
+.
+..!...Please provide the master password: w*o*o*d*s*1*0*7*7*
+...!...****************
+Couldn't load the file mysecret.kdbx: The database key appears invalid or else the database is corrupt.
+.]0;tiger@debian: ~..[01;32mtiger@debian.[00m:.[01;34m~.[00m$ .[Akpcli --kdb=mysecret.kdbx
+.
+..!...Please provide the master password: w*o*o*d*s*1*0*.. ... .1*2*8*2*
+...!...****************
+Couldn't load the file mysecret.kdbx: The database key appears invalid or else the database is corrupt.
+.]0;tiger@debian: ~..[01;32mtiger@debian.[00m:.[01;34m~.[00m$ firefox https://www.qwant.com?q=recovery%20password%20keepass%20pleasefirefox https://www.qwant.com?q=recovery%20password%20keepass%20please
+.
+.]0;tiger@debian: ~..[01;32mtiger@debian.[00m:.[01;34m~.[00m$ ppkkiillll  ffiirreecc...[Kffooxx
+.
+.]0;tiger@debian: ~..[01;32mtiger@debian.[00m:.[01;34m~.[00m$ ddeeccrr	.yypptt  mm	ysecret.kdbx ...[K  ...[K
+.
+-bash: decrypt: command not found
+.]0;tiger@debian: ~..[01;32mtiger@debian.[00m:.[01;34m~.[00m$ llss
+.
+.[0m.[01;34mDesktop.[0m  .[01;34mDocuments.[0m  .[01;34mDownloads.[0m  .[01;34mMusic.[0m  mysecret.kdbx  .[01;34mPictures.[0m  .[01;34mPublic.[0m  .[01;34mTemplates.[0m  .[01;34mVideos.[0m
+.]0;tiger@debian: ~..[01;32mtiger@debian.[00m:.[01;34m~.[00m$ bbaassee6644  mmyy	secret.kdbx 
+.
+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
+QtUzbXKNYw==
+.]0;tiger@debian: ~..[01;32mtiger@debian.[00m:.[01;34m~.[00m$ eexxiitt
+.
+logout
+</div></div></code></pre><p>I’ll treat all the information as if I were reading it from top to bottom.</p><p>First thing, we get the username and password of the user on the telnet service :</p><ul>
+<li><code>localhost:0....'..DISPLAY.localhost:0.USER.tiger......xterm-256color..............Password: woods1275</code></li>
+</ul><blockquote>
+<p>User : tiger<br>
+Password : woods1275</p>
+</blockquote><p>Ok this might be useful later.</p><p>Then, we can see that Tiger Wood (yeah, you can guess it from the username, the password and the name of the challenge <img alt=":smile:" class="emoji" src="https://cdnjs.cloudflare.com/ajax/libs/emojify.js/1.1.0/images/basic/smile.png" title=":smile:">) is launching his web browser firefox by searching on qwant Ashley Maddison <img alt=":smirk:" class="emoji" src="https://cdnjs.cloudflare.com/ajax/libs/emojify.js/1.1.0/images/basic/smirk.png" title=":smirk:"> :</p><ul>
+<li><code>firefox https://www.qwant.com/?q=Ashley%20Madison</code></li>
+</ul><p>Then he kills the firefox process and launches KeePass client.</p><p>Keepass is a free and open-source password manager. So Tiger is trying to get his password for his Ashley Maddison account. Fine.</p><p>The provided password database is called <code>mysecret.kbdx</code>, and we see two failed attempts to log in :</p><pre><code>Please provide the master password: w*o*o*d*s*1*0*7*7*
+Couldn't load the file mysecret.kdbx: The database key appears invalid or else the database is corrupt.
+Please provide the master password: w*o*o*d*s*1*0*.. ... .1*2*8*2*
+Couldn't load the file mysecret.kdbx: The database key appears invalid or else the database is corrupt.
+</code></pre><p>It is followed by the next firefox search :</p><ul>
+<li><code>https://www.qwant.com?q=recovery%20password%20keepass%20please</code></li>
+</ul><p>Looks like he forgot his password !</p><p>Then he gives us the base64 of his database :</p><ul>
+<li><code>base64 mysecret.kdbx</code></li>
+</ul><p>Which gives us his password database in base64 format :</p><pre><code class="hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span>
+<span data-linenumber="2"></span>
+<span data-linenumber="3"></span>
+<span data-linenumber="4"></span>
+<span data-linenumber="5"></span>
+<span data-linenumber="6"></span>
+<span data-linenumber="7"></span>
+<span data-linenumber="8"></span>
+<span data-linenumber="9"></span>
+<span data-linenumber="10"></span>
+<span data-linenumber="11"></span>
+<span data-linenumber="12"></span>
+<span data-linenumber="13"></span>
+<span data-linenumber="14"></span>
+<span data-linenumber="15"></span>
+<span data-linenumber="16"></span>
+<span data-linenumber="17"></span>
+<span data-linenumber="18"></span>
+<span data-linenumber="19"></span>
+<span data-linenumber="20"></span>
+<span data-linenumber="21"></span>
+<span data-linenumber="22"></span>
+<span data-linenumber="23"></span>
+<span data-linenumber="24"></span>
+<span data-linenumber="25"></span>
+<span data-linenumber="26"></span>
+<span data-linenumber="27"></span>
+<span data-linenumber="28"></span>
+<span data-linenumber="29"></span>
+<span data-linenumber="30"></span>
+<span data-linenumber="31"></span>
+<span data-linenumber="32"></span></div><div class="code">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
+QtUzbXKNYw==
+</div></div></code></pre><p>Finaly, he exits.</p><h2 id="Solution"><a class="anchor hidden-xs" href="#Solution" title="Solution"><span class="octicon octicon-link"></span></a>Solution</h2><div class="alert alert-warning">
+<p>This challenge was resolved on Parrot OS. You may have to install tools in order to revolve the challenge if you are on another distribution.</p>
+</div><p>First step is to retrieve back the keepass database from the base64.</p><p>I put the base64 text in a file called <code>base64_encoded_file</code> :</p><pre><code class="sh hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span></div><div class="code"><span class="hljs-built_in">echo</span> <span class="hljs-string">"A9mimmf7S7UB...[base64 text]...XKNYw=="</span> &gt; base64_encoded_file
+</div></div></code></pre><p>Then I decode the base64 file into the keepass :</p><pre><code>cat file | base64 -d &gt; secret.kdbx
+</code></pre><div class="alert alert-info">
+<ul>
+<li><code>cat</code> displays the content of the file</li>
+<li><code>|</code> passes the displayed text to the command <code>base64</code></li>
+<li><code>base64 -d</code> decode base64 thanks to option <code>-d</code></li>
+<li><code>&gt;</code> get the input and create or replace content of the file given next</li>
+<li><code>secret.kdbx</code> decoded file</li>
+</ul>
+</div><p>We can check if the output file is as we expect a keepass database with the command file :</p><pre><code class="sh hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span>
+<span data-linenumber="2"></span></div><div class="code"><span class="hljs-selector-tag">file</span> <span class="hljs-selector-tag">secret</span><span class="hljs-selector-class">.kdbx</span>
+<span class="hljs-selector-tag">secret</span><span class="hljs-selector-class">.kdbx</span>: <span class="hljs-selector-tag">Keepass</span> <span class="hljs-selector-tag">password</span> <span class="hljs-selector-tag">database</span> 2<span class="hljs-selector-class">.x</span> <span class="hljs-selector-tag">KDBX</span>
+</div></div></code></pre><p>Perfect, next step is to find Tiger Wood’s Keepass password.<br>
+We got just a problem : he doesn’t know it himself ! <img alt=":disappointed:" class="emoji" src="https://cdnjs.cloudflare.com/ajax/libs/emojify.js/1.1.0/images/basic/disappointed.png" title=":disappointed:"></p><p>We can still check the password used to connect with TELNET, but it won’t work.</p><p>Ok. If we look at the different password that Tiger Wood tried (woods1275,woods1077,woods1282), we can find the following pattern :<br>
+<code>woods</code> + 4 digit number</p><p>We are going to bruteforce the keepass database with a generated dictionnary following the previous pattern.</p><p>We can use <code>crunch</code> to generate the dictionnary.</p><p>Here is the man output that is useful :</p><pre><code class="hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span>
+<span data-linenumber="2"></span>
+<span data-linenumber="3"></span>
+<span data-linenumber="4"></span>
+<span data-linenumber="5"></span>
+<span data-linenumber="6"></span>
+<span data-linenumber="7"></span>
+<span data-linenumber="8"></span>
+<span data-linenumber="9"></span>
+<span data-linenumber="10"></span>
+<span data-linenumber="11"></span>
+<span data-linenumber="12"></span>
+<span data-linenumber="13"></span>
+<span data-linenumber="14"></span>
+<span data-linenumber="15"></span>
+<span data-linenumber="16"></span>
+<span data-linenumber="17"></span></div><div class="code">NAME
+       crunch - generate wordlists from a character set
+
+SYNOPSIS
+       crunch &lt;min-len&gt; &lt;max-len&gt; [&lt;charset string&gt;] [options]
+
+[...]
+       -o wordlist.txt
+              Specifies the file to write the output to, eg: wordlist.txt
+
+       -t @,%^
+              Specifies  a pattern, eg: @@god@@@@ where the only the @'s, ,'s,
+              %'s, and ^'s will change.
+              @ will insert lower case characters
+              , will insert upper case characters
+              % will insert numbers
+              ^ will insert symbols
+</div></div></code></pre><p>The command to get the dictionnary in <code>dico.txt</code> :</p><pre><code class="sh hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span></div><div class="code"><span class="hljs-selector-tag">crunch</span> 9 9 <span class="hljs-selector-tag">-t</span> <span class="hljs-selector-tag">woods</span>%%%% <span class="hljs-selector-tag">-o</span> <span class="hljs-selector-tag">dico</span><span class="hljs-selector-class">.txt</span>
+</div></div></code></pre><p>We want to use John The Ripper to bruteforce the keepass database.</p><p>Consequently, we have to convert the keepass database into a file that can be bruteforced by john : <code>keepass2john</code></p><p><code>keepass2john</code> is extracting information from a KeePass database allowing us to crack the password with John The Ripper.</p><p>Here is the command :</p><pre><code class="sh hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span></div><div class="code"><span class="hljs-selector-tag">keepass2john</span> <span class="hljs-selector-tag">secret</span><span class="hljs-selector-class">.kdbx</span> &gt; <span class="hljs-selector-tag">database</span><span class="hljs-selector-class">.hash</span>
+</div></div></code></pre><p>Now we can use john to bruteforce with the following command :</p><pre><code class="sh hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span>
+<span data-linenumber="2"></span>
+<span data-linenumber="3"></span>
+<span data-linenumber="4"></span>
+<span data-linenumber="5"></span>
+<span data-linenumber="6"></span>
+<span data-linenumber="7"></span>
+<span data-linenumber="8"></span>
+<span data-linenumber="9"></span>
+<span data-linenumber="10"></span>
+<span data-linenumber="11"></span>
+<span data-linenumber="12"></span></div><div class="code">john <span class="hljs-comment">--wordlist=dico.txt database.hash</span>
+Using default <span class="hljs-built_in">input</span> encoding: UTF<span class="hljs-number">-8</span>
+Loaded <span class="hljs-number">1</span> password hash (KeePass [SHA256 AES <span class="hljs-number">32</span>/<span class="hljs-number">64</span>])
+Cost <span class="hljs-number">1</span> (iteration count) is <span class="hljs-number">100000</span> <span class="hljs-keyword">for</span> all <span class="hljs-built_in">loaded</span> hashes
+Cost <span class="hljs-number">2</span> (version) is <span class="hljs-number">2</span> <span class="hljs-keyword">for</span> all <span class="hljs-built_in">loaded</span> hashes
+Cost <span class="hljs-number">3</span> (algorithm [<span class="hljs-number">0</span>=AES, <span class="hljs-number">1</span>=TwoFish, <span class="hljs-number">2</span>=ChaCha]) is <span class="hljs-number">0</span> <span class="hljs-keyword">for</span> all <span class="hljs-built_in">loaded</span> hashes
+Will run <span class="hljs-number">4</span> OpenMP threads
+Press <span class="hljs-string">'q'</span> <span class="hljs-keyword">or</span> Ctrl-C to abort, almost any other key <span class="hljs-keyword">for</span> <span class="hljs-built_in">status</span>
+woods0180        (secret)
+<span class="hljs-number">1</span>g <span class="hljs-number">0</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">07</span> DONE (<span class="hljs-number">2019</span><span class="hljs-number">-07</span><span class="hljs-number">-13</span> <span class="hljs-number">11</span>:<span class="hljs-number">05</span>) <span class="hljs-number">0.1424</span>g/s <span class="hljs-number">27.35</span>p/s <span class="hljs-number">27.35</span>c/s <span class="hljs-number">27.35</span>C/s woods0176..woods0191
+Use the <span class="hljs-string">"--show"</span> option to display all of the cracked passwords reliably
+Session completed
+</div></div></code></pre><p>We just got the password : <code>woods0180</code></p><p>Now we can open the database thanks to keepass2.<br>
+If you don’t have the software, you can download it on their <a href="https://keepass.info/download.html" target="_blank" rel="noopener">webpage</a>.<br>
+It’s also available in debian repositories.</p><p><img src="https://i.imgur.com/heY3CJJ.png" alt=""></p><p>Right click on an entry, then <code>Edit view</code> entry and click on the <code>...</code> button (on the right of the password field) to display the hidden password.</p><p><img src="https://i.imgur.com/7TEJ3Mo.png" alt=""></p><p>And we got the flag : <strong>lh_{I1oVeG0lfAndSex…W4IT.MyWiFe}</strong></p><h2 id="Easter-Egg"><a class="anchor hidden-xs" href="#Easter-Egg" title="Easter-Egg"><span class="octicon octicon-link"></span></a>Easter Egg</h2><p>There are two more entries in the keepass, so here are the funny passwords :<br>
+<img src="https://i.imgur.com/Cf3SjOB.png" alt=""></p><p>and</p><p><img src="https://i.imgur.com/Aq0sHIK.png" alt=""><br>
+for the following website : <a href="http://boards.4channel.org/sp/" target="_blank" rel="noopener">http://boards.4channel.org/sp/</a></p><hr><p><a href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"></a><br>This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.</p></div>
+    <div class="ui-toc dropup unselectable hidden-print" style="display:none;">
+        <div class="pull-right dropdown">
+            <a id="tocLabel" class="ui-toc-label btn btn-default" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" title="Table of content">
+                <i class="fa fa-bars"></i>
+            </a>
+            <ul id="ui-toc" class="ui-toc-dropdown dropdown-menu" aria-labelledby="tocLabel">
+                <div class="toc"><ul class="nav">
+<li class=""><a href="#Write-up-LeHack-2019---Forensic---WorldGolfChampion-50pts" title="Write-up LeHack 2019 - Forensic - WorldGolfChampion (50pts)">Write-up LeHack 2019 - Forensic - WorldGolfChampion (50pts)</a><ul class="nav">
+<li><a href="#Analysis" title="Analysis">Analysis</a></li>
+<li><a href="#Solution" title="Solution">Solution</a></li>
+<li><a href="#Easter-Egg" title="Easter Egg">Easter Egg</a></li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+            </ul>
+        </div>
+    </div>
+    <div id="ui-toc-affix" class="ui-affix-toc ui-toc-dropdown unselectable hidden-print" data-spy="affix" style="top:17px;display:none;" null null>
+        <div class="toc"><ul class="nav">
+<li class=""><a href="#Write-up-LeHack-2019---Forensic---WorldGolfChampion-50pts" title="Write-up LeHack 2019 - Forensic - WorldGolfChampion (50pts)">Write-up LeHack 2019 - Forensic - WorldGolfChampion (50pts)</a><ul class="nav">
+<li><a href="#Analysis" title="Analysis">Analysis</a></li>
+<li><a href="#Solution" title="Solution">Solution</a></li>
+<li><a href="#Easter-Egg" title="Easter Egg">Easter Egg</a></li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gist-embed/2.6.0/gist-embed.min.js" integrity="sha256-KyF2D6xPIJUW5sUDSs93vWyZm+1RzIpKCexxElmxl8g=" crossorigin="anonymous" defer></script>
+    <script>
+        var markdown = $(".markdown-body");
+        //smooth all hash trigger scrolling
+        function smoothHashScroll() {
+            var hashElements = $("a[href^='#']").toArray();
+            for (var i = 0; i < hashElements.length; i++) {
+                var element = hashElements[i];
+                var $element = $(element);
+                var hash = element.hash;
+                if (hash) {
+                    $element.on('click', function (e) {
+                        // store hash
+                        var hash = this.hash;
+                        if ($(hash).length <= 0) return;
+                        // prevent default anchor click behavior
+                        e.preventDefault();
+                        // animate
+                        $('body, html').stop(true, true).animate({
+                            scrollTop: $(hash).offset().top
+                        }, 100, "linear", function () {
+                            // when done, add hash to url
+                            // (default click behaviour)
+                            window.location.hash = hash;
+                        });
+                    });
+                }
+            }
+        }
+
+        smoothHashScroll();
+        var toc = $('.ui-toc');
+        var tocAffix = $('.ui-affix-toc');
+        var tocDropdown = $('.ui-toc-dropdown');
+        //toc
+        tocDropdown.click(function (e) {
+            e.stopPropagation();
+        });
+
+        var enoughForAffixToc = true;
+
+        function generateScrollspy() {
+            $(document.body).scrollspy({
+                target: ''
+            });
+            $(document.body).scrollspy('refresh');
+            if (enoughForAffixToc) {
+                toc.hide();
+                tocAffix.show();
+            } else {
+                tocAffix.hide();
+                toc.show();
+            }
+            $(document.body).scroll();
+        }
+
+        function windowResize() {
+            //toc right
+            var paddingRight = parseFloat(markdown.css('padding-right'));
+            var right = ($(window).width() - (markdown.offset().left + markdown.outerWidth() - paddingRight));
+            toc.css('right', right + 'px');
+            //affix toc left
+            var newbool;
+            var rightMargin = (markdown.parent().outerWidth() - markdown.outerWidth()) / 2;
+            //for ipad or wider device
+            if (rightMargin >= 133) {
+                newbool = true;
+                var affixLeftMargin = (tocAffix.outerWidth() - tocAffix.width()) / 2;
+                var left = markdown.offset().left + markdown.outerWidth() - affixLeftMargin;
+                tocAffix.css('left', left + 'px');
+            } else {
+                newbool = false;
+            }
+            if (newbool != enoughForAffixToc) {
+                enoughForAffixToc = newbool;
+                generateScrollspy();
+            }
+        }
+        $(window).resize(function () {
+            windowResize();
+        });
+        $(document).ready(function () {
+            windowResize();
+            generateScrollspy();
+        });
+
+        //remove hash
+        function removeHash() {
+            window.location.hash = '';
+        }
+
+        var backtotop = $('.back-to-top');
+        var gotobottom = $('.go-to-bottom');
+
+        backtotop.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToTop)
+                scrollToTop();
+            removeHash();
+        });
+        gotobottom.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToBottom)
+                scrollToBottom();
+            removeHash();
+        });
+
+        var toggle = $('.expand-toggle');
+        var tocExpand = false;
+
+        checkExpandToggle();
+        toggle.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            tocExpand = !tocExpand;
+            checkExpandToggle();
+        })
+
+        function checkExpandToggle () {
+            var toc = $('.ui-toc-dropdown .toc');
+            var toggle = $('.expand-toggle');
+            if (!tocExpand) {
+                toc.removeClass('expand');
+                toggle.text('Expand all');
+            } else {
+                toc.addClass('expand');
+                toggle.text('Collapse all');
+            }
+        }
+
+        function scrollToTop() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: 0
+            }, 100, "linear");
+        }
+
+        function scrollToBottom() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: $(document.body)[0].scrollHeight
+            }, 100, "linear");
+        }
+    </script>
+</body>
+
+</html>

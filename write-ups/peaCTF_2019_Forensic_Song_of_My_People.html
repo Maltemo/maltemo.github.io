@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>
+        peaCTF 2019 (Round1) - [Forensic] Song of My People (800pts) - HackMD
+    </title>
+    <link rel="icon" type="image/png" href="https://hackmd.io/favicon.png">
+    <link rel="apple-touch-icon" href="https://hackmd.io/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" integrity="sha256-3iu9jgsy9TpTwXKb7bNQzqWekRX7pPK+2OLj3R922fo=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css" integrity="sha256-QiWfLIsCT02Sdwkogf6YMiQlj4NE84MKkzEMkZnMGdg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism.min.css" integrity="sha256-vtR0hSWRc3Tb26iuN2oZHt3KRUomwTufNIf5/4oeCyg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojify.js/1.1.0/css/basic/emojify.min.css" integrity="sha256-UOrvMOsSDSrW6szVLe8ZDZezBxh5IoIfgTwdNDgTjiU=" crossorigin="anonymous" />
+    <style>
+        @charset "UTF-8";@import url(https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i|Source+Code+Pro:300,400,500|Source+Sans+Pro:300,300i,400,400i,600,600i|Source+Serif+Pro&subset=latin-ext);.hljs{display:block;background:#fff;padding:.5em;color:#333;overflow-x:auto}.hljs-comment,.hljs-meta{color:#969896}.hljs-emphasis,.hljs-quote,.hljs-string,.hljs-strong,.hljs-template-variable,.hljs-variable{color:#df5000}.hljs-keyword,.hljs-selector-tag,.hljs-type{color:#a71d5d}.hljs-attribute,.hljs-bullet,.hljs-literal,.hljs-number,.hljs-symbol{color:#0086b3}.hljs-built_in,.hljs-builtin-name{color:#005cc5}.hljs-name,.hljs-section{color:#63a35c}.hljs-tag{color:#333}.hljs-attr,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id,.hljs-selector-pseudo,.hljs-title{color:#795da3}.hljs-addition{color:#55a532;background-color:#eaffea}.hljs-deletion{color:#bd2c00;background-color:#ffecec}.hljs-link{text-decoration:underline}.markdown-body{font-size:16px;line-height:1.5;word-wrap:break-word}.markdown-body:after,.markdown-body:before{display:table;content:""}.markdown-body:after{clear:both}.markdown-body>:first-child{margin-top:0!important}.markdown-body>:last-child{margin-bottom:0!important}.markdown-body a:not([href]){color:inherit;text-decoration:none}.markdown-body .absent{color:#c00}.markdown-body .anchor{float:left;padding-right:4px;margin-left:-20px;line-height:1}.markdown-body .anchor:focus{outline:none}.markdown-body blockquote,.markdown-body dl,.markdown-body ol,.markdown-body p,.markdown-body pre,.markdown-body table,.markdown-body ul{margin-top:0;margin-bottom:16px}.markdown-body hr{height:.25em;padding:0;margin:24px 0;background-color:#e7e7e7;border:0}.markdown-body blockquote{font-size:16px;padding:0 1em;color:#777;border-left:.25em solid #ddd}.markdown-body blockquote>:first-child{margin-top:0}.markdown-body blockquote>:last-child{margin-bottom:0}.markdown-body kbd,.popover kbd{display:inline-block;padding:3px 5px;font-size:11px;line-height:10px;color:#555;vertical-align:middle;background-color:#fcfcfc;border:1px solid #ccc;border-bottom-color:#bbb;border-radius:3px;box-shadow:inset 0 -1px 0 #bbb}.markdown-body .loweralpha{list-style-type:lower-alpha}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{margin-top:24px;margin-bottom:16px;font-weight:600;line-height:1.25}.markdown-body h1 .octicon-link,.markdown-body h2 .octicon-link,.markdown-body h3 .octicon-link,.markdown-body h4 .octicon-link,.markdown-body h5 .octicon-link,.markdown-body h6 .octicon-link{color:#000;vertical-align:middle;visibility:hidden}.markdown-body h1:hover .anchor,.markdown-body h2:hover .anchor,.markdown-body h3:hover .anchor,.markdown-body h4:hover .anchor,.markdown-body h5:hover .anchor,.markdown-body h6:hover .anchor{text-decoration:none}.markdown-body h1:hover .anchor .octicon-link,.markdown-body h2:hover .anchor .octicon-link,.markdown-body h3:hover .anchor .octicon-link,.markdown-body h4:hover .anchor .octicon-link,.markdown-body h5:hover .anchor .octicon-link,.markdown-body h6:hover .anchor .octicon-link{visibility:visible}.markdown-body h1 code,.markdown-body h1 tt,.markdown-body h2 code,.markdown-body h2 tt,.markdown-body h3 code,.markdown-body h3 tt,.markdown-body h4 code,.markdown-body h4 tt,.markdown-body h5 code,.markdown-body h5 tt,.markdown-body h6 code,.markdown-body h6 tt{font-size:inherit}.markdown-body h1{font-size:2em}.markdown-body h1,.markdown-body h2{padding-bottom:.3em;border-bottom:1px solid #eee}.markdown-body h2{font-size:1.5em}.markdown-body h3{font-size:1.25em}.markdown-body h4{font-size:1em}.markdown-body h5{font-size:.875em}.markdown-body h6{font-size:.85em;color:#777}.markdown-body ol,.markdown-body ul{padding-left:2em}.markdown-body ol.no-list,.markdown-body ul.no-list{padding:0;list-style-type:none}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:0;margin-bottom:0}.markdown-body li>p{margin-top:16px}.markdown-body li+li{margin-top:.25em}.markdown-body dl{padding:0}.markdown-body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}.markdown-body dl dd{padding:0 16px;margin-bottom:16px}.markdown-body table{display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}.markdown-body table th{font-weight:700}.markdown-body table td,.markdown-body table th{padding:6px 13px;border:1px solid #ddd}.markdown-body table tr{background-color:#fff;border-top:1px solid #ccc}.markdown-body table tr:nth-child(2n){background-color:#f8f8f8}.markdown-body img{max-width:100%;box-sizing:content-box;background-color:#fff}.markdown-body img[align=right]{padding-left:20px}.markdown-body img[align=left]{padding-right:20px}.markdown-body .emoji{max-width:none;vertical-align:text-top;background-color:transparent}.markdown-body span.frame{display:block;overflow:hidden}.markdown-body span.frame>span{display:block;float:left;width:auto;padding:7px;margin:13px 0 0;overflow:hidden;border:1px solid #ddd}.markdown-body span.frame span img{display:block;float:left}.markdown-body span.frame span span{display:block;padding:5px 0 0;clear:both;color:#333}.markdown-body span.align-center{display:block;overflow:hidden;clear:both}.markdown-body span.align-center>span{display:block;margin:13px auto 0;overflow:hidden;text-align:center}.markdown-body span.align-center span img{margin:0 auto;text-align:center}.markdown-body span.align-right{display:block;overflow:hidden;clear:both}.markdown-body span.align-right>span{display:block;margin:13px 0 0;overflow:hidden;text-align:right}.markdown-body span.align-right span img{margin:0;text-align:right}.markdown-body span.float-left{display:block;float:left;margin-right:13px;overflow:hidden}.markdown-body span.float-left span{margin:13px 0 0}.markdown-body span.float-right{display:block;float:right;margin-left:13px;overflow:hidden}.markdown-body span.float-right>span{display:block;margin:13px auto 0;overflow:hidden;text-align:right}.markdown-body code,.markdown-body tt{padding:0;padding-top:.2em;padding-bottom:.2em;margin:0;font-size:85%;background-color:rgba(0,0,0,.04);border-radius:3px}.markdown-body code:after,.markdown-body code:before,.markdown-body tt:after,.markdown-body tt:before{letter-spacing:-.2em;content:"\00a0"}.markdown-body code br,.markdown-body tt br{display:none}.markdown-body del code{text-decoration:inherit}.markdown-body pre{word-wrap:normal}.markdown-body pre>code{padding:0;margin:0;font-size:100%;word-break:normal;white-space:pre;background:transparent;border:0}.markdown-body .highlight{margin-bottom:16px}.markdown-body .highlight pre{margin-bottom:0;word-break:normal}.markdown-body .highlight pre,.markdown-body pre{padding:16px;overflow:auto;font-size:85%;line-height:1.45;background-color:#f7f7f7;border-radius:3px}.markdown-body pre code,.markdown-body pre tt{display:inline;max-width:auto;padding:0;margin:0;overflow:visible;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}.markdown-body pre code:after,.markdown-body pre code:before,.markdown-body pre tt:after,.markdown-body pre tt:before{content:normal}.markdown-body .csv-data td,.markdown-body .csv-data th{padding:5px;overflow:hidden;font-size:12px;line-height:1;text-align:left;white-space:nowrap}.markdown-body .csv-data .blob-line-num{padding:10px 8px 9px;text-align:right;background:#fff;border:0}.markdown-body .csv-data tr{border-top:0}.markdown-body .csv-data th{font-weight:700;background:#f8f8f8;border-top:0}.news .alert .markdown-body blockquote{padding:0 0 0 40px;border:0 none}.activity-tab .news .alert .commits,.activity-tab .news .markdown-body blockquote{padding-left:0}.task-list-item{list-style-type:none}.task-list-item label{font-weight:400}.task-list-item.enabled label{cursor:pointer}.task-list-item+.task-list-item{margin-top:3px}.task-list-item-checkbox{float:left;margin:.31em 0 .2em -1.3em!important;vertical-align:middle;cursor:default!important}.markdown-body{padding-top:40px;padding-bottom:40px;max-width:758px;overflow:visible!important}.markdown-body .emoji{vertical-align:top}.markdown-body pre{border:inherit!important}.markdown-body code{color:inherit!important}.markdown-body pre code .wrapper{display:-moz-inline-flex;display:-ms-inline-flex;display:-o-inline-flex;display:inline-flex}.markdown-body pre code .gutter{float:left;overflow:hidden;-webkit-user-select:none;user-select:none}.markdown-body pre code .gutter.linenumber{text-align:right;position:relative;display:inline-block;cursor:default;z-index:4;padding:0 8px 0 0;min-width:20px;box-sizing:content-box;color:#afafaf!important;border-right:3px solid #6ce26c!important}.markdown-body pre code .gutter.linenumber>span:before{content:attr(data-linenumber)}.markdown-body pre code .code{float:left;margin:0 0 0 16px}.markdown-body .gist .line-numbers{border-left:none;border-top:none;border-bottom:none}.markdown-body .gist .line-data{border:none}.markdown-body .gist table{border-spacing:0;border-collapse:inherit!important}.markdown-body code[data-gist-id]{background:none;padding:0}.markdown-body code[data-gist-id]:after,.markdown-body code[data-gist-id]:before{content:""}.markdown-body code[data-gist-id] .blob-num{border:unset}.markdown-body code[data-gist-id] table{overflow:unset;margin-bottom:unset}.markdown-body code[data-gist-id] table tr{background:unset}.markdown-body[dir=rtl] pre{direction:ltr}.markdown-body[dir=rtl] code{direction:ltr;unicode-bidi:embed}.markdown-body .alert>p{margin-bottom:0}.markdown-body pre.abc,.markdown-body pre.flow-chart,.markdown-body pre.graphviz,.markdown-body pre.mermaid,.markdown-body pre.sequence-diagram{text-align:center;background-color:inherit;border-radius:0;white-space:inherit}.markdown-body pre.abc>code,.markdown-body pre.flow-chart>code,.markdown-body pre.graphviz>code,.markdown-body pre.mermaid>code,.markdown-body pre.sequence-diagram>code{text-align:left}.markdown-body pre.abc>svg,.markdown-body pre.flow-chart>svg,.markdown-body pre.graphviz>svg,.markdown-body pre.mermaid>svg,.markdown-body pre.sequence-diagram>svg{max-width:100%;height:100%}.markdown-body pre>code.wrap{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word}.markdown-body .alert>p,.markdown-body .alert>ul{margin-bottom:0}.markdown-body summary{display:list-item}.markdown-body summary:focus{outline:none}.markdown-body details summary{cursor:pointer}.markdown-body details:not([open])>:not(summary){display:none}.markdown-body figure{margin:1em 40px}.markdown-body .mark,.markdown-body mark{background-color:#fff1a7}.vimeo,.youtube{cursor:pointer;display:table;text-align:center;background-position:50%;background-repeat:no-repeat;background-size:contain;background-color:#000;overflow:hidden}.vimeo,.youtube{position:relative;width:100%}.youtube{padding-bottom:56.25%}.vimeo img{width:100%;object-fit:contain;z-index:0}.youtube img{object-fit:cover;z-index:0}.vimeo iframe,.youtube iframe,.youtube img{width:100%;height:100%;position:absolute;top:0;left:0}.vimeo iframe,.youtube iframe{vertical-align:middle;z-index:1}.vimeo .icon,.youtube .icon{position:absolute;height:auto;width:auto;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;opacity:.3;transition:opacity .2s;z-index:0}.vimeo:hover .icon,.youtube:hover .icon{opacity:.6;transition:opacity .2s}.slideshare .inner,.speakerdeck .inner{position:relative;width:100%}.slideshare .inner iframe,.speakerdeck .inner iframe{position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%}.MJX_Assistive_MathML{display:none}.ui-infobar{position:relative;z-index:2;max-width:760px;margin:25px auto -25px;padding:0 15px;color:#777}.toc .invisable-node{list-style-type:none}.ui-toc{position:fixed;bottom:20px;z-index:998}.ui-toc-label{opacity:.3;background-color:#ccc;border:none;transition:opacity .2s}.ui-toc .open .ui-toc-label{opacity:1;color:#fff;transition:opacity .2s}.ui-toc-label:focus{opacity:.3;background-color:#ccc;color:#000}.ui-toc-label:hover{opacity:1;background-color:#ccc;transition:opacity .2s}.ui-toc-dropdown{margin-top:23px;margin-bottom:20px;padding-left:10px;padding-right:10px;max-width:45vw;width:25vw;max-height:70vh;overflow:auto;text-align:inherit}.ui-toc-dropdown>.toc{max-height:calc(70vh - 100px);overflow:auto}.ui-toc-dropdown[dir=rtl] .nav{padding-right:0;letter-spacing:.0029em}.ui-toc-dropdown a{overflow:hidden;text-overflow:ellipsis;white-space:pre}.ui-toc-dropdown .nav>li>a{display:block;padding:4px 20px;font-size:13px;font-weight:500;color:#767676}.ui-toc-dropdown .nav>li:first-child:last-child > ul,.ui-toc-dropdown .toc.expand ul{display:block}.ui-toc-dropdown .nav>li>a:focus,.ui-toc-dropdown .nav>li>a:hover{padding-left:19px;color:#000;text-decoration:none;background-color:transparent;border-left:1px solid #000}.ui-toc-dropdown[dir=rtl] .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav>li>a:hover{padding-right:19px;border-left:none;border-right:1px solid #000}.ui-toc-dropdown .nav>.active:focus>a,.ui-toc-dropdown .nav>.active:hover>a,.ui-toc-dropdown .nav>.active>a{padding-left:18px;font-weight:700;color:#000;background-color:transparent;border-left:2px solid #000}.ui-toc-dropdown[dir=rtl] .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav>.active>a{padding-right:18px;border-left:none;border-right:2px solid #000}.ui-toc-dropdown .nav .nav{display:none;padding-bottom:10px}.ui-toc-dropdown .nav>.active>ul{display:block}.ui-toc-dropdown .nav .nav>li>a{padding-top:1px;padding-bottom:1px;padding-left:30px;font-size:12px;font-weight:400}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a{padding-right:30px}.ui-toc-dropdown .nav .nav>li>ul>li>a{padding-top:1px;padding-bottom:1px;padding-left:40px;font-size:12px;font-weight:400}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a{padding-right:40px}.ui-toc-dropdown .nav .nav>li>a:focus,.ui-toc-dropdown .nav .nav>li>a:hover{padding-left:29px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:hover{padding-right:29px}.ui-toc-dropdown .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown .nav .nav>li>ul>li>a:hover{padding-left:39px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:hover{padding-right:39px}.ui-toc-dropdown .nav .nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>a{padding-left:28px;font-weight:500}.ui-toc-dropdown[dir=rtl] .nav .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>a{padding-right:28px}.ui-toc-dropdown .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active>a{padding-left:38px;font-weight:500}.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active>a{padding-right:38px}.markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif}html[lang^=ja] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}html .markdown-body[lang^=ja]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html .markdown-body[lang=zh-tw]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html .markdown-body[lang=zh-cn]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}html[lang^=ja] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ\ Ｐゴシック,sans-serif}html[lang=zh-tw] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html[lang=zh-cn] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}html .ui-toc-dropdown[lang^=ja]{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ\ Ｐゴシック,sans-serif}html .ui-toc-dropdown[lang=zh-tw]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html .ui-toc-dropdown[lang=zh-cn]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}.ui-affix-toc{position:fixed;top:0;max-width:15vw;max-height:70vh;overflow:auto}.back-to-top,.expand-toggle,.go-to-bottom{display:block;padding:4px 10px;margin-top:10px;margin-left:10px;font-size:12px;font-weight:500;color:#999}.back-to-top:focus,.back-to-top:hover,.expand-toggle:focus,.expand-toggle:hover,.go-to-bottom:focus,.go-to-bottom:hover{color:#563d7c;text-decoration:none}.back-to-top,.go-to-bottom{margin-top:0}.ui-user-icon{width:20px;height:20px;display:block;border-radius:3px;margin-top:2px;margin-bottom:2px;margin-right:5px;background-position:50%;background-repeat:no-repeat;background-size:cover}.ui-user-icon.small{width:18px;height:18px;display:inline-block;vertical-align:middle;margin:0 0 .2em}.ui-infobar>small>span{line-height:22px}.ui-infobar>small .dropdown{display:inline-block}.ui-infobar>small .dropdown a:focus,.ui-infobar>small .dropdown a:hover{text-decoration:none}.ui-published-note{color:#337ab7}.ui-published-note .fa{font-size:20px;vertical-align:top}.unselectable{-webkit-user-select:none;-o-user-select:none;user-select:none}@media print{blockquote,div,img,pre,table{page-break-inside:avoid!important}a[href]:after{font-size:12px!important}}.markdown-body.slides{position:relative;z-index:1;color:#222}.markdown-body.slides:before{content:"";display:block;position:absolute;top:0;left:0;right:0;bottom:0;z-index:-1;background-color:currentColor;box-shadow:0 0 0 50vw}.markdown-body.slides section[data-markdown]{position:relative;margin-bottom:1.5em;background-color:#fff;text-align:center}.markdown-body.slides section[data-markdown] code{text-align:left}.markdown-body.slides section[data-markdown]:before{content:"";display:block;padding-bottom:56.23%}.markdown-body.slides section[data-markdown]>div:first-child{position:absolute;top:50%;left:1em;right:1em;transform:translateY(-50%);max-height:100%;overflow:hidden}.markdown-body.slides section[data-markdown]>ul{display:inline-block}.markdown-body.slides>section>section+section:after{content:"";position:absolute;top:-1.5em;right:1em;height:1.5em;border:3px solid #777}body{font-smoothing:subpixel-antialiased!important;-webkit-font-smoothing:subpixel-antialiased!important;-moz-osx-font-smoothing:auto!important;text-shadow:0 0 1em transparent,1px 1px 1.2px rgba(0,0,0,.004);-webkit-overflow-scrolling:touch;letter-spacing:.025em}.focus,:focus{outline:none!important}::-moz-focus-inner{border:0!important}body{font-family:Source Sans Pro,Helvetica,Arial,sans-serif}html[lang^=ja] body{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}abbr[data-original-title],abbr[title]{cursor:help}body.modal-open{overflow-y:auto;padding-right:0!important}
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g=" crossorigin="anonymous"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js" integrity="sha256-g6iAfvZp+nDQ2TdTR/VVKJf3bGro4ub5fvWSWVRi2NE=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js" integrity="sha256-8E4Is26QH0bD52WoQpcB+R/tcWQtpzlCojrybUd7Mxo=" crossorigin="anonymous"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true" style="position: relative;"><h1 id="peaCTF-2019-Round1---Forensic-Song-of-My-People-800pts"><a class="anchor hidden-xs" href="#peaCTF-2019-Round1---Forensic-Song-of-My-People-800pts" title="peaCTF-2019-Round1---Forensic-Song-of-My-People-800pts"><span class="octicon octicon-link"></span></a>peaCTF 2019 (Round1) - [Forensic] Song of My People (800pts)</h1><p>Written by <a href="https://twitter.com/Maltemo" target="_blank" rel="noopener">Maltemo</a>, member of team <a href="https://sinhack.blog/" target="_blank" rel="noopener">SinHack</a>.</p><p><span class="toc"><ul>
+<li><a href="#peaCTF-2019-Round1---Forensic-Song-of-My-People-800pts" title="peaCTF 2019 (Round1) - [Forensic] Song of My People (800pts)">peaCTF 2019 (Round1) - [Forensic] Song of My People (800pts)</a><ul>
+<li><a href="#Statement-of-the-challenge" title="Statement of the challenge">Statement of the challenge</a><ul>
+<li><a href="#Description" title="Description">Description</a></li>
+<li><a href="#File" title="File">File</a></li>
+</ul>
+</li>
+<li><a href="#Step-1--Extracting-the-data-from-a-password-ZIP-file" title="Step 1 : Extracting the data from a password ZIP file">Step 1 : Extracting the data from a password ZIP file</a></li>
+<li><a href="#Analysis-of-the-files" title="Analysis of the files">Analysis of the files</a></li>
+<li><a href="#Step-2--Correcting-the-PLTE-length-of-the-PNG-file" title="Step 2 : Correcting the PLTE length of the PNG file">Step 2 : Correcting the PLTE length of the PNG file</a></li>
+<li><a href="#Step-3--Get-the-flag-from-the-given-information-on-the-PNG" title="Step 3 : Get the flag from the given information on the PNG">Step 3 : Get the flag from the given information on the PNG</a><ul>
+<li><a href="#Page-Number" title="Page Number">Page Number</a></li>
+<li><a href="#Number-of-places-left" title="Number of places left">Number of places left</a></li>
+</ul>
+</li>
+<li><a href="#TLDR" title="TL;DR">TL;DR</a></li>
+<li><a href="#Flag" title="Flag">Flag</a></li>
+</ul>
+</li>
+</ul>
+</span></p><h2 id="Statement-of-the-challenge"><a class="anchor hidden-xs" href="#Statement-of-the-challenge" title="Statement-of-the-challenge"><span class="octicon octicon-link"></span></a>Statement of the challenge</h2><h3 id="Description"><a class="anchor hidden-xs" href="#Description" title="Description"><span class="octicon octicon-link"></span></a>Description</h3><p>A specific soundcloud rapper needs help getting into his password protected zipped file directory. The initial password is in the title. You just have to know your memes, and pick the right instrument! We were on the fence on giving you an image to go along with this puzzle, but the loincloth was too scandalous. Alternatively, you could bruteforce.</p><h3 id="File"><a class="anchor hidden-xs" href="#File" title="File"><span class="octicon octicon-link"></span></a>File</h3><pre><code>song_of_my_people.zip
+├── a lengthy issue.png
+├── Ice Cube - Check Yo Self Remix (Clean).mp3
+└── README.txt
+</code></pre><h2 id="Step-1--Extracting-the-data-from-a-password-ZIP-file"><a class="anchor hidden-xs" href="#Step-1--Extracting-the-data-from-a-password-ZIP-file" title="Step-1--Extracting-the-data-from-a-password-ZIP-file"><span class="octicon octicon-link"></span></a>Step 1 : Extracting the data from a password ZIP file</h2><p>The first part of the challenge was explained in the statement : extract the content of the zip.</p><p>Fine, we’ll do !<br>
+I chose the peaceful method and let my CPU rest this time.</p><p>So the hint says in the description :</p><div class="alert alert-info">
+<p>The initial <strong>password is in the title</strong>. You just have to <strong>know your memes, and pick the right instrument</strong>! We were on the fence on giving you an <strong>image</strong> to go along with this puzzle, but the <strong>loincloth</strong> was too scandalous.</p>
+</div><p>So I searched on internet for “Song of My People” and found write away this <a href="https://knowyourmeme.com/memes/the-song-of-my-people" target="_blank" rel="noopener">website</a> :<br>
+<img src="https://i.imgur.com/zoUeXmD.png" alt=""></p><p>I didn’t know this meme, so happy to learn an old one <img alt=":smile:" class="emoji" src="https://cdnjs.cloudflare.com/ajax/libs/emojify.js/1.1.0/images/basic/smile.png" title=":smile:"> ! (memes are love, memes are life <img alt=":heart:" class="emoji" src="https://cdnjs.cloudflare.com/ajax/libs/emojify.js/1.1.0/images/basic/heart.png" title=":heart:">).</p><p>We understand now why they were talking about instruments and we have to find the right one.</p><p>They were talking about a loincloth, and there it is on the first picture of the website.</p><p>Perfect, we can come to the conclusion that the password is this instrument, a <strong>violin</strong>.</p><pre><code class="shell hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span>
+<span data-linenumber="2"></span>
+<span data-linenumber="3"></span>
+<span data-linenumber="4"></span>
+<span data-linenumber="5"></span></div><div class="code">unzip -P violin song_of_my_people.zip
+Archive:  song_of_my_people.zip
+   skipping: Ice Cube - Check Yo Self Remix (Clean).mp3  unsupported compression method 99
+   skipping: README.txt              unsupported compression method 99
+   skipping: a lengthy issue.png     unsupported compression method 99
+</div></div></code></pre><p>Ouch, so unzip won’t do the trick.<br>
+Trying 7zip :</p><pre><code class="shell hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span>
+<span data-linenumber="2"></span>
+<span data-linenumber="3"></span>
+<span data-linenumber="4"></span>
+<span data-linenumber="5"></span>
+<span data-linenumber="6"></span>
+<span data-linenumber="7"></span>
+<span data-linenumber="8"></span>
+<span data-linenumber="9"></span>
+<span data-linenumber="10"></span>
+<span data-linenumber="11"></span>
+<span data-linenumber="12"></span>
+<span data-linenumber="13"></span>
+<span data-linenumber="14"></span>
+<span data-linenumber="15"></span>
+<span data-linenumber="16"></span>
+<span data-linenumber="17"></span>
+<span data-linenumber="18"></span></div><div class="code">7z x -pviolin song_of_my_people.zip
+
+7-Zip [64] 16.02 : Copyright (c) 1999-2016 Igor Pavlov : 2016-05-21
+
+Scanning the drive for archives:
+1 file, 5594494 bytes (5464 KiB)
+
+Extracting archive: song_of_my_people.zip
+--
+Path = song_of_my_people.zip
+Type = zip
+Physical Size = 5594494
+
+Everything is Ok
+
+Files: 3
+Size:       5645856
+Compressed: 5594494
+</div></div></code></pre><p>Yup, we extracted the files successfuly.</p><h2 id="Analysis-of-the-files"><a class="anchor hidden-xs" href="#Analysis-of-the-files" title="Analysis-of-the-files"><span class="octicon octicon-link"></span></a>Analysis of the files</h2><p>Let’s check the <a href="http://README.md" target="_blank" rel="noopener">README.md</a> first. After all, it’s not called README for nothing <img alt=":wink:" class="emoji" src="https://cdnjs.cloudflare.com/ajax/libs/emojify.js/1.1.0/images/basic/wink.png" title=":wink:"><br>
+Here is the content :</p><pre><code>one of the three files is a red herring, but a helpful one at that.
+
+does any of this ADD up? This is a LONG problem.
+</code></pre><p>Ok, there is not much information.</p><p>Then, I try to open the png file called <code>a lengthy issue.png</code> but I got a message error saying that the PLTE data chunk is too long. We get more information with <code>pngcheck</code> tool, but nothing incredible.</p><p>At this moment, I don’t know what it is, so I skip and check the music file.</p><p>I ran a lot of stego tool to see if there were any data hidden, but nothing at all. The music is a legit one and no weird noise are present in it.</p><p>I think this is a dead end (in addition of the <code>README</code> telling me that one of the file is a red herring).</p><p>I also check if the <code>.txt</code> didn’t hide any information in the spaces characters, you never know <img alt=":smile:" class="emoji" src="https://cdnjs.cloudflare.com/ajax/libs/emojify.js/1.1.0/images/basic/smile.png" title=":smile:">, but nothing too.</p><div class="alert alert-warning">
+<blockquote>
+<p><em>At this moment, Maltemo knew. He had to learn how PNG works.</em><br>
+<small><i class="fa fa-user"></i> Narrator</small></p>
+</blockquote>
+</div><h2 id="Step-2--Correcting-the-PLTE-length-of-the-PNG-file"><a class="anchor hidden-xs" href="#Step-2--Correcting-the-PLTE-length-of-the-PNG-file" title="Step-2--Correcting-the-PLTE-length-of-the-PNG-file"><span class="octicon octicon-link"></span></a>Step 2 : Correcting the PLTE length of the PNG file</h2><p>I spent a LOT of time learning and testing on this image, so here is summary of what you need to know for this challenge.</p><hr><p>A PNG file is composed of different chunks of data, some must exist and other are optional.</p><p>The <strong>critical chunks</strong> are (in order):</p><ul>
+<li><code>IHDR</code> (<strong>I</strong>mage <strong>H</strong>ea<strong>D</strong>e<strong>R</strong>) : General informations about the image (length, width, color type)</li>
+<li><code>PLTE</code> (<strong>P</strong>a<strong>L</strong>e<strong>T</strong>t<strong>E</strong>) : Palettes of colors of the image</li>
+<li><code>IDAT</code> (<strong>I</strong>mage <strong>DAT</strong>a) Beginning of image data</li>
+<li><code>IEND</code> (<strong>I</strong>mage <strong>END</strong>) End of image data</li>
+</ul><p>A <strong>chunk of data</strong> is always composed of :</p><table>
+<thead>
+<tr>
+<th>Length of the data chunk</th>
+<th>Chunk type</th>
+<th>Chunk data</th>
+<th>CRC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4 bytes</td>
+<td>4 bytes</td>
+<td>Length bytes</td>
+<td>4 bytes</td>
+</tr>
+</tbody>
+</table><p>Now lets focus on the <code>PLTE</code> chunk (will see later why).</p><p><code>PLTE</code> chunk contains from 1 to 256 palette entries, each a three-byte series of the form:<br>
+Red : 1 byte<br>
+Green : 1 byte<br>
+Blue : 1 byte</p><p>Consequently, the length of the <code>PLTE</code> chunk <strong>must</strong> be divisible by 3 (because one palette = 3 bytes).</p><p>Also, the <code>PLTE</code> chunk <strong>must</strong> appear for colour type 3 (that can be read in the <code>IHDR</code> chunk). For other types, it’s optionnal.</p><p>In our case, the image uses the colour type 3, so we will be forced to fix our PLTE Length properly.</p><p>The CRC (Cyclic Redundancy Code or Checksum) aims to check the integrity of the data.<br>
+For now, I don’t have the knowledge to explain to you how it works.<br>
+<a href="https://elsicarius.fr/les-images-png-comment-ca-marche-comment-corriger-manuellement-les-erreurs" target="_blank" rel="noopener">Sicarius explains it well there, but in french.</a></p><hr><p>Those are the main documentations/sources I used to learn all this stuff :</p><ul>
+<li><a href="https://www.w3.org/TR/PNG/" target="_blank" rel="noopener">https://www.w3.org/TR/PNG/</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Portable_Network_Graphics" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Portable_Network_Graphics</a></li>
+</ul><p>Thanks to this knowledge, i’ll try to explain how I did in order to fix the PNG.</p><p>So first, to display the image as hexa and show the ascii version, we can use command line <code>xxd</code>. I’ll pipe this command with <code>head</code> command to show the beginning of the file.</p><div class="alert alert-info">
+<p><strong>Quick reminder</strong>, in hexadecimal one byte is represented by two character.<br>
+Example : (ff)<span class="mathjax"><span class="MathJax_Preview" style="color: inherit;"></span><span class="MathJax" id="MathJax-Element-1-Frame" tabindex="0" style="position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><msub><mi></mi><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mn>16</mn></mrow></msub></math>" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-1" style="width: 1.012em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.769em; height: 0px; font-size: 130%;"><span style="position: absolute; clip: rect(1.746em, 1000.77em, 2.521em, -1000em); top: -2.212em; left: 0em;"><span class="mrow" id="MathJax-Span-2"><span class="msubsup" id="MathJax-Span-3"><span style="display: inline-block; position: relative; width: 0.782em; height: 0px;"><span style="position: absolute; clip: rect(3.846em, 1000em, 4.135em, -1000em); top: -3.99em; left: 0em;"><span class="mi" id="MathJax-Span-4"></span><span style="display: inline-block; width: 0px; height: 3.99em;"></span></span><span style="position: absolute; top: -3.84em; left: 0em;"><span class="texatom" id="MathJax-Span-5"><span class="mrow" id="MathJax-Span-6"><span class="mn" id="MathJax-Span-7" style="font-size: 70.7%; font-family: MathJax_Main;">16</span></span></span><span style="display: inline-block; width: 0px; height: 3.99em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.212em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.278em; border-left: 0px solid; width: 0px; height: 0.757em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi></mi><mrow class="MJX-TeXAtom-ORD"><mn>16</mn></mrow></msub></math></span></span><script type="math/tex" id="MathJax-Element-1">_{16}</script></span> = (1111 1111)<span class="mathjax"><span class="MathJax_Preview" style="color: inherit;"></span><span class="MathJax" id="MathJax-Element-2-Frame" tabindex="0" style="position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><msub><mi></mi><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mn>2</mn></mrow></msub></math>" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-8" style="width: 0.579em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.433em; height: 0px; font-size: 130%;"><span style="position: absolute; clip: rect(1.746em, 1000.43em, 2.506em, -1000em); top: -2.212em; left: 0em;"><span class="mrow" id="MathJax-Span-9"><span class="msubsup" id="MathJax-Span-10"><span style="display: inline-block; position: relative; width: 0.429em; height: 0px;"><span style="position: absolute; clip: rect(3.846em, 1000em, 4.135em, -1000em); top: -3.99em; left: 0em;"><span class="mi" id="MathJax-Span-11"></span><span style="display: inline-block; width: 0px; height: 3.99em;"></span></span><span style="position: absolute; top: -3.84em; left: 0em;"><span class="texatom" id="MathJax-Span-12"><span class="mrow" id="MathJax-Span-13"><span class="mn" id="MathJax-Span-14" style="font-size: 70.7%; font-family: MathJax_Main;">2</span></span></span><span style="display: inline-block; width: 0px; height: 3.99em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.212em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.258em; border-left: 0px solid; width: 0px; height: 0.737em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi></mi><mrow class="MJX-TeXAtom-ORD"><mn>2</mn></mrow></msub></math></span></span><script type="math/tex" id="MathJax-Element-2">_{2}</script></span><br>
+(ff in hexa = 1111 1111 in binary. Remember the notation above, I will use it later)</p>
+</div><pre><code class="shell hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span>
+<span data-linenumber="2"></span>
+<span data-linenumber="3"></span>
+<span data-linenumber="4"></span>
+<span data-linenumber="5"></span>
+<span data-linenumber="6"></span>
+<span data-linenumber="7"></span>
+<span data-linenumber="8"></span>
+<span data-linenumber="9"></span>
+<span data-linenumber="10"></span>
+<span data-linenumber="11"></span></div><div class="code">xxd a\ lengthy\ issue.png | head
+00000000: 8950 4e47 0d0a 1a0a 0000 000d 4948 4452  .PNG........IHDR
+00000010: 0000 0500 0000 02d0 0803 0000 018f a41d  ................
+00000020: f200 0000 0173 5247 4200 aece 1ce9 0000  .....sRGB.......
+00000030: 0004 6741 4d41 0000 b18f 0bfc 6105 4845  ..gAMA......a.HE
+00000040: 4c50 504c 5445 ffff fff7 f7f7 4040 4000  LPPLTE......@@@.
+00000050: 0000 3232 32f5 f5f5 7272 722d 2d2d c9c9  ..222...rrr---..
+00000060: c9a2 a2a2 b8b8 b87f 7f7f dede de11 1111  ................
+00000070: 5050 50e6 e6e6 3f3f 3f8c 8c8c bdbd bd61  PPP...???......a
+00000080: 6161 fbfb fb47 4747 2828 285d 5d5d d0d0  aa...GGG(((]]]..
+00000090: d01e 1e1e d4d4 d4a7 a7a7 9d9d 9d4d 4d4d  .............MMM
+</div></div></code></pre><p>I’ll not detail the <code>IDHR</code> chunk, but we can find the color type value of 3 :</p><ul>
+<li><code>00000010:</code> 0000 0500 0000 02d0 08<mark>03</mark> 0000 018f a41d</li>
+</ul><p>Now, let’s check the <code>PLTE</code>'s broken length. We take the four bytes before <code>PLTE</code> and we got :<br>
+<code>48 45 4c 50</code> which in ASCII is <code>HELP</code>.</p><p>Now we can understand why there was a length problem <img alt=":dizzy_face:" class="emoji" src="https://cdnjs.cloudflare.com/ajax/libs/emojify.js/1.1.0/images/basic/dizzy_face.png" title=":dizzy_face:"> !</p><p>Our mission will be to replace those four bytes by the right length.</p><p>Lets calculate the total length of data from the <code>PLT</code> chunk :<br>
+<img src="https://i.imgur.com/F3hwlq4.png" alt=""></p><p>We take everything after<code>PLTE</code>, but we let 4 bytes for the CRC, 4 bytes before the next type chunk (here <code>tRNS</code>).</p><p>I found 906 letters of hexadecimal. Converting it to bytes, we divide it by 2.</p><hr><p><span class="mathjax"><span class="MathJax_Preview" style="color: inherit;"></span><span class="MathJax" id="MathJax-Element-3-Frame" tabindex="0" style="position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mn>906</mn><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mo>/</mo></mrow><mn>2</mn><mo>=</mo><mo stretchy=&quot;false&quot;>(</mo><mn>453</mn><msub><mo stretchy=&quot;false&quot;>)</mo><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mn>10</mn></mrow></msub></math>" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-15" style="width: 8.752em; display: inline-block;"><span style="display: inline-block; position: relative; width: 6.731em; height: 0px; font-size: 130%;"><span style="position: absolute; clip: rect(1.413em, 1006.73em, 2.702em, -1000em); top: -2.308em; left: 0em;"><span class="mrow" id="MathJax-Span-16"><span class="mn" id="MathJax-Span-17" style="font-family: MathJax_Main;">906</span><span class="texatom" id="MathJax-Span-18"><span class="mrow" id="MathJax-Span-19"><span class="mo" id="MathJax-Span-20" style="font-family: MathJax_Main;">/</span></span></span><span class="mn" id="MathJax-Span-21" style="font-family: MathJax_Main;">2</span><span class="mo" id="MathJax-Span-22" style="font-family: MathJax_Main; padding-left: 0.278em;">=</span><span class="mo" id="MathJax-Span-23" style="font-family: MathJax_Main; padding-left: 0.278em;">(</span><span class="mn" id="MathJax-Span-24" style="font-family: MathJax_Main;">453</span><span class="msubsup" id="MathJax-Span-25"><span style="display: inline-block; position: relative; width: 1.171em; height: 0px;"><span style="position: absolute; clip: rect(3.096em, 1000.29em, 4.385em, -1000em); top: -3.99em; left: 0em;"><span class="mo" id="MathJax-Span-26" style="font-family: MathJax_Main;">)</span><span style="display: inline-block; width: 0px; height: 3.99em;"></span></span><span style="position: absolute; top: -3.84em; left: 0.389em;"><span class="texatom" id="MathJax-Span-27"><span class="mrow" id="MathJax-Span-28"><span class="mn" id="MathJax-Span-29" style="font-size: 70.7%; font-family: MathJax_Main;">10</span></span></span><span style="display: inline-block; width: 0px; height: 3.99em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.308em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.388em; border-left: 0px solid; width: 0px; height: 1.425em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>906</mn><mrow class="MJX-TeXAtom-ORD"><mo>/</mo></mrow><mn>2</mn><mo>=</mo><mo stretchy="false">(</mo><mn>453</mn><msub><mo stretchy="false">)</mo><mrow class="MJX-TeXAtom-ORD"><mn>10</mn></mrow></msub></math></span></span><script type="math/tex" id="MathJax-Element-3">906/2=(453)_{10}</script></span> bytes</p><p>If you don’t understand this step, go back to the blue text called Quick Reminder.</p><hr><p>We check if 453 is divisible by 3 =&gt; <span class="mathjax"><span class="MathJax_Preview" style="color: inherit;"></span><span class="MathJax" id="MathJax-Element-4-Frame" tabindex="0" style="position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mn>453</mn><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mo>/</mo></mrow><mn>3</mn><mo>=</mo><mn>151</mn></math>" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-30" style="width: 6.781em; display: inline-block;"><span style="display: inline-block; position: relative; width: 5.192em; height: 0px; font-size: 130%;"><span style="position: absolute; clip: rect(1.413em, 1005.12em, 2.702em, -1000em); top: -2.308em; left: 0em;"><span class="mrow" id="MathJax-Span-31"><span class="mn" id="MathJax-Span-32" style="font-family: MathJax_Main;">453</span><span class="texatom" id="MathJax-Span-33"><span class="mrow" id="MathJax-Span-34"><span class="mo" id="MathJax-Span-35" style="font-family: MathJax_Main;">/</span></span></span><span class="mn" id="MathJax-Span-36" style="font-family: MathJax_Main;">3</span><span class="mo" id="MathJax-Span-37" style="font-family: MathJax_Main; padding-left: 0.278em;">=</span><span class="mn" id="MathJax-Span-38" style="font-family: MathJax_Main; padding-left: 0.278em;">151</span></span><span style="display: inline-block; width: 0px; height: 2.308em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.388em; border-left: 0px solid; width: 0px; height: 1.425em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>453</mn><mrow class="MJX-TeXAtom-ORD"><mo>/</mo></mrow><mn>3</mn><mo>=</mo><mn>151</mn></math></span></span><script type="math/tex" id="MathJax-Element-4">453/3=151</script></span></p><p>Remember from the summary ?<br>
+A palette is composed of 3 bytes. So the data chunk must be divisible by 3 because it verifies if all the palettes of colour are complete.</p><hr><p>Ok so now that we have the length, we convert it from base 10 to base 16 (to hexadecimal).</p><p><span class="mathjax"><span class="MathJax_Preview" style="color: inherit;"></span><span class="MathJax" id="MathJax-Element-5-Frame" tabindex="0" style="position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mo stretchy=&quot;false&quot;>(</mo><mn>453</mn><msub><mo stretchy=&quot;false&quot;>)</mo><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mn>10</mn></mrow></msub><mo>=</mo><mo stretchy=&quot;false&quot;>(</mo><mn>1</mn><mi>c</mi><mn>5</mn><msub><mo stretchy=&quot;false&quot;>)</mo><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mn>16</mn></mrow></msub></math>" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-39" style="width: 9.474em; display: inline-block;"><span style="display: inline-block; position: relative; width: 7.26em; height: 0px; font-size: 130%;"><span style="position: absolute; clip: rect(1.413em, 1007.26em, 2.702em, -1000em); top: -2.308em; left: 0em;"><span class="mrow" id="MathJax-Span-40"><span class="mo" id="MathJax-Span-41" style="font-family: MathJax_Main;">(</span><span class="mn" id="MathJax-Span-42" style="font-family: MathJax_Main;">453</span><span class="msubsup" id="MathJax-Span-43"><span style="display: inline-block; position: relative; width: 1.171em; height: 0px;"><span style="position: absolute; clip: rect(3.096em, 1000.29em, 4.385em, -1000em); top: -3.99em; left: 0em;"><span class="mo" id="MathJax-Span-44" style="font-family: MathJax_Main;">)</span><span style="display: inline-block; width: 0px; height: 3.99em;"></span></span><span style="position: absolute; top: -3.84em; left: 0.389em;"><span class="texatom" id="MathJax-Span-45"><span class="mrow" id="MathJax-Span-46"><span class="mn" id="MathJax-Span-47" style="font-size: 70.7%; font-family: MathJax_Main;">10</span></span></span><span style="display: inline-block; width: 0px; height: 3.99em;"></span></span></span></span><span class="mo" id="MathJax-Span-48" style="font-family: MathJax_Main; padding-left: 0.278em;">=</span><span class="mo" id="MathJax-Span-49" style="font-family: MathJax_Main; padding-left: 0.278em;">(</span><span class="mn" id="MathJax-Span-50" style="font-family: MathJax_Main;">1</span><span class="mi" id="MathJax-Span-51" style="font-family: MathJax_Math; font-style: italic;">c</span><span class="mn" id="MathJax-Span-52" style="font-family: MathJax_Main;">5</span><span class="msubsup" id="MathJax-Span-53"><span style="display: inline-block; position: relative; width: 1.171em; height: 0px;"><span style="position: absolute; clip: rect(3.096em, 1000.29em, 4.385em, -1000em); top: -3.99em; left: 0em;"><span class="mo" id="MathJax-Span-54" style="font-family: MathJax_Main;">)</span><span style="display: inline-block; width: 0px; height: 3.99em;"></span></span><span style="position: absolute; top: -3.84em; left: 0.389em;"><span class="texatom" id="MathJax-Span-55"><span class="mrow" id="MathJax-Span-56"><span class="mn" id="MathJax-Span-57" style="font-size: 70.7%; font-family: MathJax_Main;">16</span></span></span><span style="display: inline-block; width: 0px; height: 3.99em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.308em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.388em; border-left: 0px solid; width: 0px; height: 1.425em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo stretchy="false">(</mo><mn>453</mn><msub><mo stretchy="false">)</mo><mrow class="MJX-TeXAtom-ORD"><mn>10</mn></mrow></msub><mo>=</mo><mo stretchy="false">(</mo><mn>1</mn><mi>c</mi><mn>5</mn><msub><mo stretchy="false">)</mo><mrow class="MJX-TeXAtom-ORD"><mn>16</mn></mrow></msub></math></span></span><script type="math/tex" id="MathJax-Element-5">(453)_{10} = (1c5)_{16}</script></span></p><p>The chunk length is 4 bytes long, so we will replace in the image <code>HELP</code> by the length :</p><p><code>48 45 4c 50</code> will be replaced by <code>00 00 01 c5</code>.</p><p>To do so, I used <code>bless</code> command line to edit the image hexadecimal, but you can use <code>hexeditor</code> or many more.</p><p><strong>BEFORE</strong><br>
+<img src="https://i.imgur.com/qcat1FN.png" alt=""></p><p><strong>AFTER</strong><br>
+<img src="https://i.imgur.com/jtqN6N5.png" alt=""></p><p>We save the image with this modification.</p><div class="alert alert-success">
+<p>We check the integrity of the PNG with <code>pngcheck</code> and we see that it has been correctly fixed ! <img alt=":confetti_ball:" class="emoji" src="https://cdnjs.cloudflare.com/ajax/libs/emojify.js/1.1.0/images/basic/confetti_ball.png" title=":confetti_ball:"> YEEEAAAAAAHH <img alt=":beers:" class="emoji" src="https://cdnjs.cloudflare.com/ajax/libs/emojify.js/1.1.0/images/basic/beers.png" title=":beers:">  !</p>
+</div><p>I spent litteraly 3 nights on this problem and learned a lot. I’m so happy that I did finish this step !</p><h2 id="Step-3--Get-the-flag-from-the-given-information-on-the-PNG"><a class="anchor hidden-xs" href="#Step-3--Get-the-flag-from-the-given-information-on-the-PNG" title="Step-3--Get-the-flag-from-the-given-information-on-the-PNG"><span class="octicon octicon-link"></span></a>Step 3 : Get the flag from the given information on the PNG</h2><p>So I thougth that the challenge was finished right here.</p><blockquote>
+<p>He was so wrong <img alt=":stuck_out_tongue_closed_eyes:" class="emoji" src="https://cdnjs.cloudflare.com/ajax/libs/emojify.js/1.1.0/images/basic/stuck_out_tongue_closed_eyes.png" title=":stuck_out_tongue_closed_eyes:"><br>
+<small><i class="fa fa-user"></i> Narrator</small></p>
+</blockquote><p>The image was this : <img src="https://i.imgur.com/qeoq2qp.png" alt=""></p><p>Let’s get back to it !</p><p>We have a ton of information on this image.<br>
+I first checked it with <a href="https://aperisolve.fr/" target="_blank" rel="noopener">aperisolve</a> online tool to verify if the are some hidden things, but everything seemed okay.</p><p>Then I saw that we had to find 2 informations :</p><ul>
+<li><strong>Number of places left</strong> at the most recent concert of [redacted] (author of the <a href="https://soundcloud.com/lil-redacted/live-concert-audio" target="_blank" rel="noopener">music on soundcloud</a>)</li>
+<li><strong>Page number of the concert archive</strong></li>
+</ul><h3 id="Page-Number"><a class="anchor hidden-xs" href="#Page-Number" title="Page-Number"><span class="octicon octicon-link"></span></a>Page Number</h3><p>I went to the <a href="https://soundcloud.com/lil-redacted/live-concert-audio" target="_blank" rel="noopener">soundcloud page</a>) and found this :<br>
+<img src="https://i.imgur.com/YYuZRWZ.png" alt=""></p><p>From the description, we can see the famous page number, but there is a “should” so we don’t know if this is a valid information.</p><p>The music sounded like morse. I decoded it with this awesome online tool <a href="https://morsecode.scphillips.com/labs/decoder/" target="_blank" rel="noopener">morse code scphillips</a> and got this output (it isn’t exactly the text because of the method I use to decode, but the website is incredible):</p><blockquote>
+<p>E5UP YALL ITS YA BOI LIL ICE CUBE MELTING OUT HERE IN THE HAWAII HEAT FOR ALL OF YOU. YOU GUESSED IT THIS IS LIVE AUDIO FROM MY WORLD TOUR. I <strong>REPEAT</strong> <mark>LIL ICE CUBES WORLD TOUR</mark> <strong>MAYBE</strong> A LIBRARY WILL HELP</p>
+</blockquote><p>This gives us the archive name thanks to the help we got from the soundcloud description : <strong>LIL ICE CUBES WORLD TOUR</strong></p><p>But what is this mysterious hexagonal library ?</p><p>We will try to answer this question by decoding the hexadecimal text on the PNG.</p><pre><code>54 68 65 20 4c 69 62 72 61 72 79 20 6f 66 20 42 61 62 65 6c 3a 0a 28 77 69 74 68 20 6e
+65 77 20 61 64 64 69 74 69 74 69 6f 6e 20 6f 66 20 61 6c 6c 20 74 68 65 20 70 6f 73 73 69 62 6c
+65 20 64 69 73 73 20 74 72 61 63 6b 73 20 74 6f 20 65 76 65 72 20 62 65 20 6d 61 64 65
+20 61 6e 64 20 65 76 65 72 20 63 6f 75 6c 64 20 62 65 20 6d 61 64 65 29
+</code></pre><p>We can decode this hexa to ascii and we get this text :</p><blockquote>
+<p>The Library of Babel:<br>
+(with new additition of all the possible diss tracks to ever be made and ever could be made)</p>
+</blockquote><p>So I search library of babel on the web and find <a href="https://www.libraryofbabel.info/book.cgi" target="_blank" rel="noopener">this website</a> which seems to correspond. I search for LIL ICE CUBES WORLD TOUR and boom :<br>
+<img src="https://i.imgur.com/75fEowu.png" alt=""></p><div class="alert alert-success">
+<p>We just confirmed that the page number was <strong>371</strong>.</p>
+</div><div class="alert alert-info">
+<p>If you are interested in understanding what is the Babel Library, I advise you to check youtube video explaining it, it’s quite fascinating.</p>
+</div><h3 id="Number-of-places-left"><a class="anchor hidden-xs" href="#Number-of-places-left" title="Number-of-places-left"><span class="octicon octicon-link"></span></a>Number of places left</h3><p>For the number of places, I searched every where but got nothing from the 3 files of the beginning.<br>
+I tried to search online to find number of places left on the most recent concert passed of Ice Cube (a real person, author of the music we got from the zip).<br>
+I got nothing either.</p><p>So I guessed and tried 3 for the 3 ice cubes on the profile picture of the music, on the souncloud page.</p><div class="alert alert-success">
+<p>It worked. And I didn’t get why. But the number of places left was 3</p>
+</div><p>If you have any explanation for this last part, I would be more than happy to understand how you did find it, if there were a logical way.</p><p>Feel free to contact me on twitter at <a href="https://twitter.com/Maltemo" target="_blank" rel="noopener">@Maltemo</a>.</p><h2 id="TLDR"><a class="anchor hidden-xs" href="#TLDR" title="TLDR"><span class="octicon octicon-link"></span></a>TL;DR</h2><p>First step was unzipping a password protected zip. It could be achieved with bruteforce or understanding a little enigma.</p><p>The next step consisted in correcting a corrupted PNG where the length of the <code>PLTE</code> lenght chunk had been replaced by letters.</p><p>The last step was different puzzles (morse sound to text, hex values to text, Library of Babel) to find informations enabling to get the flag.</p><h2 id="Flag"><a class="anchor hidden-xs" href="#Flag" title="Flag"><span class="octicon octicon-link"></span></a>Flag</h2><p>The flag is <strong>peaCTF{3_thousand_spaces_371}</strong></p><hr><p><a href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"></a><br>This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.</p></div>
+    <div class="ui-toc dropup unselectable hidden-print" style="display:none;">
+        <div class="pull-right dropdown">
+            <a id="tocLabel" class="ui-toc-label btn btn-default" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" title="Table of content">
+                <i class="fa fa-bars"></i>
+            </a>
+            <ul id="ui-toc" class="ui-toc-dropdown dropdown-menu" aria-labelledby="tocLabel">
+                <div class="toc"><ul class="nav">
+<li class=""><a href="#peaCTF-2019-Round1---Forensic-Song-of-My-People-800pts" title="peaCTF 2019 (Round1) - [Forensic] Song of My People (800pts)">peaCTF 2019 (Round1) - [Forensic] Song of My People (800pts)</a><ul class="nav">
+<li class=""><a href="#Statement-of-the-challenge" title="Statement of the challenge">Statement of the challenge</a><ul class="nav">
+<li class=""><a href="#Description" title="Description">Description</a></li>
+<li><a href="#File" title="File">File</a></li>
+</ul>
+</li>
+<li><a href="#Step-1--Extracting-the-data-from-a-password-ZIP-file" title="Step 1 : Extracting the data from a password ZIP file">Step 1 : Extracting the data from a password ZIP file</a></li>
+<li><a href="#Analysis-of-the-files" title="Analysis of the files">Analysis of the files</a></li>
+<li><a href="#Step-2--Correcting-the-PLTE-length-of-the-PNG-file" title="Step 2 : Correcting the PLTE length of the PNG file">Step 2 : Correcting the PLTE length of the PNG file</a></li>
+<li><a href="#Step-3--Get-the-flag-from-the-given-information-on-the-PNG" title="Step 3 : Get the flag from the given information on the PNG">Step 3 : Get the flag from the given information on the PNG</a><ul class="nav">
+<li><a href="#Page-Number" title="Page Number">Page Number</a></li>
+<li><a href="#Number-of-places-left" title="Number of places left">Number of places left</a></li>
+</ul>
+</li>
+<li><a href="#TLDR" title="TL;DR">TL;DR</a></li>
+<li><a href="#Flag" title="Flag">Flag</a></li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+            </ul>
+        </div>
+    </div>
+    <div id="ui-toc-affix" class="ui-affix-toc ui-toc-dropdown unselectable hidden-print" data-spy="affix" style="top:17px;display:none;" null null>
+        <div class="toc"><ul class="nav">
+<li class=""><a href="#peaCTF-2019-Round1---Forensic-Song-of-My-People-800pts" title="peaCTF 2019 (Round1) - [Forensic] Song of My People (800pts)">peaCTF 2019 (Round1) - [Forensic] Song of My People (800pts)</a><ul class="nav">
+<li class=""><a href="#Statement-of-the-challenge" title="Statement of the challenge">Statement of the challenge</a><ul class="nav">
+<li class=""><a href="#Description" title="Description">Description</a></li>
+<li><a href="#File" title="File">File</a></li>
+</ul>
+</li>
+<li><a href="#Step-1--Extracting-the-data-from-a-password-ZIP-file" title="Step 1 : Extracting the data from a password ZIP file">Step 1 : Extracting the data from a password ZIP file</a></li>
+<li><a href="#Analysis-of-the-files" title="Analysis of the files">Analysis of the files</a></li>
+<li><a href="#Step-2--Correcting-the-PLTE-length-of-the-PNG-file" title="Step 2 : Correcting the PLTE length of the PNG file">Step 2 : Correcting the PLTE length of the PNG file</a></li>
+<li><a href="#Step-3--Get-the-flag-from-the-given-information-on-the-PNG" title="Step 3 : Get the flag from the given information on the PNG">Step 3 : Get the flag from the given information on the PNG</a><ul class="nav">
+<li><a href="#Page-Number" title="Page Number">Page Number</a></li>
+<li><a href="#Number-of-places-left" title="Number of places left">Number of places left</a></li>
+</ul>
+</li>
+<li><a href="#TLDR" title="TL;DR">TL;DR</a></li>
+<li><a href="#Flag" title="Flag">Flag</a></li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gist-embed/2.6.0/gist-embed.min.js" integrity="sha256-KyF2D6xPIJUW5sUDSs93vWyZm+1RzIpKCexxElmxl8g=" crossorigin="anonymous" defer></script>
+    <script>
+        var markdown = $(".markdown-body");
+        //smooth all hash trigger scrolling
+        function smoothHashScroll() {
+            var hashElements = $("a[href^='#']").toArray();
+            for (var i = 0; i < hashElements.length; i++) {
+                var element = hashElements[i];
+                var $element = $(element);
+                var hash = element.hash;
+                if (hash) {
+                    $element.on('click', function (e) {
+                        // store hash
+                        var hash = this.hash;
+                        if ($(hash).length <= 0) return;
+                        // prevent default anchor click behavior
+                        e.preventDefault();
+                        // animate
+                        $('body, html').stop(true, true).animate({
+                            scrollTop: $(hash).offset().top
+                        }, 100, "linear", function () {
+                            // when done, add hash to url
+                            // (default click behaviour)
+                            window.location.hash = hash;
+                        });
+                    });
+                }
+            }
+        }
+
+        smoothHashScroll();
+        var toc = $('.ui-toc');
+        var tocAffix = $('.ui-affix-toc');
+        var tocDropdown = $('.ui-toc-dropdown');
+        //toc
+        tocDropdown.click(function (e) {
+            e.stopPropagation();
+        });
+
+        var enoughForAffixToc = true;
+
+        function generateScrollspy() {
+            $(document.body).scrollspy({
+                target: ''
+            });
+            $(document.body).scrollspy('refresh');
+            if (enoughForAffixToc) {
+                toc.hide();
+                tocAffix.show();
+            } else {
+                tocAffix.hide();
+                toc.show();
+            }
+            $(document.body).scroll();
+        }
+
+        function windowResize() {
+            //toc right
+            var paddingRight = parseFloat(markdown.css('padding-right'));
+            var right = ($(window).width() - (markdown.offset().left + markdown.outerWidth() - paddingRight));
+            toc.css('right', right + 'px');
+            //affix toc left
+            var newbool;
+            var rightMargin = (markdown.parent().outerWidth() - markdown.outerWidth()) / 2;
+            //for ipad or wider device
+            if (rightMargin >= 133) {
+                newbool = true;
+                var affixLeftMargin = (tocAffix.outerWidth() - tocAffix.width()) / 2;
+                var left = markdown.offset().left + markdown.outerWidth() - affixLeftMargin;
+                tocAffix.css('left', left + 'px');
+            } else {
+                newbool = false;
+            }
+            if (newbool != enoughForAffixToc) {
+                enoughForAffixToc = newbool;
+                generateScrollspy();
+            }
+        }
+        $(window).resize(function () {
+            windowResize();
+        });
+        $(document).ready(function () {
+            windowResize();
+            generateScrollspy();
+        });
+
+        //remove hash
+        function removeHash() {
+            window.location.hash = '';
+        }
+
+        var backtotop = $('.back-to-top');
+        var gotobottom = $('.go-to-bottom');
+
+        backtotop.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToTop)
+                scrollToTop();
+            removeHash();
+        });
+        gotobottom.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToBottom)
+                scrollToBottom();
+            removeHash();
+        });
+
+        var toggle = $('.expand-toggle');
+        var tocExpand = false;
+
+        checkExpandToggle();
+        toggle.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            tocExpand = !tocExpand;
+            checkExpandToggle();
+        })
+
+        function checkExpandToggle () {
+            var toc = $('.ui-toc-dropdown .toc');
+            var toggle = $('.expand-toggle');
+            if (!tocExpand) {
+                toc.removeClass('expand');
+                toggle.text('Expand all');
+            } else {
+                toc.addClass('expand');
+                toggle.text('Collapse all');
+            }
+        }
+
+        function scrollToTop() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: 0
+            }, 100, "linear");
+        }
+
+        function scrollToBottom() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: $(document.body)[0].scrollHeight
+            }, 100, "linear");
+        }
+    </script>
+</body>
+
+</html>

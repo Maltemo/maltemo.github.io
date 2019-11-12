@@ -1,0 +1,57 @@
+@font-face {
+  font-family: fontMrRobot;
+  src: url('../fonts/MR_ROBOT.ttf') format('truetype'),
+        url('../fonts/MR_ROBOT.woff') format('woff');
+}
+
+html,body{
+    background-color: black;
+    margin: 0px;
+    padding: 0px;
+    color : white;
+}
+
+main{
+    font-family: "monospace";
+    text-align: center;
+}
+
+h1{
+    font-family: fontMrRobot;
+    color : red;
+    font-weight:normal;
+    font-size: 8em;
+    margin: 0.3em 0px 0px 0px;
+}
+
+#avatar{
+    border-radius: 15em;
+    width : 15em;
+}
+
+#navigation{
+    margin : 1em 0px;
+}
+
+#hackthebox img{
+    margin : 1em 0px;
+}
+
+#sinhack_link{
+    color : white;
+}
+
+.navigation_tab{
+    font-family: fontMrRobot;
+    text-decoration: none;
+    color: white;
+    font-size: 2em;
+}
+
+.picture_link{
+    text-decoration: none;
+    color: white;
+}
+.picture_link img{
+    width : 6em;
+}

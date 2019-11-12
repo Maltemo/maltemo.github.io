@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<meta name="author" content="Maltemo">
+		<meta name="description" content="Maltemo&#39;s personal website">
+		<meta name="keywords" content="CTF,write-ups,security,maltemo">
+
+		<meta name="twitter:card" content="summary"/>
+		<meta name="twitter:title" content="Maltemo"/>
+		<meta name="twitter:description" content="Maltemo&#39;s personal website"/>
+
+		<meta property="og:title" content="Maltemo" />
+		<meta property="og:description" content="Maltemo&#39;s personal website" />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://maltemo.github.io/" />
+
+		<base href="https://maltemo.github.io/">
+		<title>Maltemo</title>
+		<link rel="canonical" href="https://maltemo.github.io/">
+		<link rel="icon" type="image/png" href="assets/images/favicon-32x32.png" sizes="32x32">
+		<link rel="stylesheet" href="assets/css/index.css">
+	</head>
+
+	<body>
+		<main>
+			<div id="navigation">
+                <a class="navigation_tab" href="index.html">Home page</a>
+				-
+				<a class="navigation_tab" href="write-ups_list.html">Write-ups</a>
+				-
+				<a class="navigation_tab" href="contact.html">Contact</a>
+			</div>
+			<h1>write-up list</h1>
+            <div id="app">
+                <table align="center">
+                    <thead>
+						<tr>
+	                        <th>CTF</th>
+	                        <th>Challenge Type</th>
+	                        <th>Title</th>
+	                        <th>Points</th>
+	                        <th>Date</th>
+	                        <th>Tags</th>
+						</tr>
+                    </thead>
+					<tbody>
+						<tr is="write-up" v-for="(writeup,index) in writeups" :key="index" :writeup="writeup"></tr>
+					</tbody>
+				</table>
+            </div>
+			<section class="container">
+				© 2019 - Made by Maltemo
+			</section>
+		</main>
+	</body>
+    <script src="assets/js/vue.min.js"></script>
+	<script src="assets/js/writeup.component.js"></script>
+    <script src="assets/js/list.js"></script>
+    <script src="assets/js/app.js"></script>
+</html>
