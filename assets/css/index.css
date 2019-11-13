@@ -24,16 +24,16 @@ h1{
     margin: 0.3em 0px 0px 0px;
 }
 
+footer{
+    margin-top: 1em;
+}
+
 #avatar{
     border-radius: 15em;
     width : 15em;
 }
 
 #navigation{
-    margin : 1em 0px;
-}
-
-#hackthebox img{
     margin : 1em 0px;
 }
 
