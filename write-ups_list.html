@@ -39,11 +39,11 @@
                 <table align="center">
                     <thead>
 						<tr>
-	                        <th>CTF</th>
-	                        <th>Challenge Type</th>
-	                        <th>Title</th>
+	                        <th @click="toggleSortCTF">CTF</th>
+	                        <th @click="toggleSortChallengeType">Challenge Type</th>
+	                        <th @click="toggleSortTitle">Title</th>
 	                        <th>Points</th>
-	                        <th>Date</th>
+	                        <th @click="toggleSortDates">Date</th>
 	                        <th>Tags</th>
 						</tr>
                     </thead>

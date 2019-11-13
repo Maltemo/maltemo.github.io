@@ -28,6 +28,26 @@ footer{
     margin-top: 1em;
 }
 
+table{
+    border : 1px solid white;
+    border-spacing: 0px;
+}
+
+table tr td{
+    border : 1px solid white;
+
+}
+
+tr:hover td {
+  background: #101011;
+  color:#FFFFFF;
+  border-top: 1px solid #22262e;
+}
+
+td,th{
+    padding : 0.4em;
+}
+
 #avatar{
     border-radius: 15em;
     width : 15em;
