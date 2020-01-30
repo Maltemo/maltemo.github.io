@@ -102,6 +102,14 @@ var write_up_list = [
         ctf : "LeHack",
         date : new Date(2019,06,13),
         points : 50
+    },
+    {
+	title : "Dox the grinch",
+	challenge_type : "OSINT",
+	tags : "",
+	ctf : "x-masCTF",
+	date : new Date(2019,11,20),
+	points : 250
     }
 ]
 
