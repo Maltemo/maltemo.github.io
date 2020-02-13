@@ -110,7 +110,21 @@ var write_up_list = [
 	ctf : "x-masCTF",
 	date : new Date(2019,11,20),
 	points : 250
-    }
+    },{
+        title : "BitsnBytes",
+        challenge_type : "Prog",
+        tags : "",
+        ctf : "neverlanCTF",
+        date : new Date(2020,1,13),
+        points : 200
+    },{
+        title : "Listen to this",
+        challenge_type : "Forensic",
+        tags : "",
+        ctf : "neverlanCTF",
+        date : new Date(2020,1,13),
+        points : 125
+}
 ]
 
 const template_write_up_object = {
