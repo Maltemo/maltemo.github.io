@@ -111,6 +111,13 @@ var write_up_list = [
 	date : new Date(2019,11,20),
 	points : 250
     },{
+        title : "Traverxec",
+        challenge_type : "Pentest",
+        tags : "",
+        ctf : "HackTheBox",
+        date : new Date(2019,11,24),
+        points : 0
+    },{
         title : "BitsnBytes",
         challenge_type : "Prog",
         tags : "",
