@@ -1,9 +1,9 @@
-var write_up_list = [
+const write_up_list = [
     {
         title : "Simple Basique",
         challenge_type : "Crypto",
         tags : "",
-        ctf : "AperiCTF",
+        ctf : 10000,
         date : new Date(2019,09,14),
         points : 50
     },
@@ -11,7 +11,7 @@ var write_up_list = [
         title : "Hey DJ",
         challenge_type : "OSINT",
         tags : "",
-        ctf : "AperiCTF",
+        ctf : 10000,
         date : new Date(2019,09,14),
         points : 175
     },
@@ -19,7 +19,7 @@ var write_up_list = [
         title : "Emoji 🥳",
         challenge_type : "Prog",
         tags : "",
-        ctf : "AperiCTF",
+        ctf : 10000,
         date : new Date(2019,09,14),
         points : 50
     },
@@ -27,7 +27,7 @@ var write_up_list = [
         title : "Special Cookie Recipe",
         challenge_type : "Stegano",
         tags : "",
-        ctf : "AperiCTF",
+        ctf : 10000,
         date : new Date(2019,09,14),
         points : 50
     },
@@ -35,7 +35,7 @@ var write_up_list = [
         title : "TMNT",
         challenge_type : "Web",
         tags : "",
-        ctf : "AperiCTF",
+        ctf : 10000,
         date : new Date(2019,09,14),
         points : 300
     },
@@ -43,7 +43,7 @@ var write_up_list = [
         title : "Broken Keyboard",
         challenge_type : "Crypto",
         tags : "",
-        ctf : "peaCTF",
+        ctf : 10001,
         date : new Date(2019,06,28),
         points : 50
     },
@@ -51,7 +51,7 @@ var write_up_list = [
         title : "Crack The Key",
         challenge_type : "Crypto",
         tags : "",
-        ctf : "peaCTF",
+        ctf : 10001,
         date : new Date(2019,06,28),
         points : 450
     },
@@ -59,7 +59,7 @@ var write_up_list = [
         title : "Song of My People",
         challenge_type : "Forensic",
         tags : "",
-        ctf : "peaCTF",
+        ctf : 10001,
         date : new Date(2019,06,28),
         points : 800
     },
@@ -67,7 +67,7 @@ var write_up_list = [
         title : "We are E.xtr",
         challenge_type : "Forensic",
         tags : "",
-        ctf : "peaCTF",
+        ctf : 10001,
         date : new Date(2019,06,28),
         points : 350
     },
@@ -75,7 +75,7 @@ var write_up_list = [
         title : "Guillotine",
         challenge_type : "Forensic",
         tags : "",
-        ctf : "peaCTF",
+        ctf : 10001,
         date : new Date(2019,08,10),
         points : 1200
     },
@@ -83,7 +83,7 @@ var write_up_list = [
         title : "c0rrupted",
         challenge_type : "Forensic",
         tags : "",
-        ctf : "picoCTF",
+        ctf : 10002,
         date : new Date(2019,06,28),
         points : 250
     },
@@ -91,7 +91,7 @@ var write_up_list = [
         title : "WhitePages",
         challenge_type : "Forensic",
         tags : "",
-        ctf : "picoCTF",
+        ctf : 10002,
         date : new Date(2019,06,28),
         points : 250
     },
@@ -99,7 +99,7 @@ var write_up_list = [
         title : "WorldGolfChampion",
         challenge_type : "Forensic",
         tags : "",
-        ctf : "LeHack",
+        ctf : 10003,
         date : new Date(2019,06,13),
         points : 50
     },
@@ -107,32 +107,32 @@ var write_up_list = [
 	title : "Dox the grinch",
 	challenge_type : "OSINT",
 	tags : "",
-	ctf : "x-masCTF",
+	ctf : 10004,
 	date : new Date(2019,11,20),
 	points : 250
     },{
         title : "Traverxec",
         challenge_type : "Pentest",
         tags : "",
-        ctf : "HackTheBox",
+        ctf : 10005,
         date : new Date(2019,11,24),
         points : 0
     },{
         title : "BitsnBytes",
         challenge_type : "Prog",
         tags : "",
-        ctf : "neverlanCTF",
+        ctf : 10006,
         date : new Date(2020,1,13),
         points : 200
     },{
         title : "Listen to this",
         challenge_type : "Forensic",
         tags : "",
-        ctf : "neverlanCTF",
+        ctf : 10006,
         date : new Date(2020,1,13),
         points : 125
 }
-]
+];
 
 const template_write_up_object = {
         title : "",
@@ -142,3 +142,13 @@ const template_write_up_object = {
         date : "",
         points : 0
 };
+
+const ctf_list = [
+    { id : 10000, name : "AperiCTF" },
+    { id : 10001, name : "peaCTF" },
+    { id : 10002, name : "picoCTF" },
+    { id : 10003, name : "LeHack" },
+    { id : 10004, name : "x-masCTF" },
+    { id : 10005, name : "HackTheBox" },
+    { id : 10006, name : "neverlanCTF" },
+];

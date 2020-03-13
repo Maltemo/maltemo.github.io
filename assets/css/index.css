@@ -89,3 +89,9 @@ td,th{
 .write_up_link{
     color: white;
 }
+
+#graph {
+	height : 80vh;
+	width : 99%;
+	border : solid white 1px;
+}

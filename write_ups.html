@@ -28,37 +28,21 @@
 	<body>
 		<main>
 			<div id="navigation">
-                <a class="navigation_tab" href="index.html">Home page</a>
+				<a class="navigation_tab" href="index.html">Home page</a>
 				-
-				<a class="navigation_tab" href="write-ups_list.html">Write-ups</a>
+				<a class="navigation_tab" href="write_ups.html">Write-ups</a>
 				-
 				<a class="navigation_tab" href="contact.html">Contact</a>
 			</div>
-			<h1>write-up list</h1>
-            <div id="app">
-                <table align="center">
-                    <thead>
-						<tr>
-	                        <th @click="toggleSortCTF">CTF</th>
-	                        <th @click="toggleSortChallengeType">Challenge Type</th>
-	                        <th @click="toggleSortTitle">Title</th>
-	                        <th>Points</th>
-	                        <th @click="toggleSortDates">Date</th>
-	                        <th>Tags</th>
-						</tr>
-                    </thead>
-					<tbody>
-						<tr is="write-up" v-for="(writeup,index) in writeups" :key="index" :writeup="writeup"></tr>
-					</tbody>
-				</table>
-            </div>
+			<div id="graph">
+
+			</div>
 			<footer>
 				© 2020 - Made by Maltemo
 			</footer>
 		</main>
 	</body>
-    <script src="assets/js/vue.min.js"></script>
-	<script src="assets/js/writeup.component.js"></script>
-    <script src="assets/js/list.js"></script>
-    <script src="assets/js/app.js"></script>
+	<script src="assets/js/list.js"></script>
+	<script src="assets/js/vis-network.min.js"></script>
+	<script src="assets/js/graph.js"></script>
 </html>
