@@ -114,8 +114,10 @@ network.on('click',function(event){
 		let selected_node = nodes.get(event.nodes[0]);
 		//If the selected_node is a write-up
 		if(selected_node.group === "Write-up"){
+			//simplification of the title
+			let wu_title = selected_node.label.split(" ").join("_").replace(/[^\w\s]/gi,'');
+			let url = `write-ups/${ctf_list.filter(x=>x.id===selected_node.ctf)[0].name}_${selected_node.date.getFullYear()}_${selected_node.challenge_type}_${wu_title}.html`;
 			//redirect to the correct resource
-			let url = `write-ups/${ctf_list.filter(x=>x.id===selected_node.ctf)[0].name}_${selected_node.date.getFullYear()}_${selected_node.challenge_type}_${selected_node.label}.html`;
 			window.open(url);
 		}
 	}
