@@ -104,13 +104,27 @@ write_up_list.forEach((wu,index)=>{
 nodes.add(write_up_nodes);
 edges.add(write_up_edges);
 
+// Legend
+const legend_id = 1000000;
+const x = - container.clientWidth / 2 + 50;
+const y = - container.clientHeight / 2 + 50;
+nodes.add({
+	id: legend_id,
+	x: x, y: y,
+	label: 'Click on those nodes\n to open write-ups',
+	group: 'Write-up',
+	value: 1,
+	fixed: true,
+	physics:false
+});
+
 //Generating the graph
 const network = new vis.Network(container,{ nodes, edges }, options);
 
 //On click event
 network.on('click',function(event){
 	//if a node was selected
-	if(event.nodes.length > 0){
+	if(event.nodes.length > 0 && event.nodes[0] != legend_id ){
 		let selected_node = nodes.get(event.nodes[0]);
 		//If the selected_node is a write-up
 		if(selected_node.group === "Write-up"){
