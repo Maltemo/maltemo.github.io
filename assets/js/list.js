@@ -131,7 +131,14 @@ const write_up_list = [
         ctf : 10006,
         date : new Date(2020,1,13),
         points : 125
-}
+    },{
+        title : "Multiple Challs",
+        challenge_type : "Web",
+        tags : "",
+        ctf : 10007,
+        date : new Date(2020,2,20),
+        points : 0
+    }
 ];
 
 const template_write_up_object = {
@@ -151,4 +158,5 @@ const ctf_list = [
     { id : 10004, name : "x-masCTF" },
     { id : 10005, name : "HackTheBox" },
     { id : 10006, name : "neverlanCTF" },
+    { id : 10007, name : "angstromCTF" },
 ];
