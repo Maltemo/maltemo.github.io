@@ -34,7 +34,7 @@
 </head>
 
 <body>
-    <div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true" style="position: relative;"><h1 id="angstromCTF-2020---Web-Multiple-Challs"><a class="anchor hidden-xs" href="#angstromCTF-2020---Web-Multiple-Challs" title="angstromCTF-2020---Web-Multiple-Challs"><span class="octicon octicon-link"></span></a>angstromCTF 2020 - [Web] Multiple Challs</h1><p>Written by <a href="https://twitter.com/Maltemo" target="_blank" rel="noopener">Maltemo</a>, member of team <a href="https://sinhack.blog/" target="_blank" rel="noopener">SinHack</a>.</p><p><span class="toc"><ul>
+    <div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true"><h1 id="angstromCTF-2020---Web-Multiple-Challs"><a class="anchor hidden-xs" href="#angstromCTF-2020---Web-Multiple-Challs" title="angstromCTF-2020---Web-Multiple-Challs"><span class="octicon octicon-link"></span></a>angstromCTF 2020 - [Web] Multiple Challs</h1><p>Written by <a href="https://twitter.com/Maltemo" target="_blank" rel="noopener">Maltemo</a>, member of team <a href="https://sinhack.blog/" target="_blank" rel="noopener">SinHack</a>.</p><p><span class="toc"><ul>
 <li><a href="#angstromCTF-2020---Web-Multiple-Challs" title="angstromCTF 2020 - [Web] Multiple Challs">angstromCTF 2020 - [Web] Multiple Challs</a><ul>
 <li><a href="#The-Magic-Word-20pts" title="The Magic Word (20pts)">The Magic Word (20pts)</a><ul>
 <li><a href="#Description" title="Description">Description</a></li>
@@ -63,9 +63,6 @@
 <li><a href="#Analysis3" title="Analysis">Analysis</a></li>
 <li><a href="#TLDR3" title="TL;DR">TL;DR</a></li>
 <li><a href="#Flag3" title="Flag">Flag</a></li>
-<li><a href="#Analysis4" title="Analysis">Analysis</a></li>
-<li><a href="#TLDR4" title="TL;DR">TL;DR</a></li>
-<li><a href="#Flag4" title="Flag">Flag</a></li>
 </ul>
 </li>
 </ul>
@@ -347,7 +344,7 @@ limiter = Limiter(
 </ul><p><img src="https://i.imgur.com/IpLpDWa.png" alt=""></p><div class="alert alert-success">
 <p>And here we get the flag :</p>
 <p><img src="https://i.imgur.com/AMVL8ra.png" alt=""></p>
-</div><h3 id="TLDR3"><a class="anchor hidden-xs" href="#TLDR3" title="TLDR3"><span class="octicon octicon-link"></span></a>TL;DR</h3><p>The challenge consisted in a sql injection through the UserAgent header of the HTTP request.</p><h3 id="Flag3"><a class="anchor hidden-xs" href="#Flag3" title="Flag3"><span class="octicon octicon-link"></span></a>Flag</h3><p>The flag is <strong>actf{nyoom_1_4m_sp33d}</strong></p><h4 id="Description4"><a class="anchor hidden-xs" href="#Description4" title="Description4"><span class="octicon octicon-link"></span></a>Description</h4><p><a href="https://challenges.neverlanctf.com:1150" target="_blank" rel="noopener">https://challenges.neverlanctf.com:1150</a></p><h3 id="Analysis4"><a class="anchor hidden-xs" href="#Analysis4" title="Analysis4"><span class="octicon octicon-link"></span></a>Analysis</h3><h3 id="TLDR4"><a class="anchor hidden-xs" href="#TLDR4" title="TLDR4"><span class="octicon octicon-link"></span></a>TL;DR</h3><p>The website was loading a new svg picture every minutes, that could contain the flag in binary within the svg xml <code>&lt;rectangles&gt;</code> tags. The aim was to automate this process with a program.</p><h3 id="Flag4"><a class="anchor hidden-xs" href="#Flag4" title="Flag4"><span class="octicon octicon-link"></span></a>Flag</h3><p>The flag is <strong>flag{its_all_ab0ut_timing}</strong></p><hr><p><a href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"></a><br>This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.</p></div>
+</div><h3 id="TLDR3"><a class="anchor hidden-xs" href="#TLDR3" title="TLDR3"><span class="octicon octicon-link"></span></a>TL;DR</h3><p>The challenge consisted in a sql injection through the UserAgent header of the HTTP request.</p><h3 id="Flag3"><a class="anchor hidden-xs" href="#Flag3" title="Flag3"><span class="octicon octicon-link"></span></a>Flag</h3><p>The flag is <strong>actf{nyoom_1_4m_sp33d}</strong>.</p><hr><p><a href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"></a><br>This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.</p></div>
     <div class="ui-toc dropup unselectable hidden-print" style="display:none;">
         <div class="pull-right dropdown">
             <a id="tocLabel" class="ui-toc-label btn btn-default" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" title="Table of content">
@@ -383,9 +380,6 @@ limiter = Limiter(
 <li><a href="#Analysis3" title="Analysis">Analysis</a></li>
 <li><a href="#TLDR3" title="TL;DR">TL;DR</a></li>
 <li><a href="#Flag3" title="Flag">Flag</a></li>
-<li><a href="#Analysis4" title="Analysis">Analysis</a></li>
-<li><a href="#TLDR4" title="TL;DR">TL;DR</a></li>
-<li><a href="#Flag4" title="Flag">Flag</a></li>
 </ul>
 </li>
 </ul>
@@ -425,9 +419,6 @@ limiter = Limiter(
 <li><a href="#Analysis3" title="Analysis">Analysis</a></li>
 <li><a href="#TLDR3" title="TL;DR">TL;DR</a></li>
 <li><a href="#Flag3" title="Flag">Flag</a></li>
-<li><a href="#Analysis4" title="Analysis">Analysis</a></li>
-<li><a href="#TLDR4" title="TL;DR">TL;DR</a></li>
-<li><a href="#Flag4" title="Flag">Flag</a></li>
 </ul>
 </li>
 </ul>
