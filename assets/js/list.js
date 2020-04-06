@@ -138,6 +138,20 @@ const write_up_list = [
         ctf : 10007,
         date : new Date(2020,2,20),
         points : 0
+    },{
+        title : "Oxyr",
+        challenge_type : "OSINT",
+        tags : "",
+        ctf : 10008,
+        date : new Date(2020,3,6),
+        points : 1000
+    },{
+        title : "OSINT You All Other The Place",
+        challenge_type : "OSINT",
+        tags : "",
+        ctf : 10008,
+        date : new Date(2020,3,6),
+        points : 1000
     }
 ];
 
@@ -159,4 +173,5 @@ const ctf_list = [
     { id : 10005, name : "HackTheBox" },
     { id : 10006, name : "neverlanCTF" },
     { id : 10007, name : "angstromCTF" },
+    { id : 10008, name : "AUCTF" },
 ];
