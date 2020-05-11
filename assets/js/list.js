@@ -152,6 +152,27 @@ const write_up_list = [
         ctf : 10008,
         date : new Date(2020,3,6),
         points : 1000
+    },{
+        title : "Romance Dawn",
+        challenge_type : "Forensic",
+        tags : "",
+        ctf : 10009,
+        date : new Date(2020,4,11),
+        points : 100
+    },{
+        title : "Pain In The Ass",
+        challenge_type : "Forensic",
+        tags : "",
+        ctf : 10009,
+        date : new Date(2020,4,11),
+        points : 200
+    },{
+        title : "Containment Forever",
+        challenge_type : "Web",
+        tags : "",
+        ctf : 10009,
+        date : new Date(2020,4,11),
+        points : 300
     }
 ];
 
@@ -159,7 +180,7 @@ const template_write_up_object = {
         title : "",
         challenge_type : "",
         tags : "",
-        ctf : "",
+        ctf : 10000,
         date : "",
         points : 0
 };
@@ -174,4 +195,5 @@ const ctf_list = [
     { id : 10006, name : "neverlanCTF" },
     { id : 10007, name : "angstromCTF" },
     { id : 10008, name : "AUCTF" },
+    { id : 10009, name : "SharkyCTF" },
 ];
