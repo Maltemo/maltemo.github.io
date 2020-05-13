@@ -2,7 +2,7 @@ const write_up_list = [
     {
         title : "Simple Basique",
         challenge_type : "Crypto",
-        tags : "",
+        tags : ["URLencoded"],
         ctf : 10000,
         date : new Date(2019,09,14),
         points : 50
@@ -10,7 +10,7 @@ const write_up_list = [
     {
         title : "Hey DJ",
         challenge_type : "OSINT",
-        tags : "",
+        tags : ["Metadata", "Automatic-response"],
         ctf : 10000,
         date : new Date(2019,09,14),
         points : 175
@@ -18,7 +18,7 @@ const write_up_list = [
     {
         title : "Emoji 🥳",
         challenge_type : "Prog",
-        tags : "",
+        tags : ["Scripting","WebScrapping"],
         ctf : 10000,
         date : new Date(2019,09,14),
         points : 50
@@ -26,7 +26,7 @@ const write_up_list = [
     {
         title : "Special Cookie Recipe",
         challenge_type : "Stegano",
-        tags : "",
+        tags : ["Binary","Scripting","UpperCase"],
         ctf : 10000,
         date : new Date(2019,09,14),
         points : 50
@@ -34,7 +34,7 @@ const write_up_list = [
     {
         title : "TMNT",
         challenge_type : "Web",
-        tags : "",
+        tags : ["XSS","ReflectedXSS","MutatedXSS"],
         ctf : 10000,
         date : new Date(2019,09,14),
         points : 300
@@ -42,7 +42,7 @@ const write_up_list = [
     {
         title : "Broken Keyboard",
         challenge_type : "Crypto",
-        tags : "",
+        tags : ["ASCII"],
         ctf : 10001,
         date : new Date(2019,06,28),
         points : 50
@@ -50,7 +50,7 @@ const write_up_list = [
     {
         title : "Crack The Key",
         challenge_type : "Crypto",
-        tags : "",
+        tags : ["Vigenere"],
         ctf : 10001,
         date : new Date(2019,06,28),
         points : 450
@@ -58,7 +58,7 @@ const write_up_list = [
     {
         title : "Song of My People",
         challenge_type : "Forensic",
-        tags : "",
+        tags : ["MorseCode","PNGfixing","pngcheck","bless"],
         ctf : 10001,
         date : new Date(2019,06,28),
         points : 800
@@ -66,7 +66,7 @@ const write_up_list = [
     {
         title : "We are E.xtr",
         challenge_type : "Forensic",
-        tags : "",
+        tags : ["PNGfixing","MagicNumber","bless"],
         ctf : 10001,
         date : new Date(2019,06,28),
         points : 350
@@ -74,7 +74,7 @@ const write_up_list = [
     {
         title : "Guillotine",
         challenge_type : "Forensic",
-        tags : "",
+        tags : ["PNGfixing","pngcheck","bless"],
         ctf : 10001,
         date : new Date(2019,08,10),
         points : 1200
@@ -82,7 +82,7 @@ const write_up_list = [
     {
         title : "c0rrupted",
         challenge_type : "Forensic",
-        tags : "",
+        tags : ["PNGfixing","pngcheck","bless"],
         ctf : 10002,
         date : new Date(2019,06,28),
         points : 250
@@ -90,7 +90,7 @@ const write_up_list = [
     {
         title : "WhitePages",
         challenge_type : "Forensic",
-        tags : "",
+        tags : ["Binary", "Whitespace"],
         ctf : 10002,
         date : new Date(2019,06,28),
         points : 250
@@ -98,7 +98,7 @@ const write_up_list = [
     {
         title : "WorldGolfChampion",
         challenge_type : "Forensic",
-        tags : "",
+        tags : ["pcap", "john", "keepass", "wireshark"],
         ctf : 10003,
         date : new Date(2019,06,13),
         points : 50
@@ -106,28 +106,28 @@ const write_up_list = [
     {
 	title : "Dox the grinch",
 	challenge_type : "OSINT",
-	tags : "",
+	tags : ["GoogleDork","SocialNetworks"],
 	ctf : 10004,
 	date : new Date(2019,11,20),
 	points : 250
     },{
         title : "Traverxec",
         challenge_type : "Pentest",
-        tags : "",
+        tags : ["French","Pentest","Report","metasploit","PrivilegeEscalation"],
         ctf : 10005,
         date : new Date(2019,11,24),
         points : 0
     },{
         title : "BitsnBytes",
         challenge_type : "Prog",
-        tags : "",
+        tags : ["Scripting","SVG"],
         ctf : 10006,
         date : new Date(2020,1,13),
         points : 200
     },{
         title : "Listen to this",
         challenge_type : "Forensic",
-        tags : "",
+        tags : ["audacity","MorseCode","SoundIsolation"],
         ctf : 10006,
         date : new Date(2020,1,13),
         points : 125
@@ -141,35 +141,35 @@ const write_up_list = [
     },{
         title : "Oxyr",
         challenge_type : "OSINT",
-        tags : "",
+        tags : ["Metadata","Sources","QRcode"],
         ctf : 10008,
         date : new Date(2020,3,6),
         points : 1000
     },{
         title : "OSINT You All Other The Place",
         challenge_type : "OSINT",
-        tags : "",
+        tags : ["whois","SocialNetworks"],
         ctf : 10008,
         date : new Date(2020,3,6),
         points : 1000
     },{
         title : "Romance Dawn",
         challenge_type : "Forensic",
-        tags : "",
+        tags : ["PNGfixing","pngcheck","bless"],
         ctf : 10009,
         date : new Date(2020,4,11),
         points : 100
     },{
         title : "Pain In The Ass",
         challenge_type : "Forensic",
-        tags : "",
+        tags : ["pcap","wireshark","Scripting","ErrorBasedSQLI"],
         ctf : 10009,
         date : new Date(2020,4,11),
         points : 200
     },{
         title : "Containment Forever",
         challenge_type : "Web",
-        tags : "",
+        tags : ["MongoDB","ObjectId"],
         ctf : 10009,
         date : new Date(2020,4,11),
         points : 300
