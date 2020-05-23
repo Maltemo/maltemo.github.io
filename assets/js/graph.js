@@ -1,7 +1,6 @@
 //Data preparation
 const container = document.getElementById("graph");
 const maltemo_id = 0;
-const sinhack_id = 100;
 const write_up_id = 99;
 
 const nodes = new vis.DataSet([
@@ -13,13 +12,6 @@ const nodes = new vis.DataSet([
 		image : 'assets/images/avatar.jpg',
 		value : 5
 	},{
-		id : sinhack_id,
-		label : "SinHack",
-		group : "Team",
-		shape : 'circularImage',
-		image : 'assets/images/sinhack.jpg',
-		value : 4
-	},{
 		id : write_up_id,
 		label : "Write-ups",
 		group : "Category",
@@ -28,11 +20,6 @@ const nodes = new vis.DataSet([
 ]);
 const edges = new vis.DataSet([
 	{
-		from : maltemo_id,
-		to : sinhack_id,
-		label : "member of",
-		arrows : { to : true }
-	},{
 		from : maltemo_id,
 		to : write_up_id,
 		label : "redacted",
@@ -105,14 +92,26 @@ nodes.add(write_up_nodes);
 edges.add(write_up_edges);
 
 // Legend
-const legend_id = 1000000;
-const x = - container.clientWidth / 2 + 50;
-const y = - container.clientHeight / 2 + 50;
+const info_legend_id = 1000000;
 nodes.add({
-	id: legend_id,
-	x: x, y: y,
-	label: 'Click on those nodes\n to open write-ups',
-	group: 'Write-up',
+	id: info_legend_id,
+	x: - container.clientWidth / 2 + 50,
+	y: - container.clientHeight / 2 + 50,
+	label: "Click on those nodes\n to open write-ups",
+	group: "Write-up",
+	value: 1,
+	fixed: true,
+	physics:false
+});
+
+//Tags legend
+const tag_legend_id = 1000001
+nodes.add({
+	id: tag_legend_id,
+	x: - container.clientWidth / 2 + 50,
+	y: - container.clientHeight / 2 + 150,
+	label: "Click on me to show tags",
+	group: "Action",
 	value: 1,
 	fixed: true,
 	physics:false
@@ -126,7 +125,7 @@ network.on('click',function(event){
 	//if a node was selected
 	if(event.nodes.length > 0 && event.nodes[0] != legend_id ){
 		let selected_node = nodes.get(event.nodes[0]);
-		//If the selected_node is a write-up
+
 		if(selected_node.group === "Write-up"){
 			//simplification of the title
 			let wu_title = selected_node.label.split(" ").join("_").replace(/[^\w\s]/gi,'');
@@ -134,5 +133,15 @@ network.on('click',function(event){
 			//redirect to the correct resource
 			window.open(url);
 		}
+		if(selected_node.group === "Action"){
+			//Add nodes and edges
+		}
 	}
 });
+
+//Useful for a future menu
+const tag_list = write_up_list.flatMap(wu => wu.tags);
+const tag_occurence = tag_list.reduce((acc,curr)=>{
+	acc[curr] ? acc[curr]++ : acc[curr] = 1;
+	return acc;
+},{});
