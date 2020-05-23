@@ -123,7 +123,7 @@ const network = new vis.Network(container,{ nodes, edges }, options);
 //On click event
 network.on('click',function(event){
 	//if a node was selected
-	if(event.nodes.length > 0 && event.nodes[0] != legend_id ){
+	if(event.nodes.length > 0 && event.nodes[0] != info_legend_id ){
 		let selected_node = nodes.get(event.nodes[0]);
 
 		if(selected_node.group === "Write-up"){

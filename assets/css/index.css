@@ -7,10 +7,10 @@
 /* Licence is available at https://maltemo.github.io/assets/fonts/UBUNTU_FONT_LICENCE.txt */
 @font-face{
 	font-family : ubuntuMono;
-    src: url('../fonts/ubuntuMono-R.ttf') format('truetype'),
-    url('../fonts/ubuntuMono-RI.ttf') format('truetype'),
-    url('../fonts/ubuntuMono-B.ttf') format('truetype'),
-    url('../fonts/ubuntuMono-BI.ttf') format('truetype')
+    src: url('../fonts/ubuntuMono-R.ttf?raw=true') format('truetype'),
+    url('../fonts/ubuntuMono-RI.ttf?raw=true') format('truetype'),
+    url('../fonts/ubuntuMono-B.ttf?raw=true') format('truetype'),
+    url('../fonts/ubuntuMono-BI.ttf?raw=true') format('truetype')
 }
 
 html,body{
