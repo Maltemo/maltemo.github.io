@@ -27,22 +27,24 @@
 
 	<body>
 		<main>
-			<div id="navigation">
-				<a class="navigation_tab" href="index.html">Home page</a>
-				-
-				<a class="navigation_tab" href="write_ups.html">Write-ups</a>
-				-
-				<a class="navigation_tab" href="contact.html">Contact</a>
-			</div>
-			<div id="graph">
+			<div id="navigation"></div>
 
+			<div>
+				<p> Bye bye old complicated menu, hello simple one.</p>
+				<label for="sort_options">Sort write-ups by :</label>
+				<select id="sort_options">
+					<option value="0" selected>challenge category</option>
+					<option value="1">date (desc)</option>
+					<option value="2">date (asc)</option>
+				</select>
 			</div>
-			<footer>
-				© 2020 - Made by Maltemo
-			</footer>
+			<ul id="write_ups"></ul>
+
+			<footer></footer>
 		</main>
 	</body>
+	<script src="assets/js/utils.js"></script>
+	<script src="assets/js/template.js"></script>
 	<script src="assets/js/list.js"></script>
-	<script src="assets/js/vis-network.min.js"></script>
-	<script src="assets/js/graph.js"></script>
+	<script src="assets/js/write-up.js"></script>
 </html>

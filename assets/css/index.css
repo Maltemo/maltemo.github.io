@@ -7,10 +7,8 @@
 /* Licence is available at https://maltemo.github.io/assets/fonts/UBUNTU_FONT_LICENCE.txt */
 @font-face{
 	font-family : ubuntuMono;
-    src: url('../fonts/ubuntuMono-R.ttf?raw=true') format('truetype'),
-    url('../fonts/ubuntuMono-RI.ttf?raw=true') format('truetype'),
-    url('../fonts/ubuntuMono-B.ttf?raw=true') format('truetype'),
-    url('../fonts/ubuntuMono-BI.ttf?raw=true') format('truetype')
+    src: url('../fonts/ubuntuMono-R.ttf') format('truetype'),
+        url('../fonts/ubuntuMono-R.woff') format('woff');
 }
 
 html,body{
@@ -30,7 +28,7 @@ h1{
     font-family: fontMrRobot;
     color : red;
     font-weight:normal;
-    font-size: 8em;
+    font-size: 500%;
     margin: 0.3em 0px 0px 0px;
 }
 
@@ -58,6 +56,11 @@ td,th{
     padding : 0.4em;
 }
 
+a.wu_link{
+    text-decoration: none;
+    color: white;
+}
+
 #avatar{
     border-radius: 15em;
     width : 15em;
@@ -67,15 +70,17 @@ td,th{
     margin : 1em 0px;
 }
 
-#sinhack_link{
-    color : white;
+#write_ups{
+    text-align: left;
+    font-size: 1.4em;
 }
 
 .navigation_tab{
     font-family: fontMrRobot;
     text-decoration: none;
     color: white;
-    font-size: 2em;
+    font-size: 180%;
+    margin: 0px 0.5em;
 }
 
 .picture_link{
@@ -90,8 +95,17 @@ td,th{
     color: white;
 }
 
-#graph {
-	height : 80vh;
-	width : 99%;
-	border : solid white 1px;
+.tag {
+    background-color: transparent;
+    color : white;
+    border : 1px solid #343a40;
+    padding : 0.375rem 0.75rem;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;
+    margin: 0px 2px;
+}
+
+.tag:hover{
+    color: black;
+    background-color: white;
 }
