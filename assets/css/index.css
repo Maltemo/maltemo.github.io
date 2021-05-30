@@ -7,13 +7,13 @@
 /* Licence is available at https://maltemo.github.io/assets/fonts/UBUNTU_FONT_LICENCE.txt */
 @font-face{
 	font-family : ubuntuMono;
-    src: url('../fonts/ubuntuMono-R.ttf') format('truetype'),
-        url('../fonts/ubuntuMono-R.woff') format('woff');
+    src: url('../fonts/UbuntuMono-R.ttf') format('truetype'),
+        url('../fonts/UbuntuMono-R.woff') format('woff');
 }
 
 html,body{
     font-family: ubuntuMono,"monospace";
-    background-color: black;
+    background-color: #0d1117;
     margin: 0px;
     padding: 0px;
     color : white;
@@ -43,13 +43,10 @@ table{
 
 table tr td{
     border : 1px solid white;
-
 }
 
 tr:hover td {
-  background: #101011;
-  color:#FFFFFF;
-  border-top: 1px solid #22262e;
+  background: #161b22;
 }
 
 td,th{
@@ -70,9 +67,11 @@ a.wu_link{
     margin : 1em 0px;
 }
 
-#write_ups{
-    text-align: left;
-    font-size: 1.4em;
+#tab_write_ups{
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    margin-top: 1em;
 }
 
 .navigation_tab{
@@ -89,23 +88,4 @@ a.wu_link{
 }
 .picture_link img{
     width : 6em;
-}
-
-.write_up_link{
-    color: white;
-}
-
-.tag {
-    background-color: transparent;
-    color : white;
-    border : 1px solid #343a40;
-    padding : 0.375rem 0.75rem;
-    border-radius: 0.25rem;
-    transition: color 0.15s ease-in-out,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;
-    margin: 0px 2px;
-}
-
-.tag:hover{
-    color: black;
-    background-color: white;
 }

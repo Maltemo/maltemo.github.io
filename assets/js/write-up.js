@@ -1,6 +1,6 @@
 /* Global variables */
-var ul_tag = document.getElementById("write_ups")
-var select_tag = document.getElementById("sort_options")
+var table_tbody_tag = document.getElementById("tab_body_write_ups");
+var select_tag = document.getElementById("sort_options");
 
 /* Sort functions */
 let sort_alphabeticaly_challenge_type = (w1, w2) => {
@@ -19,26 +19,33 @@ list_sort_func = [
 ]
 
 /* Display functions */
-let display_write_ups = (sort_function) => {
+let display_write_ups_tab = (sort_function) => {
     write_up_list
     .sort(sort_function)
     .forEach((write_up) => {
-        let li_tag = document.createElement("li");
-        let a_tag = create_link(
-            `[${write_up.challenge_type}] ${write_up.title} (${write_up.date.getFullYear()}/${write_up.date.getMonth()}/${write_up.date.getDate()})`,
-            `write-ups/${write_up.ctf}_${write_up.date.getFullYear()}_${write_up.challenge_type}_${write_up.title.split(" ").join("_").replace(/[^\w\s]/gi,'')}.html`,
-            "wu_link"
-        )
-        li_tag.appendChild(a_tag)
-        ul_tag.appendChild(li_tag)
+        let tr_tag = document.createElement("tr");
+        let td_category_tag = create_text_td(write_up.challenge_type);
+        let td_title_tag = create_content_td(
+            create_link(
+                `${write_up.title}`,
+                `write-ups/${write_up.ctf}_${write_up.date.getFullYear()}_${write_up.challenge_type}_${write_up.title.split(" ").join("_").replace(/[^\w\s]/gi,'')}.html`,
+                "wu_link"
+            )
+        );
+        let td_release_date_tag = create_text_td(`${write_up.date.getFullYear()}/${write_up.date.getMonth()}/${write_up.date.getDate()}`);
+
+        tr_tag.appendChild(td_category_tag);
+        tr_tag.appendChild(td_title_tag);
+        tr_tag.appendChild(td_release_date_tag);
+        table_tbody_tag.appendChild(tr_tag);
     });
 }
 
 /* Listener */
 select_tag.addEventListener("change", function(){
-    ul_tag.innerHTML = ""
-    display_write_ups(list_sort_func[this.value])
+    table_tbody_tag.innerHTML = ""
+    display_write_ups_tab(list_sort_func[this.value])
 })
 
 /* Main */
-display_write_ups(sort_alphabeticaly_challenge_type)
+display_write_ups_tab(sort_alphabeticaly_challenge_type)
