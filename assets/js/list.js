@@ -176,6 +176,14 @@ const write_up_list = [
     }
 ];
 
+const blog_posts_list = [
+    {
+        title : "Optimisation de mon utilisation du clavier",
+        date : new Date(2021, 10, 3),
+        url : "opti_clavier.html"
+    }
+]
+
 const template_write_up_object = {
         title : "",
         challenge_type : "",

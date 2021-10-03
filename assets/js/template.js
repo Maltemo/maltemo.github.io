@@ -9,6 +9,10 @@ let tabs = [
         url: "write_ups.html"
     },
     {
+        name: "Blog posts",
+        url: "blog_posts.html"
+    },
+    {
         name: "Contact",
         url: "contact.html"
     },

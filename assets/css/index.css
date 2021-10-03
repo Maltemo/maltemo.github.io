@@ -68,8 +68,11 @@ a.wu_link{
 }
 
 #tab_write_ups{
-    margin-left: auto;
-    margin-right: auto;
+    width: 60%;
+    margin-top: 1em;
+}
+
+#tab_blog_posts{
     width: 60%;
     margin-top: 1em;
 }
@@ -80,6 +83,11 @@ a.wu_link{
     color: white;
     font-size: 180%;
     margin: 0px 0.5em;
+}
+
+.center_table{
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .picture_link{

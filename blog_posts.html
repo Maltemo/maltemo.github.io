@@ -29,24 +29,22 @@
 		<main>
 			<div id="navigation"></div>
 
-			<div
+			<div>
 				<label for="sort_options">Sort write-ups by :</label>
 				<select id="sort_options">
-					<option value="0" selected>challenge category</option>
-					<option value="1">date (desc)</option>
-					<option value="2">date (asc)</option>
+					<option value="0" selected>date (desc)</option>
+					<option value="1">date (asc)</option>
 				</select>
 			</div>
-			<table id="tab_write_ups" class="center_table">
+			<table id="tab_blog_posts" class="center_table">
 				<caption>Write Up List</caption>
 				<thead>
 					<tr>
-						<th>Category</th>
 						<th>Title</th>
 						<th>Release Date</tr>
 					</tr>
 				</thead>
-				<tbody id="tab_body_write_ups"></tbody>
+				<tbody id="tab_body_blog_posts"></tbody>
 			</table>
 
 			<footer></footer>
@@ -55,5 +53,5 @@
 	<script src="assets/js/utils.js"></script>
 	<script src="assets/js/template.js"></script>
 	<script src="assets/js/list.js"></script>
-	<script src="assets/js/write-up.js"></script>
+	<script src="assets/js/blog-posts.js"></script>
 </html>
