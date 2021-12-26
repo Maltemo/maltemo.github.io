@@ -173,6 +173,13 @@ const write_up_list = [
         ctf : "SharkyCTF",
         date : new Date(2020,4,11),
         points : 300
+    },{
+        title : "Rapport Écrit",
+        challenge_type : "OSINT",
+        tags : [""],
+        ctf : "HexaCTF",
+        date : new Date(2021,11,26),
+        points : 8060
     }
 ];
 

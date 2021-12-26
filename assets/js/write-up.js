@@ -32,7 +32,7 @@ let display_write_ups_tab = (sort_function) => {
                 "wu_link"
             )
         );
-        let td_release_date_tag = create_text_td(`${write_up.date.getFullYear()}/${write_up.date.getMonth()}/${write_up.date.getDate()}`);
+        let td_release_date_tag = create_text_td(`${write_up.date.getFullYear()}/${write_up.date.getMonth()+1}/${write_up.date.getDate()}`);
 
         tr_tag.appendChild(td_category_tag);
         tr_tag.appendChild(td_title_tag);

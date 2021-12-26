@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>
+        Hexa OSINT CTF - Write-up - CadricielMalveillant - HackMD
+    </title>
+    <link rel="icon" type="image/png" href="https://hackmd.io/favicon.png">
+    <link rel="apple-touch-icon" href="https://hackmd.io/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" integrity="sha256-3iu9jgsy9TpTwXKb7bNQzqWekRX7pPK+2OLj3R922fo=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css" integrity="sha256-QiWfLIsCT02Sdwkogf6YMiQlj4NE84MKkzEMkZnMGdg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism.min.css" integrity="sha256-vtR0hSWRc3Tb26iuN2oZHt3KRUomwTufNIf5/4oeCyg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hackmd/emojify.js@2.1.0/dist/css/basic/emojify.min.css" integrity="sha256-UOrvMOsSDSrW6szVLe8ZDZezBxh5IoIfgTwdNDgTjiU=" crossorigin="anonymous" />
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i|Source+Code+Pro:300,400,500|Source+Sans+Pro:300,300i,400,400i,600,600i|Source+Serif+Pro&subset=latin-ext);.hljs{display:block;background:#fff;padding:.5em;color:#333;overflow-x:auto}.hljs-comment,.hljs-meta{color:#969896}.hljs-emphasis,.hljs-quote,.hljs-string,.hljs-strong,.hljs-template-variable,.hljs-variable{color:#df5000}.hljs-keyword,.hljs-selector-tag,.hljs-type{color:#a71d5d}.hljs-attribute,.hljs-bullet,.hljs-literal,.hljs-number,.hljs-symbol{color:#0086b3}.hljs-built_in,.hljs-builtin-name{color:#005cc5}.hljs-name,.hljs-section{color:#63a35c}.hljs-tag{color:#333}.hljs-attr,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id,.hljs-selector-pseudo,.hljs-title{color:#795da3}.hljs-addition{color:#55a532;background-color:#eaffea}.hljs-deletion{color:#bd2c00;background-color:#ffecec}.hljs-link{text-decoration:underline}.markdown-body{font-size:16px;line-height:1.5;word-wrap:break-word}.markdown-body:after,.markdown-body:before{display:table;content:""}.markdown-body:after{clear:both}.markdown-body>:first-child{margin-top:0!important}.markdown-body>:last-child{margin-bottom:0!important}.markdown-body a:not([href]){color:inherit;text-decoration:none}.markdown-body .absent{color:#c00}.markdown-body .anchor{float:left;padding-right:4px;margin-left:-20px;line-height:1}.markdown-body .anchor:focus{outline:none}.markdown-body blockquote,.markdown-body dl,.markdown-body ol,.markdown-body p,.markdown-body pre,.markdown-body table,.markdown-body ul{margin-top:0;margin-bottom:16px}.markdown-body hr{height:.25em;padding:0;margin:24px 0;background-color:#e7e7e7;border:0}.markdown-body blockquote{font-size:16px;padding:0 1em;color:#777;border-left:.25em solid #ddd}.markdown-body blockquote>:first-child{margin-top:0}.markdown-body blockquote>:last-child{margin-bottom:0}.markdown-body kbd,.popover kbd{display:inline-block;padding:3px 5px;font-size:11px;line-height:10px;color:#555;vertical-align:middle;background-color:#fcfcfc;border:1px solid #ccc;border-bottom-color:#bbb;border-radius:3px;box-shadow:inset 0 -1px 0 #bbb}.markdown-body .loweralpha{list-style-type:lower-alpha}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{margin-top:24px;margin-bottom:16px;font-weight:600;line-height:1.25}.markdown-body h1 .octicon-link,.markdown-body h2 .octicon-link,.markdown-body h3 .octicon-link,.markdown-body h4 .octicon-link,.markdown-body h5 .octicon-link,.markdown-body h6 .octicon-link{color:#000;vertical-align:middle;visibility:hidden}.markdown-body h1:hover .anchor,.markdown-body h2:hover .anchor,.markdown-body h3:hover .anchor,.markdown-body h4:hover .anchor,.markdown-body h5:hover .anchor,.markdown-body h6:hover .anchor{text-decoration:none}.markdown-body h1:hover .anchor .octicon-link,.markdown-body h2:hover .anchor .octicon-link,.markdown-body h3:hover .anchor .octicon-link,.markdown-body h4:hover .anchor .octicon-link,.markdown-body h5:hover .anchor .octicon-link,.markdown-body h6:hover .anchor .octicon-link{visibility:visible}.markdown-body h1 code,.markdown-body h1 tt,.markdown-body h2 code,.markdown-body h2 tt,.markdown-body h3 code,.markdown-body h3 tt,.markdown-body h4 code,.markdown-body h4 tt,.markdown-body h5 code,.markdown-body h5 tt,.markdown-body h6 code,.markdown-body h6 tt{font-size:inherit}.markdown-body h1{font-size:2em}.markdown-body h1,.markdown-body h2{padding-bottom:.3em;border-bottom:1px solid #eee}.markdown-body h2{font-size:1.5em}.markdown-body h3{font-size:1.25em}.markdown-body h4{font-size:1em}.markdown-body h5{font-size:.875em}.markdown-body h6{font-size:.85em;color:#777}.markdown-body ol,.markdown-body ul{padding-left:2em}.markdown-body ol.no-list,.markdown-body ul.no-list{padding:0;list-style-type:none}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:0;margin-bottom:0}.markdown-body li>p{margin-top:16px}.markdown-body li+li{padding-top:.25em}.markdown-body dl{padding:0}.markdown-body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}.markdown-body dl dd{padding:0 16px;margin-bottom:16px}.markdown-body table{display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}.markdown-body table th{font-weight:700}.markdown-body table td,.markdown-body table th{padding:6px 13px;border:1px solid #ddd}.markdown-body table tr{background-color:#fff;border-top:1px solid #ccc}.markdown-body table tr:nth-child(2n){background-color:#f8f8f8}.markdown-body img{max-width:100%;box-sizing:content-box;background-color:#fff}.markdown-body img[align=right]{padding-left:20px}.markdown-body img[align=left]{padding-right:20px}.markdown-body .emoji{max-width:none;vertical-align:text-top;background-color:transparent}.markdown-body span.frame{display:block;overflow:hidden}.markdown-body span.frame>span{display:block;float:left;width:auto;padding:7px;margin:13px 0 0;overflow:hidden;border:1px solid #ddd}.markdown-body span.frame span img{display:block;float:left}.markdown-body span.frame span span{display:block;padding:5px 0 0;clear:both;color:#333}.markdown-body span.align-center{display:block;overflow:hidden;clear:both}.markdown-body span.align-center>span{display:block;margin:13px auto 0;overflow:hidden;text-align:center}.markdown-body span.align-center span img{margin:0 auto;text-align:center}.markdown-body span.align-right{display:block;overflow:hidden;clear:both}.markdown-body span.align-right>span{display:block;margin:13px 0 0;overflow:hidden;text-align:right}.markdown-body span.align-right span img{margin:0;text-align:right}.markdown-body span.float-left{display:block;float:left;margin-right:13px;overflow:hidden}.markdown-body span.float-left span{margin:13px 0 0}.markdown-body span.float-right{display:block;float:right;margin-left:13px;overflow:hidden}.markdown-body span.float-right>span{display:block;margin:13px auto 0;overflow:hidden;text-align:right}.markdown-body code,.markdown-body tt{padding:0;padding-top:.2em;padding-bottom:.2em;margin:0;font-size:85%;background-color:rgba(0,0,0,.04);border-radius:3px}.markdown-body code:after,.markdown-body code:before,.markdown-body tt:after,.markdown-body tt:before{letter-spacing:-.2em;content:"\00a0"}.markdown-body code br,.markdown-body tt br{display:none}.markdown-body del code{text-decoration:inherit}.markdown-body pre{word-wrap:normal}.markdown-body pre>code{padding:0;margin:0;font-size:100%;word-break:normal;white-space:pre;background:transparent;border:0}.markdown-body .highlight{margin-bottom:16px}.markdown-body .highlight pre{margin-bottom:0;word-break:normal}.markdown-body .highlight pre,.markdown-body pre{padding:16px;overflow:auto;font-size:85%;line-height:1.45;background-color:#f7f7f7;border-radius:3px}.markdown-body pre code,.markdown-body pre tt{display:inline;max-width:auto;padding:0;margin:0;overflow:visible;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}.markdown-body pre code:after,.markdown-body pre code:before,.markdown-body pre tt:after,.markdown-body pre tt:before{content:normal}.markdown-body .csv-data td,.markdown-body .csv-data th{padding:5px;overflow:hidden;font-size:12px;line-height:1;text-align:left;white-space:nowrap}.markdown-body .csv-data .blob-line-num{padding:10px 8px 9px;text-align:right;background:#fff;border:0}.markdown-body .csv-data tr{border-top:0}.markdown-body .csv-data th{font-weight:700;background:#f8f8f8;border-top:0}.news .alert .markdown-body blockquote{padding:0 0 0 40px;border:0 none}.activity-tab .news .alert .commits,.activity-tab .news .markdown-body blockquote{padding-left:0}.task-list-item{list-style-type:none}.task-list-item label{font-weight:400}.task-list-item.enabled label{cursor:pointer}.task-list-item+.task-list-item{margin-top:3px}.task-list-item-checkbox{float:left;margin:.31em 0 .2em -1.3em!important;vertical-align:middle;cursor:default!important}.markdown-body{padding-top:40px;padding-bottom:40px;max-width:758px;overflow:visible!important;position:relative}.markdown-body .emoji{vertical-align:top}.markdown-body pre{border:inherit!important}.markdown-body code{color:inherit!important}.markdown-body pre code .wrapper{display:-moz-inline-flex;display:-ms-inline-flex;display:-o-inline-flex;display:inline-flex}.markdown-body pre code .gutter{float:left;overflow:hidden;-webkit-user-select:none;user-select:none}.markdown-body pre code .gutter.linenumber{text-align:right;position:relative;display:inline-block;cursor:default;z-index:4;padding:0 8px 0 0;min-width:20px;box-sizing:content-box;color:#afafaf!important;border-right:3px solid #6ce26c!important}.markdown-body pre code .gutter.linenumber>span:before{content:attr(data-linenumber)}.markdown-body pre code .code{float:left;margin:0 0 0 16px}.markdown-body .gist .line-numbers{border-left:none;border-top:none;border-bottom:none}.markdown-body .gist .line-data{border:none}.markdown-body .gist table{border-spacing:0;border-collapse:inherit!important}.markdown-body code[data-gist-id]{background:none;padding:0}.markdown-body code[data-gist-id]:after,.markdown-body code[data-gist-id]:before{content:""}.markdown-body code[data-gist-id] .blob-num{border:unset}.markdown-body code[data-gist-id] table{overflow:unset;margin-bottom:unset}.markdown-body code[data-gist-id] table tr{background:unset}.markdown-body[dir=rtl] pre{direction:ltr}.markdown-body[dir=rtl] code{direction:ltr;unicode-bidi:embed}.markdown-body .alert>p:last-child{margin-bottom:0}.markdown-body pre.abc,.markdown-body pre.flow-chart,.markdown-body pre.graphviz,.markdown-body pre.mermaid,.markdown-body pre.sequence-diagram,.markdown-body pre.vega{text-align:center;background-color:inherit;border-radius:0;white-space:inherit;overflow:visible}.markdown-body pre.abc>code,.markdown-body pre.flow-chart>code,.markdown-body pre.graphviz>code,.markdown-body pre.mermaid>code,.markdown-body pre.sequence-diagram>code,.markdown-body pre.vega>code{text-align:left}.markdown-body pre.abc>svg,.markdown-body pre.flow-chart>svg,.markdown-body pre.graphviz>svg,.markdown-body pre.mermaid>svg,.markdown-body pre.sequence-diagram>svg,.markdown-body pre.vega>svg{max-width:100%;height:100%}.markdown-body pre>code.wrap{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word}.markdown-body .alert>p:last-child,.markdown-body .alert>ul:last-child{margin-bottom:0}.markdown-body summary{display:list-item}.markdown-body summary:focus{outline:none}.markdown-body details summary{cursor:pointer}.markdown-body details:not([open])>:not(summary){display:none}.markdown-body figure{margin:1em 40px}.markdown-body .mark,.markdown-body mark{background-color:#fff1a7}.vimeo,.youtube{cursor:pointer;display:table;text-align:center;background-position:50%;background-repeat:no-repeat;background-size:contain;background-color:#000;overflow:hidden}.vimeo,.youtube{position:relative;width:100%}.youtube{padding-bottom:56.25%}.vimeo img{width:100%;object-fit:contain;z-index:0}.youtube img{object-fit:cover;z-index:0}.vimeo iframe,.youtube iframe,.youtube img{width:100%;height:100%;position:absolute;top:0;left:0}.vimeo iframe,.youtube iframe{vertical-align:middle;z-index:1}.vimeo .icon,.youtube .icon{position:absolute;height:auto;width:auto;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;opacity:.3;transition:opacity .2s;z-index:0}.vimeo:hover .icon,.youtube:hover .icon{opacity:.6;transition:opacity .2s}.slideshare .inner,.speakerdeck .inner{position:relative;width:100%}.slideshare .inner iframe,.speakerdeck .inner iframe{position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%}.figma{display:table;position:relative;width:100%;padding-bottom:56.25%}.figma iframe{position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%;border:1px solid #eee}.MJX_Assistive_MathML{display:none}#MathJax_Message{z-index:1000!important}.ui-infobar{position:relative;z-index:2;max-width:760px;margin:25px auto -25px;color:#777}.toc .invisable-node{list-style-type:none}.ui-toc{position:fixed;bottom:20px;z-index:998}.ui-toc.both-mode{margin-left:8px}.ui-toc.both-mode .ui-toc-label{height:40px;padding:10px 4px;border-top-left-radius:0;border-bottom-left-radius:0}.ui-toc-label{background-color:#e6e6e6;border:none;color:#868686;transition:opacity .2s}.ui-toc .open .ui-toc-label{opacity:1;color:#fff;transition:opacity .2s}.ui-toc-label:focus{opacity:.3;background-color:#ccc;color:#000}.ui-toc-label:hover{opacity:1;background-color:#ccc;transition:opacity .2s}.ui-toc-dropdown{margin-top:20px;margin-bottom:20px;padding-left:10px;padding-right:10px;max-width:45vw;width:25vw;max-height:70vh;overflow:auto;text-align:inherit}.ui-toc-dropdown>.toc{max-height:calc(70vh - 100px);overflow:auto}.ui-toc-dropdown[dir=rtl] .nav{padding-right:0;letter-spacing:.0029em}.ui-toc-dropdown a{overflow:hidden;text-overflow:ellipsis;white-space:pre}.ui-toc-dropdown .nav>li>a{display:block;padding:4px 20px;font-size:13px;font-weight:500;color:#767676}.ui-toc-dropdown .nav>li:first-child:last-child>ul,.ui-toc-dropdown .toc.expand ul{display:block}.ui-toc-dropdown .nav>li>a:focus,.ui-toc-dropdown .nav>li>a:hover{padding-left:19px;color:#000;text-decoration:none;background-color:transparent;border-left:1px solid #000}.ui-toc-dropdown[dir=rtl] .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav>li>a:hover{padding-right:19px;border-left:none;border-right:1px solid #000}.ui-toc-dropdown .nav>.active:focus>a,.ui-toc-dropdown .nav>.active:hover>a,.ui-toc-dropdown .nav>.active>a{padding-left:18px;font-weight:700;color:#000;background-color:transparent;border-left:2px solid #000}.ui-toc-dropdown[dir=rtl] .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav>.active>a{padding-right:18px;border-left:none;border-right:2px solid #000}.ui-toc-dropdown .nav .nav{display:none;padding-bottom:10px}.ui-toc-dropdown .nav>.active>ul{display:block}.ui-toc-dropdown .nav .nav>li>a{padding-top:1px;padding-bottom:1px;padding-left:30px;font-size:12px;font-weight:400}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a{padding-right:30px}.ui-toc-dropdown .nav .nav>li>ul>li>a{padding-top:1px;padding-bottom:1px;padding-left:40px;font-size:12px;font-weight:400}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a{padding-right:40px}.ui-toc-dropdown .nav .nav>li>a:focus,.ui-toc-dropdown .nav .nav>li>a:hover{padding-left:29px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:hover{padding-right:29px}.ui-toc-dropdown .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown .nav .nav>li>ul>li>a:hover{padding-left:39px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:hover{padding-right:39px}.ui-toc-dropdown .nav .nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>a{padding-left:28px;font-weight:500}.ui-toc-dropdown[dir=rtl] .nav .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>a{padding-right:28px}.ui-toc-dropdown .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active>a{padding-left:38px;font-weight:500}.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active>a{padding-right:38px}.markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif}html[lang^=ja] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}html .markdown-body[lang^=ja]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html .markdown-body[lang=zh-tw]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html .markdown-body[lang=zh-cn]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}html[lang^=ja] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ\ Ｐゴシック,sans-serif}html[lang=zh-tw] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html[lang=zh-cn] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}html .ui-toc-dropdown[lang^=ja]{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ\ Ｐゴシック,sans-serif}html .ui-toc-dropdown[lang=zh-tw]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html .ui-toc-dropdown[lang=zh-cn]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}.ui-affix-toc{position:fixed;top:0;max-width:15vw;max-height:70vh;overflow:auto}.back-to-top,.expand-toggle,.go-to-bottom{display:block;padding:4px 10px;margin-top:10px;margin-left:10px;font-size:12px;font-weight:500;color:#999}.back-to-top:focus,.back-to-top:hover,.expand-toggle:focus,.expand-toggle:hover,.go-to-bottom:focus,.go-to-bottom:hover{color:#563d7c;text-decoration:none}.back-to-top,.go-to-bottom{margin-top:0}.ui-user-icon{width:20px;height:20px;display:block;border-radius:50%;margin-top:2px;margin-bottom:2px;margin-right:5px;background-position:50%;background-repeat:no-repeat;background-size:cover}.ui-user-icon.small{width:18px;height:18px;display:inline-block;vertical-align:middle;margin:0 0 .2em}.ui-infobar>small>span{line-height:22px}.ui-infobar>small .dropdown{display:inline-block}.ui-infobar>small .dropdown a:focus,.ui-infobar>small .dropdown a:hover{text-decoration:none}.ui-more-info{color:#888;cursor:pointer;vertical-align:middle}.ui-more-info .fa{font-size:16px}.ui-connectedGithub,.ui-published-note{color:#888}.ui-connectedGithub{line-height:23px;white-space:nowrap}.ui-connectedGithub a.file-path{color:#888;text-decoration:none;padding-left:22px}.ui-connectedGithub a.file-path:active,.ui-connectedGithub a.file-path:hover{color:#888;text-decoration:underline}.ui-connectedGithub .fa{font-size:20px}.ui-published-note .fa{font-size:20px;vertical-align:top}.unselectable{-webkit-user-select:none;-o-user-select:none;user-select:none}.selectable{-webkit-user-select:text;-o-user-select:text;user-select:text}@media print{blockquote,div,img,pre,table{page-break-inside:avoid!important}a[href]:after{font-size:12px!important}}.markdown-body.slides{position:relative;z-index:1;color:#222}.markdown-body.slides:before{content:"";display:block;position:absolute;top:0;left:0;right:0;bottom:0;z-index:-1;background-color:currentColor;box-shadow:0 0 0 50vw}.markdown-body.slides section[data-markdown]{position:relative;margin-bottom:1.5em;background-color:#fff;text-align:center}.markdown-body.slides section[data-markdown] code{text-align:left}.markdown-body.slides section[data-markdown]:before{content:"";display:block;padding-bottom:56.23%}.markdown-body.slides section[data-markdown]>div:first-child{position:absolute;top:50%;left:1em;right:1em;transform:translateY(-50%);max-height:100%;overflow:hidden}.markdown-body.slides section[data-markdown]>ul{display:inline-block}.markdown-body.slides>section>section+section:after{content:"";position:absolute;top:-1.5em;right:1em;height:1.5em;border:3px solid #777}.site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,sans-serif}html[lang^=ja] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}body{font-smoothing:subpixel-antialiased!important;-webkit-font-smoothing:subpixel-antialiased!important;-moz-osx-font-smoothing:auto!important;text-shadow:0 0 1em transparent,1px 1px 1.2px rgba(0,0,0,.004);-webkit-overflow-scrolling:touch;letter-spacing:.025em;font-family:Source Sans Pro,Helvetica,Arial,sans-serif}html[lang^=ja] body{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}abbr[data-original-title],abbr[title]{cursor:help}body.modal-open{overflow-y:auto;padding-right:0!important}
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g=" crossorigin="anonymous"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js" integrity="sha256-g6iAfvZp+nDQ2TdTR/VVKJf3bGro4ub5fvWSWVRi2NE=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js" integrity="sha256-8E4Is26QH0bD52WoQpcB+R/tcWQtpzlCojrybUd7Mxo=" crossorigin="anonymous"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true"><h1 id="Hexa-OSINT-CTF---Write-up---CadricielMalveillant" data-id="Hexa-OSINT-CTF---Write-up---CadricielMalveillant"><a class="anchor hidden-xs" href="#Hexa-OSINT-CTF---Write-up---CadricielMalveillant" title="Hexa-OSINT-CTF---Write-up---CadricielMalveillant"><span class="octicon octicon-link"></span></a><span>Hexa OSINT CTF - Write-up - CadricielMalveillant</span></h1><p><img src="https://i.imgur.com/g7beMQz.png" alt="Logo de l'Hexa CTF" loading="lazy"></p><p><span>Rédigé par Neticien et Maltemo</span></p><p><span class="toc"><ul>
+<li><a href="#Hexa-OSINT-CTF---Write-up---CadricielMalveillant" title="Hexa OSINT CTF - Write-up - CadricielMalveillant">Hexa OSINT CTF - Write-up - CadricielMalveillant</a><ul>
+<li><a href="#Introduction" title="Introduction">Introduction</a><ul>
+<li><a href="#Welcome-10-pts" title="Welcome 10 pts">Welcome 10 pts</a></li>
+<li><a href="#Money-money-money-100-pts" title="Money money money 100 pts">Money money money 100 pts</a></li>
+<li><a href="#Post-100-pts" title="Post 100 pts">Post 100 pts</a></li>
+<li><a href="#Resources-100-pts" title="Resources 100 pts">Resources 100 pts</a></li>
+</ul>
+</li>
+<li><a href="#The-Blogger" title="The Blogger">The Blogger</a><ul>
+<li><a href="#Hello-world-200-pts" title="Hello world 200 pts">Hello world 200 pts</a></li>
+<li><a href="#Leviosaaa-300-pts" title="Leviosaaa 300 pts">Leviosaaa 300 pts</a></li>
+<li><a href="#Biggest-fan-200-pts" title="Biggest fan 200 pts">Biggest fan 200 pts</a></li>
+<li><a href="#Rename-300-pts" title="Rename 300 pts">Rename 300 pts</a></li>
+<li><a href="#Rolling-in-the-deep-200-pts" title="Rolling in the deep 200 pts">Rolling in the deep 200 pts</a></li>
+<li><a href="#Where-are-you-200-pts" title="Where are you? 200 pts">Where are you? 200 pts</a></li>
+<li><a href="#Men-in-black-300-pts" title="Men in black 300 pts">Men in black 300 pts</a></li>
+<li><a href="#Counter-Strike-300-pts" title="Counter Strike 300 pts">Counter Strike 300 pts</a></li>
+</ul>
+</li>
+<li><a href="#The-Accountant" title="The Accountant">The Accountant</a><ul>
+<li><a href="#Ship-it-200-pts" title="Ship it 200 pts">Ship it 200 pts</a></li>
+<li><a href="#Pollution-300-pts" title="Pollution 300 pts">Pollution 300 pts</a></li>
+<li><a href="#Keep-an-eye-on-300-pts" title="Keep an eye on 300 pts">Keep an eye on 300 pts</a></li>
+<li><a href="#Next-Business-200-pts" title="Next Business 200 pts">Next Business 200 pts</a></li>
+<li><a href="#The-car-200-pts" title="The car 200 pts">The car 200 pts</a></li>
+<li><a href="#Higher-400-pts" title="Higher 400 pts">Higher 400 pts</a></li>
+<li><a href="#The-artist-300-pts" title="The artist 300 pts">The artist 300 pts</a></li>
+<li><a href="#Catch’em-all-300-pts" title="Catch’em all 300 pts">Catch’em all 300 pts</a></li>
+<li><a href="#Deeper-400-pts" title="Deeper 400 pts">Deeper 400 pts</a></li>
+<li><a href="#Dig-the-past-400-pts" title="Dig the past 400 pts">Dig the past 400 pts</a></li>
+</ul>
+</li>
+<li><a href="#The-Wanderer" title="The Wanderer">The Wanderer</a><ul>
+<li><a href="#Indoor-200-pts" title="Indoor 200 pts">Indoor 200 pts</a></li>
+<li><a href="#Tourism-200-pts" title="Tourism 200 pts">Tourism 200 pts</a></li>
+<li><a href="#Find-the-road-200-pts" title="Find the road 200 pts">Find the road 200 pts</a></li>
+<li><a href="#On-the-road-again-200-pts" title="On the road again 200 pts">On the road again 200 pts</a></li>
+<li><a href="#Fly-300-pts" title="Fly 300 pts">Fly 300 pts</a></li>
+<li><a href="#The-Statue-200-pts" title="The Statue 200 pts">The Statue 200 pts</a></li>
+<li><a href="#Further-500-pts" title="Further 500 pts">Further 500 pts</a></li>
+</ul>
+</li>
+<li><a href="#The-meeting-300-pts" title="The meeting 300 pts">The meeting 300 pts</a></li>
+<li><a href="#The-boss" title="The boss">The boss</a><ul>
+<li><a href="#Frame-100-pts" title="Frame 100 pts">Frame 100 pts</a></li>
+<li><a href="#Jason-200-pts" title="Jason 200 pts">Jason 200 pts</a></li>
+<li><a href="#Source-200-pts" title="Source 200 pts">Source 200 pts</a></li>
+<li><a href="#Trebel-bass-ut-base-200-pts" title="Trebel, bass, ut base 200 pts">Trebel, bass, ut base 200 pts</a></li>
+<li><a href="#Decrypt-age-400-pts" title="Decrypt age 400 pts">Decrypt age 400 pts</a></li>
+</ul>
+</li>
+<li><a href="#Remerciements" title="Remerciements">Remerciements</a></li>
+<li><a href="#Glossaires-" title="Glossaires ">Glossaires </a></li>
+</ul>
+</li>
+</ul>
+</span></p><h2 id="Introduction" data-id="Introduction"><a class="anchor hidden-xs" href="#Introduction" title="Introduction"><span class="octicon octicon-link"></span></a><span>Introduction</span></h2><h3 id="Welcome-10-pts" data-id="Welcome-10-pts"><a class="anchor hidden-xs" href="#Welcome-10-pts" title="Welcome-10-pts"><span class="octicon octicon-link"></span></a><span>Welcome 10 pts</span></h3><p><span>Dans la première épreuve, on apprend qu’un groupe de personnes fomentent un plan sombre et macchiavélique. Ce groupe s’appelle Manipar.</span></p><p><span>Ce groupe dispose d’un blog exposé sur la Toile, on nous charge de trouver ce blog.</span></p><p><span>Commençons notre recherche à l’aide du moteur de recherche Google, du plus large au plus ciblé&nbsp;:</span></p><pre><code>Manipar
+"Manipar"
+"Manipar" blog
+"Manipar" skyblog
+"Manipar" blogspot
+intitle:Manipar
+intitle:Manipar blog
+</code></pre><p><span>Les résultats de ces recherches ne convenant pas, et par manque de patience, l’indice gratuit est utilisé afin de gagner du temps :</span></p><pre><code>Insérer l’indice lorsque l’on pourra le récupérer.
+</code></pre><p><span>Effectivement, l’idée d’utiliser </span><a href="https://fr.wikipedia.org/wiki/Domaine_de_premier_niveau" target="_blank" rel="noopener"><span>le domaine de premier niveau (Top Level Domain)</span></a><span> </span><code>.blog</code><span> ne m’était pas venu à l’idée.</span></p><p><span>Le lien menant au blog du groupe Manipar est récupéré, ainsi que le drapeau pour valider le challenge à partir du site web </span><a href="http://manipar.blog/" target="_blank" rel="noopener"><span>http://manipar.blog/</span></a></p><div class="alert alert-success">
+<p><img src="https://i.imgur.com/uXbwfly.png" alt="Capture d'écran de la page d'accueil de manipar.blog" loading="lazy"></p>
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{Welcome_to_the_CTF}</code></p>
+</div><div class="alert alert-info">
+<p><strong><span>Méthode alternative</span></strong><br>
+<span>Avec du recul, la solution aurait pu être trouvé facilement en utilisant </span><a href="https://dotdb.com/search?keyword=manipar&amp;position=any" target="_blank" rel="noopener"><span>le site DotDB</span></a><span>.</span></p>
+<p><span>Ce site permet de chercher des noms de domaines de sites enregistrés, en se basant sur un mot clé.</span></p>
+</div><h3 id="Money-money-money-100-pts" data-id="Money-money-money-100-pts"><a class="anchor hidden-xs" href="#Money-money-money-100-pts" title="Money-money-money-100-pts"><span class="octicon octicon-link"></span></a><span>Money money money 100 pts</span></h3><p><span>Le site propose deux grandes sections:</span></p><ul>
+<li><span>Blog</span></li>
+<li><span>About</span></li>
+</ul><p><span>La section </span><code>About</code><span> présente un gros indice.</span></p><blockquote>
+<p><span>Our collective advocates freedom of expression, through massive information sharing. We also maintain a blog in which we follow the daily activity of leaks. On this site, you can follow our blog where our member will post many topics.</span></p>
+<p><span>And above all, know that we love </span><strong><span>robots</span></strong><span> very much.</span></p>
+</blockquote><p><span>Le mot robot fait référence au fichier standard intitulé </span><code>robots.txt</code><span> (ou aux robots butineurs de Toile), présent à la racine des sites internet. Ce fichier est utilisé pour indiquer aux butineurs (crawlers) des moteurs de recherche quelles parties du site peuvent être indexées ou non.</span></p><p><a href="http://manipar.blog/robots.txt" target="_blank" rel="noopener"><span>http://manipar.blog/robots.txt</span></a></p><pre><code>User-agent: *
+Disallow: /wp-admin/
+Disallow: bank.manipar.blog
+Allow: /wp-admin/admin-ajax.php
+</code></pre><p><span>On obtient alors plusieurs informations:</span></p><ul>
+<li><span>Le site a été créé avec l’outil WordPress</span>
+<ul>
+<li><span>On peut alors prévoir les répertoires existant, on peut aussi extraire la liste des utilisateurs avec un scan </span><strong><span>actif</span></strong><span> (attention, on sort du cadre de l’OSINT)</span></li>
+</ul>
+</li>
+<li><span>Le site dispose d’un sous-domaine </span><code>bank.manipar.blog</code></li>
+</ul><p><span>Commençons par le sous domaine, qui semble s’apparenter au nom de l’épreuve.</span></p><p><a href="https://bank.manipar.blog/" target="_blank" rel="noopener"><span>https://bank.manipar.blog/</span></a></p><pre><code>For every transaction, please use this : 
+0x630D6640eB3cAad3f43dB7abe6657AC478074Bd0 Cryptoka. 
+Flag{Cryptoka_the_4cc0untant}
+</code></pre><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{Cryptoka_the_4cc0untant}</code></p>
+<p><span>Cette épreuve dévérrouille l’ensemble des épreuves de la section </span><strong><span>The Accountant</span></strong><span>.</span></p>
+</div><h3 id="Post-100-pts" data-id="Post-100-pts"><a class="anchor hidden-xs" href="#Post-100-pts" title="Post-100-pts"><span class="octicon octicon-link"></span></a><span>Post 100 pts</span></h3><p><span>Parmi les articles, un attire notre attention par son titre : </span><a href="http://manipar.blog/?p=2008" target="_blank" rel="noopener"><span>“They talk about us”</span></a><span>.</span></p><p><span>Une image d’un article de journal y est présenté. En s’attardant sur son contenu, on découvre le pseudonyme du blogueur : </span><code>Chainburst</code><span>.</span></p><p><img src="https://i.imgur.com/3oBObgl.png" alt="Morceau de journal traitant du groupe Manipar" loading="lazy"></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{Chainburst}</code></p>
+<p><span>Cette épreuve dévérrouille l’ensemble des épreuves de la section </span><strong><span>The Blogger</span></strong><span>.</span></p>
+</div><h3 id="Resources-100-pts" data-id="Resources-100-pts"><a class="anchor hidden-xs" href="#Resources-100-pts" title="Resources-100-pts"><span class="octicon octicon-link"></span></a><span>Resources 100 pts</span></h3><p><span>Pour cette épreuve, on se ressert de l’information récupérée plus tôt dans l’épreuve </span><code>Money money money</code><span>, en particulier le fait que le blog utilise WordPress.</span></p><p><span>En effet, cet outil dispose d’un schema de répertoire bien définit car spécifique à cette application. Ainsi, on retrouvera souvent les interfaces de connexions des administrateurs dans le fichier </span><code>wp-login</code><span> ou </span><code>wp-admin</code><span>.</span></p><p><span>Dans notre cas, nous cherchons une image, qui sera sûrement rangé dans le répertoire des ressources, appelé </span><code>wp-content/uploads/</code><span>.</span></p><p><span>Dans le cas où l’outil pour créer le site web est moins connu, une méthode générique permet de récupérer cette information :</span></p><ul>
+<li><span>Clic droit sur une image du site</span></li>
+<li><span>Copier le lien de l’image</span></li>
+<li><span>Décortiquer le lien pour en extraire le répertoire qui nous intéresse.</span></li>
+</ul><pre><code>http://manipar.blog/ =&gt; racine du site
+
+wp-content/uploads/2021/10/ =&gt; répertoires, à comparer avec votre système de fichier
+
+wallhaven-zxq6lw_1920x1080-1024x576.png =&gt; resource, en l’occurence une image
+</code></pre><p><span>En accédant au répertoire </span><code>wp-content</code><span> à travers </span><a href="http://manipar.blog/wp-content/uploads/" target="_blank" rel="noopener"><span>ce lien</span></a><span>, on découvre que l’ensemble des fichiers et répertoires sont listés.</span></p><p><span>Ce comportement est un défaut de configuration du serveur web et est une faille de sécurité appelé “Directory Listing” en anglais.</span></p><p><span>En effet, un serveur correctement paramétré n’affichera aucune information lorsqu’un utilisateur réalisera une requête sur un répertoire.</span></p><p><img src="https://i.imgur.com/3SVXqg8.png" alt="Capture d'écran du direcory listing sur le site manipar.blog" loading="lazy"></p><p><span>En exploitant ce défaut de configuration, on obtient plusieurs fichiers sortant du lot:</span></p><ul>
+<li><a href="http://manipar.blog/wp-content/uploads/2021/03/TODO.txt" target="_blank" rel="noopener"><span>http://manipar.blog/wp-content/uploads/2021/03/TODO.txt</span></a></li>
+<li><a href="http://manipar.blog/wp-content/uploads/2019/05/Indoor.png" target="_blank" rel="noopener"><span>http://manipar.blog/wp-content/uploads/2019/05/Indoor.png</span></a></li>
+</ul><p><span>Le contenu du fichier TODO.txt sera utilisé dans les challenges suivant, nous nous attarderons sur l’image:</span><br>
+<img src="https://i.imgur.com/cPfoUJB.png" alt="Photo d'un parking sous terrain prise depuis une voiture, le drapeau est affiché en haut de l'image en rouge" loading="lazy"></p><p><span>En effet, celle-ci contient le drapeau que nous cherchons pour continuer notre aventure :</span></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{DonGru_1s_0n_h1s_w4y}</code></p>
+<p><span>Ce challenge dévérrouille l’ensemble des challenges de la section </span><strong><span>The Wanderer</span></strong><span>.</span></p>
+</div><h2 id="The-Blogger" data-id="The-Blogger"><a class="anchor hidden-xs" href="#The-Blogger" title="The-Blogger"><span class="octicon octicon-link"></span></a><span>The Blogger</span></h2><p><span>Cette section détaillera l’ensemble des étapes pour rassembler des informations sur le membre de Manipar surnommé </span><strong><span>Le Blogueur</span></strong><span>.</span></p><h3 id="Hello-world-200-pts" data-id="Hello-world-200-pts"><a class="anchor hidden-xs" href="#Hello-world-200-pts" title="Hello-world-200-pts"><span class="octicon octicon-link"></span></a><span>Hello world 200 pts</span></h3><p><span>La première étape consiste à pivoter depuis le pseudonyme d’un utilisateur vers d’autres comptes créé sur d’autres plateformes, dans notre cas nous cherchons les réseaux sociaux.</span></p><p><span>Pour cela, nous allons utiliser un site qui va nous simplifier la tâche :  </span><a href="https://whatsmyname.app/" target="_blank" rel="noopener"><span>https://whatsmyname.app/</span></a></p><p><span>Cette application va rechercher sur une longue liste de site web si un utilisateur existe correspondant à notre recherche.</span><br>
+<img src="https://i.imgur.com/nVBVSua.png" alt="Résultat de la recherche du site whatsmyname sur le pseudonyme ChainBurst" loading="lazy"></p><p><span>On s’orientera alors vers le réseau social TikTok qui semble prometteur :</span><br>
+<a href="https://www.tiktok.com/@Chainburst?lang=en" target="_blank" rel="noopener"><span>https://www.tiktok.com/@Chainburst?lang=en</span></a></p><p><span>Une des vidéos postées révèle le drapeau, tout en bas de l’écran :</span><br>
+<img src="https://i.imgur.com/qCx4CwI.png" alt="Capture d'écran d'une vidéo du compte TikTok de Chainburst, le drapeau est affiché tout en bas" loading="lazy"></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{Chainburst_1s_0n_T1kt0k}</code></p>
+</div><h3 id="Leviosaaa-300-pts" data-id="Leviosaaa-300-pts"><a class="anchor hidden-xs" href="#Leviosaaa-300-pts" title="Leviosaaa-300-pts"><span class="octicon octicon-link"></span></a><span>Leviosaaa 300 pts</span></h3><p><span>On reçoit un enregistrement sonore à décoder.</span><br>
+<span>À la première écoute, on se rend compte que l’enregistrement semble être une voix accéléré puis ralenti.</span></p><p><span>En accélérant le son sur </span><a href="https://www.audacityteam.org/" target="_blank" rel="noopener"><span>l’outil gratuit et opensource Audacity</span></a><span> par 3, on arrive à entendre :</span></p><pre><code>Do not forget the document to be sold. 
+Have a good day Emmaaaa
+</code></pre><p><span>Puis sur la fin, on ralentit approximativement la vitesse d’écoute par moitié :</span></p><pre><code>I know sorry, aah don’t forget about the flag: ema is Chainburst
+</code></pre><p><span>Grâce à cette étape, on apprend le prénom de Chainburst : Ema.</span><br>
+<span>Il semblerait donc qu’Ema soit une femme.</span></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{ema_is_Chainburst}</code></p>
+</div><h3 id="Biggest-fan-200-pts" data-id="Biggest-fan-200-pts"><a class="anchor hidden-xs" href="#Biggest-fan-200-pts" title="Biggest-fan-200-pts"><span class="octicon octicon-link"></span></a><span>Biggest fan 200 pts</span></h3><p><span>En fouillant parmi les vidéos, on trouve</span><br>
+<a href="https://www.tiktok.com/@chainburst/video/7029285424556297478?lang=en&amp;is_copy_url=1&amp;is_from_webapp=v1" target="_blank" rel="noopener"><span>https://www.tiktok.com/@chainburst/video/7029285424556297478?lang=en&amp;is_copy_url=1&amp;is_from_webapp=v1</span></a></p><p><span>Le plus grand fan de Manipar nous livre une information cruciale dans ce commentaire, le nom de famille de Chainburst : </span><code>Peetars</code><span>.</span></p><pre><code>I don't know if UFO exists but I am following your movement with attention and I hope that I will be able to join your team Ms. Peetars !
+</code></pre><p><span>Ainsi, on sait maintenant que Chainburst s’appelle Ema Peetars.</span><br>
+<span>Cependant, cette information n’est pas tout de suite utile, car notre objectif est de trouver plus d’informations sur ce fameux fan surnommé </span><code>sunrisefire</code><span> sur TikTok.</span><br>
+<a href="https://www.tiktok.com/@sunrisefire?lang=en" target="_blank" rel="noopener"><span>https://www.tiktok.com/@sunrisefire?lang=en</span></a></p><p><span>Son profil indique un second pseudonyme : </span><code>sunrisef1rework</code><span>.</span></p><p><span>L’outil WhatsmMyName vu précédemment n’est cette fois-ci pas utile, car il ne renvoie aucun résultat pertinent.</span></p><p><span>En utilisant le moteur de recherche google sur le pseudonyme en question, un compte Reddit apparaît alors :</span><br>
+<a href="https://www.reddit.com/user/SunriseF1rework/" target="_blank" rel="noopener"><span>https://www.reddit.com/user/SunriseF1rework/</span></a></p><p><span>La photo de couverture derrière la photo de profil contient une image intéressante, un bout de drapeau y est inscrit.</span><br>
+<img src="https://styles.redditmedia.com/t5_5bja2i/styles/profileBanner_oh2is7oxqzy71.png?width=1280&amp;height=384&amp;crop=1280:384,smart&amp;s=48ae735fbf1b1b579bcd8d3850e75dd86392131e" alt="Photo de bannière avec fond noir donnant une partie du drapeau" loading="lazy"></p><pre><code>3cr3t_h4
+</code></pre><p><span>En cherchant sur tweeter, on découvre qu’un utilisateur avec un pseudonyme similaire existe :</span><br>
+<a href="https://twitter.com/SunriseF1rework" target="_blank" rel="noopener"><span>https://twitter.com/SunriseF1rework</span></a></p><p><a href="https://twitter.com/SunriseF1rework/status/1458824123120078848" target="_blank" rel="noopener"><span>Un de ses tweets</span></a><span> donne une autre partie du drapeau:</span></p><pre><code>flag{M4nip4r_s
+</code></pre><p><span>Un autre tweet montre une capture d’écran dans laquelle on voit apparaître plusieurs applications de réseaux sociaux : Reddit, Twitter et SoundCloud.</span></p><p><span>Bingo, la plateforme d’écoute de musique n’était pas encore connu dans notre enquête !</span></p><p><span>Au cas où on aurait raté cette information, un autre tweet peut nous mettre sur la piste :</span></p><pre><code>It's almost time to go on a trip ! In a hurry to listen to my little playlist made up of new artists !
+</code></pre><p><span>Voici le lien du compte de SunriseF1rework sur SoundCloud, choqué déçu de ne pas y trouver la fameuse playlist mais au moins le drapeau est là dans sa description de compte :</span><br>
+<a href="https://soundcloud.com/user-44108001" target="_blank" rel="noopener"><span>https://soundcloud.com/user-44108001</span></a><br>
+<img src="https://i.imgur.com/h1PqeI7.png" alt="Profil soundcloud de l'utilisateur sunrisef1rework" loading="lazy"></p><pre><code>ckt1v1t1s}
+</code></pre><p><span>En mettant bout à bout les trois bouts de drapeau, on obtient :</span></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{M4nip4r_s3cr3t_h4ckt1v1t1s}</code></p>
+</div><h3 id="Rename-300-pts" data-id="Rename-300-pts"><a class="anchor hidden-xs" href="#Rename-300-pts" title="Rename-300-pts"><span class="octicon octicon-link"></span></a><span>Rename 300 pts</span></h3><p><span>Nous cherchons maintenant à trouver d’autres comptes d’Ema Peetars, aka Chainburst.</span></p><p><span>Grâce à la découverte de son nom complet, nous pouvons pivoter sur plusieurs plateformes sociales utilisant l’identité des personnes comme identifiants :</span></p><ul>
+<li><span>Facebook</span></li>
+<li><span>LinkedIn</span></li>
+<li><span>VK</span></li>
+</ul><p><span>En cherchant rapidement sur Facebook, on découvre </span><a href="https://www.facebook.com/profile.php?id=100074879528132" target="_blank" rel="noopener"><span>le profile de la blogueuse</span></a><span>.</span></p><p><img src="https://i.imgur.com/5VG1it2.png" alt="Profile Facebook d'Ema Peetars, aka Chainburst" loading="lazy"></p><p><span>Depuis son profil, dans la section « À propos » et la sous-catégorie </span><a href="https://www.facebook.com/profile.php?id=100074879528132&amp;sk=about_contact_and_basic_info" target="_blank" rel="noopener"><span>« Informations générales et coordonnées »</span></a><span>, on peut obtenir plusieurs informations capitales pour la suite de l’investigation :</span></p><ul>
+<li><span>L’adresse email d’Ema: </span><a href="mailto:emapeetars@gmail.com" target="_blank" rel="noopener"><span>emapeetars@gmail.com</span></a></li>
+<li><span>Sa date de naissance: 5 avril 1992</span></li>
+</ul><p><span>La section </span><a href="https://www.facebook.com/profile.php?id=100074879528132&amp;sk=about_details" target="_blank" rel="noopener"><span>« Détails sur Ema »</span></a><span> détaille la citation préférée d’Ema, qui n’est d’autre que le drapeau :</span></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{m3t4_1s_N3w_F4c3b00k}</code></p>
+</div><h3 id="Rolling-in-the-deep-200-pts" data-id="Rolling-in-the-deep-200-pts"><a class="anchor hidden-xs" href="#Rolling-in-the-deep-200-pts" title="Rolling-in-the-deep-200-pts"><span class="octicon octicon-link"></span></a><span>Rolling in the deep 200 pts</span></h3><p><span>Explorons maintenant la piste de l’adresse gmail.</span></p><p><span>La première initiative était de trouver l’ensemble des comptes créés à partir de cette adresse email à l’aide de l’outil </span><code>Holehe</code><span>.</span></p><p><span>Cependant, les résultats sont décevants, annonçant que seul le compte google existe.</span></p><p><span>On se concentre alors sur le compte google, qui peut nous apporter de nombreuses informations supplémentaires au vue des services variés proposés par google (map, calendrier, photos, etc.).</span></p><p><span>Pour cela, nous utilisons </span><a href="https://tools.epieos.com/email.php" target="_blank" rel="noopener"><span>l’outil en ligne proposé par l’entreprise Epios</span></a><span> nous permet de récupérer les informations suivantes :</span></p><pre><code>Email : emapeetars@gmail.com
+Name : Ema P
+GoogleID : 116256632717489575864
+Last Update : 2021-11-27 00:34:37
+Maps https://www.google.com/maps/contrib/116256632717489575864
+Calendar : https://calendar.google.com/calendar/htmlembed?src=emapeetars@gmail.com
+</code></pre><p><span>Le lien vers le calendrier semble cassé, nous laissons donc cette piste de côté pour le moment.</span></p><p><span>Cependant, le compte google map d’Ema nous apprend de nouvelles informations. Elle se trouvait aux Catacombes Saint Paul de Malte, où elle a laissé un commentaire à propos de l’endroit.</span></p><p><span>On trouve alors dans ce commentaire le drapeau.</span></p><p><img src="https://i.imgur.com/CNYJ2pt.jpg" alt="Capture d'écran du commentaire d'Ema à propos des catacombes Saint Paul" loading="lazy"></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{Chainburst_w4s_1n_C4t4c0mbs}</code></p>
+</div><h3 id="Where-are-you-200-pts" data-id="Where-are-you-200-pts"><a class="anchor hidden-xs" href="#Where-are-you-200-pts" title="Where-are-you-200-pts"><span class="octicon octicon-link"></span></a><span>Where are you? 200 pts</span></h3><p><span>L’épreuve suivante nous a donné beaucoup de fil à retordre pour différenters raisons.</span></p><p><span>L’épreuve nous demandait de trouver le prochain compte d’Ema, en se basant sur les endroits qu’elle avait visité.</span></p><p><span>Un indice indiquait qu’Ema utilisait beaucoup de « # » dièses (hastag pour nos collègues albions). Cette indice pouvait laisser le doute entre l’utilisation du réseau social Instagram et Twitter qui sont tous deux très portés sur le dièse.</span></p><p><span>Son compte facebook regorgeait de photographies de lieux qu’Ema avait visité, ma première piste était d’identifier l’ensemble de ces destinations.</span></p><p><span>Pour cela, nous nous sommes servi de notre culture générale, des commentaires des photos et du moteur de recherche google reverse image.</span></p><p><span>Lieux identifiés :</span></p><ul>
+<li><span>Dubrovnik Croatia</span></li>
+<li><span>Venice Italy</span></li>
+<li><span>Louvre Paris</span></li>
+<li><span>New York</span></li>
+<li><span>Es Vedrà Ibiza (Erasmus trip with 3 best friends)</span></li>
+<li><span>Vøringfossen Norway</span></li>
+<li><span>Sidney Australia</span></li>
+<li><span>National Park Banff Canada</span></li>
+<li><span>Tibet</span></li>
+<li><span>Cape Town South Africa</span></li>
+<li><span>Catacombes de Saint-Paul Malte</span></li>
+</ul><p><span>Nous nous sommes alors servi des filtres de recherche avancé de twitter pour investiguer les différents lieux cité précédemment.</span></p><p><span>Nous avons aussi réduit nos recherches dans le temps, autour des dates de publications des autres messages sur les différents profils d’Ema.</span></p><div class="alert alert-info">
+<p><span>Les filtres </span><code>until:</code><span> et </span><code>since:</code><span> permettent de filtrer dans le temps les recherches.</span><br>
+<span>Le filtre </span><code>geocode</code><span> permet de préciser </span><code>latitude,longitude,radius</code><span>.</span><br>
+<a href="https://www.tweetbinder.com/blog/twitter-geocode/" target="_blank" rel="noopener"><span>Source sur laquelle nous nous sommes basée.</span></a></p>
+</div><p><span>Plusieurs pistes ont été alors explorées. Chaque poste facebook parlant de voyage se terminait par l’émote planète.</span></p><p><span>Nous avons alors cherché des tweets datant de la période de temps qui nous intéressait, avec les destinations citées précédemment, utilisant l’émote terre.</span></p><p><span>Une autre piste était le fait que le thème de la liberté était souvent repris dans les messages des différents comptes d’Ema. Nous avons aussi cherché avec ce critère.</span></p><p><img src="https://i.imgur.com/3O2Wh68.png" alt="" loading="lazy"></p><p><span>Malheureusement, ces deux pistes se sont avérées mauvaises.</span></p><p><span>Nous nous sommes alors concentrés sur la dernière position connue de Chainburst, c’est à dire les catacombes de Saint Paul à Malte.</span></p><p><img src="https://i.imgur.com/JzeTDU4.png" alt="" loading="lazy"></p><p><span>Toujours rien, malgré nos recherches acharnées. Nous avons alors décidé d’utiliser un indice car nous arrivions en fin d’événement, afin de débloquer notre progression.</span></p><pre><code>Hint: Did you know that it is possible to locate Tweets ?
+</code></pre><p><span>Cette indice nous confirmes donc que nous sommes sur la bonne piste, mais que ratons nous ?</span></p><p><span>Neticien a finalement par trouver l’astuce: les lieux répertoriés par FourSquare.</span></p><p><span>En effet, lorsque vous indiquez que votre tweet a été publié dans un lieu reconnu par Foursquare, Twitter va associer votre tweet au lieu présent dans l’API de Foursquare.</span></p><p><span>En trouvant </span><a href="https://twitter.com/Nigel_May/status/1461313534260924423" target="_blank" rel="noopener"><span>un tweet publié par des touristes</span></a><span> ayant récemment visité les Catacombes, on trouve alors un lien vers le lieu.</span></p><p><img src="https://i.imgur.com/eJStgpt.png" alt="" loading="lazy"></p><p><span>Depuis ce filtre de recherche, on trouve alors </span><a href="https://twitter.com/FreeHandcuff/status/1465764722536497158" target="_blank" rel="noopener"><span>le tweet d’un utilisateur appelé FreeHandcuff</span></a><span>, un pseudonyme proche de notre hypothèse précédente sur le sujet de liberté abordé régulièrement par Ema.</span></p><p><img src="https://i.imgur.com/7PjQ8q0.png" alt="" loading="lazy"></p><p><span>En remontant sur son profil, on découvre alors dans sa description de compte le drapeau :</span></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{g3o_tw33t_1s_fun}</code></p>
+</div><h3 id="Men-in-black-300-pts" data-id="Men-in-black-300-pts"><a class="anchor hidden-xs" href="#Men-in-black-300-pts" title="Men-in-black-300-pts"><span class="octicon octicon-link"></span></a><span>Men in black 300 pts</span></h3><p><span>L’énoncé nous indique que nous avons raté des informations sur le compte twitter de Chainburst.</span></p><p><span>Après une minutieuse analyse de l’ensemble des tweets du compte, des utilisateurs suivi par le compte, des commentaires masqués, d’analyse des images, il semblait qu’il nous manquait quelquechose.</span></p><p><span>En relisant l’énoncé, je me suis rendu compte que l’intitulé de l’épreuve donnait un gros indice.</span></p><p><span>Men in black fait référence à un film, et voici son résumé :</span></p><blockquote>
+<p><span>Chargés de protéger la Terre de toute infraction extraterrestre et de réguler l’immigration intergalactique sur notre planète, les Men in black ou MIB opèrent dans le plus grand secret. Vêtus de costumes sombres et équipés des toutes dernières technologies, ils passent inaperçus aux yeux des humains dont ils effacent régulièrement la mémoire récente : la présence d’aliens sur notre sol doit rester secrète.</span><br>
+<a href="https://kifim.ouest-france.fr/film/men-in-black/1223/" target="_blank" rel="noopener"><span>Source</span></a></p>
+</blockquote><p><span>Cette indice nous indique donc qu’un élément du compte a été supprimé, à l’image des Men in black qui peuvent effacer la mémoire des terriens ayant vu des aliens.</span></p><p><span>Pour remonter dans le temps, quoi de mieux que de monter dans une delorean aux côtés de «&nbsp;Doc&nbsp;» ?</span><br>
+<img src="https://i.imgur.com/s7pUaoX.gif" alt="" loading="lazy"></p><p><span>Plus sérieusement, le site web archive permet de réaliser cet exploit s’il y a eu suffisament d’activité sur la page, ou qu’un utilisateur de service a expressement demandé l’archivage d’une page à un instant T.</span></p><p><span>Heureusement, quelqu’un semble avoir réalisé cette action dans les dates qui nous intéressent, c’est à dire en Novembre 2021.</span></p><p><a href="https://web.archive.org/web/20211125140136/https://twitter.com/FreeHandcuff" target="_blank" rel="noopener"><span>https://web.archive.org/web/20211125140136/https://twitter.com/FreeHandcuff</span></a></p><p><span>On trouve alors le tweet suivant :</span></p><pre><code>Российские социальные сети намного более открыты. Я свободен выражать себя так, как хочу, и могу поделиться информацией со всеми!
+Flag{c4tch_tw33t_0n_W4yb4ck}
+</code></pre><p><span>Qui une fois traduit signifie :</span></p><pre><code>Are we rushing in, or are we going sneaky beaky like. 
+This is easy, we kill them and then we go home. We will make them regret this day. 
+Flag{Rush_B_on_Dust2}. 
+</code></pre><p><span>… Bon ok j’ai menti </span><img class="emoji" alt=":laughing:" src="https://cdn.jsdelivr.net/npm/@hackmd/emojify.js@2.1.0/dist/images/basic/laughing.png"></p><pre><code>Les médias sociaux russes sont beaucoup plus ouverts. 
+Je suis libre de m'exprimer comme je l'entends, et je peux partager des informations avec tout le monde !
+Flag{c4tch_tw33t_0n_W4yb4ck}
+</code></pre><p><span>Pas sûr que la vrai traduction soit plus sérieuse que la mienne </span><img class="emoji" alt=":wink:" src="https://cdn.jsdelivr.net/npm/@hackmd/emojify.js@2.1.0/dist/images/basic/wink.png"></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{c4tch_tw33t_0n_W4yb4ck}</code></p>
+</div><h3 id="Counter-Strike-300-pts" data-id="Counter-Strike-300-pts"><a class="anchor hidden-xs" href="#Counter-Strike-300-pts" title="Counter-Strike-300-pts"><span class="octicon octicon-link"></span></a><span>Counter Strike 300 pts</span></h3><p><span>L’épreuve suivante consiste à trouver un nouveau compte d’Ema Peetars, sur un nouveau réseau social.</span></p><p><span>Le message décodé dans le défi précédent nous donne un indice, chercher sur un réseau social russe.</span></p><p><span>Le plus connu est le réseau social </span><strong><span>« V Kontakt »</span></strong><span>.</span></p><p><span>En réalisant </span><a href="https://vk.com/search?c%5Bq%5D=ema%20peetars&amp;c%5Bsection%5D=auto" target="_blank" rel="noopener"><span>une recherche</span></a><span> dans ce réseau social, le profil d’Ema Peetars apparaît :</span></p><p><img src="https://i.imgur.com/rJWlwxa.png" alt="" loading="lazy"></p><p><span>En affichant les informations détaillées du </span><a href="https://vk.com/id689731920" target="_blank" rel="noopener"><span>profil</span></a><span>, on obtenait alors le drapeau de cette épreuve.</span></p><p><img src="https://i.imgur.com/hwc1ATQ.png" alt="" loading="lazy"></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{ema_sp34ks_Russ14n}</code></p>
+</div><div class="alert alert-info">
+<p><span>Pendant l’épreuve, nous avons découvert le compte VK d’Ema Peetars avant son compte facebook, notamment grâce à la recherche google suivante: </span><code>"Ema Peetars"</code><span>.</span></p>
+<p><span>Le </span><a href="https://vkbaza.com/people-name.php?user=%D0%95%D0%BC%D0%BC%D0%B0" target="_blank" rel="noopener"><span>second lien</span></a><span> listait l’existence de nombreux utilisateurs VK, dont celui de Chainburst.</span></p>
+</div><h2 id="The-Accountant" data-id="The-Accountant"><a class="anchor hidden-xs" href="#The-Accountant" title="The-Accountant"><span class="octicon octicon-link"></span></a><span>The Accountant</span></h2><p><span>Cette section détaillera l’ensemble des étapes pour rassembler des informations sur le membre de Manipar surnommé </span><strong><span>Le Comptable</span></strong><span>.</span></p><h3 id="Ship-it-200-pts" data-id="Ship-it-200-pts"><a class="anchor hidden-xs" href="#Ship-it-200-pts" title="Ship-it-200-pts"><span class="octicon octicon-link"></span></a><span>Ship it 200 pts</span></h3><p><span>Le but est d’identifier le constructeur d’un bateau nommé </span><strong><span>BREMER ELENA</span></strong><span>.</span></p><p><span>Sur base de son nom, il est possible d’identifier son </span><strong><span>IMO</span></strong><span> via des sites répertoriant les numéros d’identification des navires tel que </span><a href="https://www.marinetraffic.com/en/ais/details/ships/shipid:205845/mmsi:218861000/imo:9347073/vessel:BREMER_ELENA" target="_blank" rel="noopener"><span>celui-ci</span></a><span>.</span></p><p><img src="https://i.imgur.com/EnS6GOm.png" alt="" loading="lazy"></p><p><strong><span>Nom :</span></strong><span> </span><code>BREMER ELENA</code><br>
+<strong><span>IMO :</span></strong><span> </span><code>9347073</code><br>
+<strong><span>Pavillon :</span></strong><span> </span><code>Allemand</code><br>
+<strong><span>Type :</span></strong><span> </span><code>Navire cargo</code></p><p><span>Ensuite, un simple Dorks permet de cibler un fichier qui contiendrait le nom du chantier naval de ce bateau.</span></p><p><strong><span>Dorks :</span></strong><span> </span><code>"9347073" filetype:pdf "shipyard"</code></p><p><a href="http://www.hsm-ag.de/wp-content/uploads/2015/07/MV-ELENE-BRAREN.pdf" target="_blank" rel="noopener"><span>http://www.hsm-ag.de/wp-content/uploads/2015/07/MV-ELENE-BRAREN.pdf</span></a></p><p><img src="https://i.imgur.com/t124TpQ.png" alt="" loading="lazy"></p><p><strong><span>Chantier naval :</span></strong><span> </span><code>Bodewes Scheepswerven</code><br>
+<strong><span>Pays :</span></strong><span> </span><code>Pays-Bas</code><br>
+<strong><span>Ville :</span></strong><span> </span><code>Hoogezand</code></p><p><span>Enfin, il suffit de rechercher une entreprise nommé </span><strong><span>Bodewes</span></strong><span> et ayant un site à </span><strong><span>Hoogezand</span></strong><span> dans le </span><a href="https://www.kvk.nl/zoeken/handelsregister/?handelsnaam=Bodewes&amp;kvknummer=&amp;straat=&amp;postcode=&amp;huisnummer=&amp;plaats=Hoogezand&amp;hoofdvestiging=1&amp;rechtspersoon=1&amp;nevenvestiging=1&amp;zoekvervallen=0&amp;zoekuitgeschreven=1&amp;start=0" target="_blank" rel="noopener"><span>registre du commerce du Pays-Bas</span></a><span> (KVK) pour identifier le chantier naval.</span></p><p><img src="https://i.imgur.com/wt3E7gy.png" alt="" loading="lazy"></p><p><span>Un </span><a href="http://www.bodewesshipyards.nl/" target="_blank" rel="noopener"><span>lien</span></a><span> vers un site Web est indiqué sur la page de commande de documents de cette structure :</span></p><p><img src="https://i.imgur.com/YTgWoyd.png" alt="" loading="lazy"></p><p><span>Il suffit alors de suivre ce lien et de rechercher sur le site le nom du bateau pour confirmer que </span><strong><span>ROYAL BODEWES</span></strong><span> est bien le constructeur de ce bateau :</span></p><p><img src="https://i.imgur.com/ycOtOyh.png" alt="" loading="lazy"></p><p><img src="https://i.imgur.com/WgTNin3.png" alt="" loading="lazy"></p><p><span>Ce qui nous donne le drapeau :</span></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{Royal Bodewes}</code></p>
+</div><h3 id="Pollution-300-pts" data-id="Pollution-300-pts"><a class="anchor hidden-xs" href="#Pollution-300-pts" title="Pollution-300-pts"><span class="octicon octicon-link"></span></a><span>Pollution 300 pts</span></h3><p><span>Nous cherchons donc une mesure de concentration d’ion hydrogène aux coordonneés </span><code>53°59.99'N08°06.40'E</code><span> en janvier 2017 effectuée par un organisme recconu.</span></p><p><span>Le but de cette recherche est d’identifier de potentiels rejets d’éléments polluants par un bateau.</span></p><p><span>Décomposons la problématique :</span></p><ol>
+<li>
+<p><span>La mention </span><code>concentration d'ion hydrogène</code><span> fait probablement référence au pH ou potentiel hydrogène souvent utilisé afin de détecter des ajouts d’éléments dans un milieu aqueux (ex : rejet de polluants dans l’eau).</span></p>
+</li>
+<li>
+<p><span>Les coordonnées </span><code>53°59.99'N08°06.40'E</code><span> sont au format DDM (Degrees Decimal Minutes), il est possible de les lires ainsi :</span></p>
+<ul>
+<li><span>NORD</span>
+<ul>
+<li><span>53 degrés</span></li>
+<li><span>59.99 minutes</span></li>
+</ul>
+</li>
+<li><span>EST</span>
+<ul>
+<li><span>8 degrés</span></li>
+<li><span>6.40 minutes</span></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol><p><span>Afin d’avoir plus de facilité dans leur manipulation, nous allons les </span><a href="https://www.pgc.umn.edu/apps/convert/" target="_blank" rel="noopener"><span>convertirs</span></a><span> en degrés décimaux :</span></p><p><img src="https://i.imgur.com/Cy57YNG.png" alt="" loading="lazy"></p><p><span>Nous obtenons donc :</span></p><p><strong><span>Lattitude :</span></strong><span> </span><code>53.999833</code><br>
+<strong><span>Longitude :</span></strong><span> </span><code>8.106667</code></p><p><span>Il suffit alors de taper ces coordonnées dans Google Maps (même si le format DDM est aussi accepté) pour obtenir l’emplacement suivant :</span></p><p><img src="https://i.imgur.com/DSwwyih.png" alt="" loading="lazy"></p><p><span>Ce point se situe en Mer du Nord au large du Nord de l’Allemagne.</span></p><ol start="3">
+<li><span>Dans l’intitulé, il est fait mention d’un organisme reconnu, étant donné que ces coordonnées pointent vers une localisation en Mer du Nord, il est fort probable que cet organisme soit une institution européenne.</span></li>
+</ol><p><span>Cherchons donc des publications d’une institution européenne concernant des études qui auraient pu être menées en Mer du Nord en 2017 sur des cas de pollutions : </span><code>site:.eu "ph" "northern sea" "pollution" "2017"</code><span>.</span></p><p><span>Le second </span><a href="https://www.eea.europa.eu/publications/report_2002_0524_154909/regional-seas-around-europe/page121.html" target="_blank" rel="noopener"><span>lien</span></a><span> retourné par la recherche concerne un rapport de l’Agence Européenne pour l’Environnement dont la dernière modification date de janvier 2017 (ce qui semble coller avec la description donnée dans l’intitulé).</span></p><p><img src="https://i.imgur.com/OMfvZik.png" alt="" loading="lazy"></p><p><span>Cependant, sur base de l’URL </span><code>report_2002_0524</code><span>, il est probable que le rapport date en réalité du 24 mai 2002.</span></p><p><span>Néanmoins, sachant que cette agence mène ce genre d’étude, des données produites ou aggrégées par cette agence sont peut-être en libre accès.</span></p><p><span>En se rendant en pieds de page, des liens des services auxquels l’EEA contribue :</span></p><p><img src="https://i.imgur.com/D20D0wT.png" alt="" loading="lazy"></p><p><span>Une plateforme retient mon attention : </span><code>Copernicus | Europe's eyes on Earth</code></p><p><img src="https://i.imgur.com/PIM6T7d.png" alt="" loading="lazy"></p><p><span>Il semblerait que ce service donne la possibilité de visualiser des données environnementales et notamment maritimes.</span></p><p><img src="https://i.imgur.com/Yhx6S21.png" alt="" loading="lazy"></p><p><span>Il est notamment possible d’utiliser des outils de visualisation de données (projection sur une carte), ce qui me permettrait d’y projeter mes coordonnées :</span></p><p><img src="https://i.imgur.com/rC83BBI.jpg" alt="" loading="lazy"></p><p><span>Via le service MyOcean Pro il est possible de sélectionner un jeu de données, une fenêtre de temps et des coordonnées pour projeter des mesures (ici le pH).</span></p><p><span>Nous obtenons donc une mesure de pH (8.022) effectuée le 16 janvier 2017.</span></p><p><a href="https://myocean.marine.copernicus.eu/data?view=viewer&amp;crs=epsg%3A4326&amp;t=1485676800000&amp;z=0&amp;center=7.69317%2C54.45055&amp;zoom=14.62&amp;layers=W3siaWQiOiJjMCIsImxheWVySWQiOiJOV1NIRUxGX01VTFRJWUVBUl9CR0NfMDA0XzAxMS9jbWVtc19tb2RfbndzX2JnYy1waF9teV83a20tM0RfUDFNLW0vcGgiLCJ6SW5kZXgiOjQwLCJsb2dTY2FsZSI6ZmFsc2V9XQ%3D%3D&amp;objects=W3siaWQiOiJjMCIsImNycyI6ImVwc2c6NDMyNiIsImNvbXBsZXRlIjp0cnVlLCJncmFwaElkcyI6WyJOV1NIRUxGX01VTFRJWUVBUl9CR0NfMDA0XzAxMS9jbWVtc19tb2RfbndzX2JnYy1waF9teV83a20tM0RfUDFNLW0vcGgvL3YodCkiLCJOV1NIRUxGX01VTFRJWUVBUl9CR0NfMDA0XzAxMS9jbWVtc19tb2RfbndzX2JnYy1waF9teV83a20tM0RfUDFNLW0vcGgvL3YoeikiLCJOV1NIRUxGX01VTFRJWUVBUl9CR0NfMDA0XzAxMS9jbWVtc19tb2RfbndzX2JnYy1waF9teV83a20tM0RfUDFNLW0vcGgvL3YodCx6KSJdLCJ0eXBlIjoicG9pIiwiY29vcmRzIjpbOC4xMDg5MzA2OTM4OTYyNDMsNTMuOTkxNzc0MzQzMTUyNjFdLCJwaW5PZmZzZXQiOls3OS4wMDAwMDAwMDAwMDIyNywtNzQuMDAwMDAwMDAwMDA0NTVdfV0%3D&amp;initial=1" target="_blank" rel="noopener"><span>Fausse piste</span></a></p><p><span>Néanmoins, les coordonnées ne collent pas totalement, la mesure a été prise aux coordonnées 53.992 Nord, 8.109 Est.</span></p><p><span>Ce point est à environ 880 mètres des coordonnées qui nous ont été fournies :</span></p><p><img src="https://i.imgur.com/26k3iWc.png" alt="" loading="lazy"></p><p><span>J’ai donc tenté de récupérer les données brutes de cette plateforme afin d’identifier s’il n’y avait pas d’autres points aux alentours.</span></p><pre><code class="bash hljs"><div class="wrapper"><div class="gutter linenumber"><span></span>
+<span></span></div><div class="code">SYSTEM@SYSTEM:~/j_en_ai_crustacé_de_vous$ file cmems_mod_nws_bgc-ph_my_7km-3D_P1D-m_1638645759246.nc
+cmems_mod_nws_bgc-ph_my_7km-3D_P1D-m_1638645759246.nc: NetCDF Data Format data
+</div></div></code></pre><p><span>Les données sont fournies au format NetCDF qu’il est possible de décoder avec l’outil </span><code>ncdump</code><span>.</span></p><pre><code class="bash hljs"><div class="wrapper"><div class="gutter linenumber"><span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span></div><div class="code">SYSTEM@SYSTEM:~/j_en_ai_crustacé_de_vous$ ncdump cmems_mod_nws_bgc-ph_my_7km-3D_P1M-m_1638642727064.nc
+netcdf cmems_mod_nws_bgc-ph_my_7km-3D_P1M-m_1638642727064 {
+dimensions:
+	time = 1 ;
+	depth = 1 ;
+	latitude = 1 ;
+	longitude = 1 ;
+variables:
+	<span class="hljs-built_in">float</span> depth(depth) ;
+		depth:axis = <span class="hljs-string">"Z"</span> ;
+		depth:standard_name = <span class="hljs-string">"depth"</span> ;
+		depth:units = <span class="hljs-string">"m"</span> ;
+		depth:positive = <span class="hljs-string">"down"</span> ;
+		depth:long_name = <span class="hljs-string">"depth"</span> ;
+		depth:_ChunkSizes = 24 ;
+		depth:_CoordinateAxisType = <span class="hljs-string">"Height"</span> ;
+		depth:_CoordinateZisPositive = <span class="hljs-string">"down"</span> ;
+		depth:valid_min = 0.f ;
+		depth:valid_max = 0.f ;
+	<span class="hljs-built_in">float</span> latitude(latitude) ;
+		latitude:standard_name = <span class="hljs-string">"latitude"</span> ;
+		latitude:long_name = <span class="hljs-string">"latitude"</span> ;
+		latitude:units = <span class="hljs-string">"degrees_north"</span> ;
+		latitude:nav_model = <span class="hljs-string">"grid_T"</span> ;
+		latitude:axis = <span class="hljs-string">"Y"</span> ;
+		latitude:_ChunkSizes = 375 ;
+		latitude:_CoordinateAxisType = <span class="hljs-string">"Lat"</span> ;
+		latitude:valid_min = 54.0007f ;
+		latitude:valid_max = 54.0007f ;
+	<span class="hljs-built_in">float</span> ph(time, depth, latitude, longitude) ;
+		ph:_FillValue = -32768.f ;
+		ph:standard_name = <span class="hljs-string">"sea_water_ph_reported_on_total_scale"</span> ;
+		ph:long_name = <span class="hljs-string">"Sea water pH reported on total scale"</span> ;
+		ph:units = <span class="hljs-string">"1"</span> ;
+		ph:missing_value = -32768.f ;
+		ph:cell_methods = <span class="hljs-string">"time: mean"</span> ;
+		ph:_ChunkSizes = 1, 24, 375, 297 ;
+	double time(time) ;
+		time:axis = <span class="hljs-string">"T"</span> ;
+		time:calendar = <span class="hljs-string">"Gregorian"</span> ;
+		time:long_name = <span class="hljs-string">"Validity time"</span> ;
+		time:standard_name = <span class="hljs-string">"time"</span> ;
+		time:units = <span class="hljs-string">"seconds since 1970-01-01 00:00:00"</span> ;
+		time:cell_methods = <span class="hljs-string">"time: mean"</span> ;
+		time:_ChunkSizes = 512 ;
+		time:_CoordinateAxisType = <span class="hljs-string">"Time"</span> ;
+		time:valid_min = 1484568000. ;
+		time:valid_max = 1484568000. ;
+	<span class="hljs-built_in">float</span> longitude(longitude) ;
+		longitude:standard_name = <span class="hljs-string">"longitude"</span> ;
+		longitude:long_name = <span class="hljs-string">"longitude"</span> ;
+		longitude:units = <span class="hljs-string">"degrees_east"</span> ;
+		longitude:nav_model = <span class="hljs-string">"grid_T"</span> ;
+		longitude:axis = <span class="hljs-string">"X"</span> ;
+		longitude:_ChunkSizes = 297 ;
+		longitude:_CoordinateAxisType = <span class="hljs-string">"Lon"</span> ;
+		longitude:valid_min = 8.11083f ;
+		longitude:valid_max = 8.11083f ;
+
+// global attributes:
+		:Conventions = <span class="hljs-string">"CF-1.7"</span> ;
+		:references = <span class="hljs-string">"http://marine.copernicus.eu/"</span> ;
+		:institution = <span class="hljs-string">"UK Met Office"</span> ;
+		:netcdf-version-id = <span class="hljs-string">"netCDF-4"</span> ;
+		:creation_date = <span class="hljs-string">"2020-08-08T00:00:00Z"</span> ;
+		:<span class="hljs-built_in">source</span> = <span class="hljs-string">"AMM-FOAM 7 km (tidal) NEMO v3.6_FABM-ERSEM v15.06_NEMOVAR v6"</span> ;
+		:product = <span class="hljs-string">"NWSHELF_MULTIYEAR_BGC_004_011"</span> ;
+		:credit = <span class="hljs-string">"E.U. Copernicus Marine Service Information (CMEMS)"</span> ;
+		:forcing_data_source = <span class="hljs-string">"ECMWF; ERA5"</span> ;
+		:licence = <span class="hljs-string">"http://marine.copernicus.eu/services-portfolio/service-commitments-and-licence/"</span> ;
+		:title = <span class="hljs-string">"monthly-mean pH (3D)"</span> ;
+		:<span class="hljs-built_in">history</span> = <span class="hljs-string">"See source and creation_date attributes"</span> ;
+		:contact = <span class="hljs-string">"servicedesk.cmems@mercator-ocean.eu"</span> ;
+		:_CoordSysBuilder = <span class="hljs-string">"ucar.nc2.dataset.conv.CF1Convention"</span> ;
+		:comment = <span class="hljs-string">""</span> ;
+data:
+
+ depth = 0 ;
+
+ latitude = 54.0007 ;
+
+ ph =
+  8.02195 ;
+
+ time = 1484568000 ;
+
+ longitude = 8.11083 ;
+}
+</div></div></code></pre><p><span>Après quatres tentatives en échecs (et une sévère envie de mourrir &lt;3), aucune coordonnées ne correspondaient exactement, il était temps de changer de source de données.</span></p><p><span>En chercheant des sources de données européennes, je tombe sur la plateforme d’OpenData européenne :</span></p><p><img src="https://i.imgur.com/v2QNpko.png" alt="" loading="lazy"></p><p><span>En tapant les bons mots clés dans la barre du moteur de recherche de jeux de données de cette plateforme, il est possible d’identifier un jeu de données qui semble coller :</span><br>
+<img src="https://i.imgur.com/CBTAXKi.png" alt="" loading="lazy"></p><p><a href="https://data.europa.eu/data/datasets/6240d32e-c8c0-42bd-b5dc-b5c6024d1b08?locale=fr" target="_blank" rel="noopener"><span>hydrogen ion concentration (pH) of sea water 2017</span></a></p><p><span>En suivant le lien de téléchargement du jeu de données, j’atterris sur un portail de fournitures de données hydrographiques allemand :</span></p><p><img src="https://i.imgur.com/fRxJweh.png" alt="" loading="lazy"></p><p><a href="https://data.bsh.de/Open_Data/" target="_blank" rel="noopener"><span>BSH OpenData</span></a></p><p><span>En suivant le lien permettant de consulter les relevés de pH effectués en 2017, j’identifie une mesure dont les coordonnées correspondent exactement aux coordonnées fournis (et à la date, le 20/01/2017 à 12:48) :</span></p><p><img src="https://i.imgur.com/CPwmJL1.png" alt="" loading="lazy"></p><p><a href="https://data.bsh.de/Open_Data/MO_H_PH/MO_H_PH_2017.txt" target="_blank" rel="noopener"><span>Wasserstoff-Ionenkonzentration des Meerwassers (pH-Wert) 2017</span></a></p><p><span>Et d’après la légende, la mesure de pH serait le 13ème champ du relevé.</span></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{8,09}</code></p>
+</div><p><img src="https://i.imgur.com/7fhO05h.jpg" alt="" loading="lazy"></p><h3 id="Keep-an-eye-on-300-pts" data-id="Keep-an-eye-on-300-pts"><a class="anchor hidden-xs" href="#Keep-an-eye-on-300-pts" title="Keep-an-eye-on-300-pts"><span class="octicon octicon-link"></span></a><span>Keep an eye on 300 pts</span></h3><p><span>Cette épreuve nous demande de trouver l’inscription d’un panneau vert présent sur une caméra de sécurité installée par DonGru.</span></p><p><span>L’énoncé utilise l’expression « keep an eye » est utilisée. Cette même expression était utilisées dans le fichier </span><a href="http://manipar.blog/wp-content/uploads/2021/03/TODO.txt" target="_blank" rel="noopener"><span>TODO.txt</span></a><span> que nous avions trouvé précédemment grâce au « Directory listing » sur le blog du groupe Manipar:</span></p><pre><code>DonGru, you know where to go. Be there in 5 days, we have an agreement. If you don't, you know what will happen...
+On the way, please sort these things out:
+- contact the boss to have further instructions;
+- make sure C. will be there on time;
+- set up the Insecam, we need to keep an eye.
+
+See you soon, venn.
+Cryptoka.
+</code></pre><p><span>Une référence est faite au site </span><a href="http://www.insecam.org" target="_blank" rel="noopener"><span>Insecam</span></a><span>, qui présente une liste de caméras non sécurisées (en utilisant les identifiants par défauts du constructeur) exposées sur la Toile.</span></p><p><span>La catégorie </span><strong><span>« Marina »</span></strong><span> est donnée afin d’affiner la recherche et nous éviter de perdre trop de temps.</span></p><p><span>Au bout de la 7ème page, on finit par trouver le fameux panneau vert sur </span><a href="http://www.insecam.org/en/view/920225/" target="_blank" rel="noopener"><span>cette page</span></a><span> :</span></p><p><img src="https://i.imgur.com/9ywiFjX.jpg" alt="" loading="lazy"></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{Green_Turtle_Club}</code></p>
+</div><h3 id="Next-Business-200-pts" data-id="Next-Business-200-pts"><a class="anchor hidden-xs" href="#Next-Business-200-pts" title="Next-Business-200-pts"><span class="octicon octicon-link"></span></a><span>Next Business 200 pts</span></h3><p><span>Cette épreuve nous demande de trouver un compte du comptable utilisant le pseudonyme Cryptoka. On nous précise que ce compte lui sert à réaliser des affaires.</span></p><p><span>L’outil WhatsMyName retourne 8 différent comptes, mais aucun ne semblent correspondre à ce que l’on cherche.</span></p><p><span>Nous continuons alors notre recherche avec les moteurs de recherche google et duckduckgo, sans grande réussite.</span></p><p><span>En relisant l’énoncé, je m’aperçois que la plateforme que nous cherchons permet de vendre des services à des particuliers.</span></p><p><span>Une plateforme répond à ce critère, même s’il est plus orienté sur le développement ou le design: Fiverr.</span></p><p><span>En cherchant sur ce site, on trouve alors le profil de Cryptoka : </span><a href="https://www.fiverr.com/cryptoka" target="_blank" rel="noopener"><span>https://www.fiverr.com/cryptoka</span></a></p><p><img src="https://i.imgur.com/G4XDZsh.png" alt="" loading="lazy"></p><p><span>Sa page d’accueil nous apprend plusieurs choses :</span></p><ul>
+<li><span>On retrouve le voyage en Erasmus, similaire à Chainburst.</span></li>
+<li><span>Cette personne parle couramment Allemand et Anglais.</span></li>
+<li><a href="https://www.fiverr.com/cryptoka/give-you-many-information?context_referrer=user_page&amp;ref_ctx_id=a9aefb04ca89063e9cca151b811b9806&amp;pckg_id=1&amp;pos=1" target="_blank" rel="noopener"><span>Une facture</span></a><span> est présente, elle doit sûrement contenir d’autres informations clé.</span></li>
+</ul><p><img src="https://i.imgur.com/Z9y28zM.png" alt="" loading="lazy"></p><p><span>Cette facture nous indique le nom et prénom de Cryptoka : </span><strong><span>Karl VonTonberg</span></strong><span>.</span></p><p><span>Le drapeau est inscrit dans cette facture, à droite.</span></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{s3rv1c3_0n_F1v3rr}</code></p>
+</div><h3 id="The-car-200-pts" data-id="The-car-200-pts"><a class="anchor hidden-xs" href="#The-car-200-pts" title="The-car-200-pts"><span class="octicon octicon-link"></span></a><span>The car 200 pts</span></h3><p><span>L’objectif de cette épreuve consiste à retrouver le numéro de référence de fabrication du parebrise arrière de cette voiture (au format [0-9]{10}), à partir des informations présentes dans la photographie ci-dessous :</span></p><p><img src="https://i.imgur.com/7SUuLOO.jpg" alt="" loading="lazy"></p><p><span>Peu d’éléments sont réellement pertinents sur cette image, hormis le tatouage de pare-brise qui contient plusieurs informations :</span></p><p><img src="https://i.imgur.com/8XxmFLW.png" alt="" loading="lazy"></p><p><span>Il est possible de lire le nom du fabricant (Saint-Gobain SEKURIT), une partie d’un numéro d’identification (43x 002687, x étant un caractère difficile à identifier) ainsi que la marque de la voiture (Peugeot).</span></p><p><span>Faisons donc une recherche Google sur la base de ces informations : </span><code>saint gobain sekurit 002687 peugeot</code><span>.</span></p><p><img src="https://i.imgur.com/BfMQHws.png" alt="" loading="lazy"></p><p><span>Grâce à cette recherche, nous identifions une </span><a href="https://www.befr.ebay.be/itm/1609989480-Lune-Avant-Peugeot-RCZ-Basis-Annee-2010-1373511-/143942422519" target="_blank" rel="noopener"><span>annonce eBay</span></a><span> concernant un pare-brise ayant un tatouage d’identification sensiblement similaire au tatouage présent sur la photo de cette épreuve :</span></p><p><img src="https://i.imgur.com/UIE0aA7.png" alt="" loading="lazy"></p><ul>
+<li><strong><span>Type de verre :</span></strong><span> II (Verre feuilleté)</span></li>
+<li><strong><span>Code européen d’identification du pays :</span></strong><span> E8 (République Tchèque)</span></li>
+<li><strong><span>Numéro d’homologation au réglèment ECE R43 :</span></strong><span> 43R - 002687</span></li>
+<li><strong><span>Department of Trade number :</span></strong><span> DOT 617 (Usine Saint-Gobain Sekurit, Rep. Tchèque à Horovice)</span></li>
+<li><strong><span>Identifiant américain de référence constructeur :</span></strong><span> M452</span></li>
+<li><strong><span>Type de verre au standard américain :</span></strong><span> AS1 (verre feuilleté)</span></li>
+</ul><p><span>Source : </span><a href="https://www.carwindshields.info/windshieldmarkings" target="_blank" rel="noopener"><span>https://www.carwindshields.info/windshieldmarkings</span></a></p><p><span>En complément des identifiants présents sur le tatouage, l’annonce précise le MPN (Manufacturer Part Number) du pare-brise : 1609989480.</span></p><p><span>Cet identifiant semble correspondre au format attendu par cette épreuve.</span></p><p><span>Sur base du modèle de la voiture (Peugeot RCZ Basis, série de 2010) il est possible de pivoter sur </span><a href="https://www.autoglas.online/PEUGEOT-RCZ-HECKSCHEIBE-HEIZ-BJ-0310-DUNKEL-5602702280" target="_blank" rel="noopener"><span>une annonce</span></a><span> (vente) équivalente d’un pare-brise arrière, permettant ainsi de retrouver le MPN de cette pièce : 1613329480.</span></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{1613329480}</code></p>
+</div><h3 id="Higher-400-pts" data-id="Higher-400-pts"><a class="anchor hidden-xs" href="#Higher-400-pts" title="Higher-400-pts"><span class="octicon octicon-link"></span></a><span>Higher 400 pts</span></h3><p><span>L’énoncé nous indique que le groupe Manipar essaye de vendre des photos satellites de la ville de Berlin, datant du 25 Novembre 1970.</span><br>
+<span>Le service de renseignement allemand cherche à savoir si ces données ont réellement été subtilisées.</span></p><p><span>Notre objectif, si nous l’acceptons (oui), trouver en source ouverte cette photo. Le drapeau devra contenir l’identifiant d’entité de la photo satellite.</span></p><p><span>Le première étape était de vérifier si cette information était accessible depuis le moteur de recherche google.</span></p><p><span>En cherchant les mots clés </span><code>berlin satellite photo 1970</code><span>, on découvre parmi les résultats, une photo de qui correspond aux dates indiquées :</span></p><p><img src="https://www.mil-airfields.de/de1/berlin-hubschrauberlandeplatz-steinstuecken/1970-11-01-helicopter-landing-ground.jpg" alt="" loading="lazy"><br>
+<a href="https://www.mil-airfields.de/germany/berlin-steinstuecken-helicopter-landing.htm" target="_blank" rel="noopener"><span>Le site</span></a><span>, qui répertorie des bases aériennes allemandes durant la seconde guerre mondiale et la guerre froide, n’indique pas d’identifiant d’entité pour cette image mais apporte d’autres information.</span></p><p><span>La photo provient de </span><code>US Geological Survey</code><span>, d’après la légende en bas à gauche.</span></p><p><span>Cette entité américaine définit aussi comment se construit un « Entity ID » sur </span><a href="https://lta.cr.usgs.gov/DD/aerial_single_frame.html#entity_id" target="_blank" rel="noopener"><span>son site</span></a><span> :</span></p><blockquote>
+<p><strong><span>Entity ID</span></strong><br>
+<span>Field Definition:  The Entity ID consist of a two digit data set designator and the Photo ID. The unique accession photo id, developed for each agency, allows identification within the EROS database that is comparable with the agency’s original identification.</span></p>
+<p><span>Format:</span><br>
+<span>DDAPPPPPRRRFFFF</span><br>
+<span>DD = Data set designator (AR)</span><br>
+<span>A = Agency</span><br>
+<span>P = Project</span><br>
+<span>R = Roll</span><br>
+<span>F = Frame</span></p>
+<p><span>Example:</span><br>
+<span>AR5750022260121</span></p>
+</blockquote><p><span>L’objectif suivant est de trouver un site (probablement de l’US Geological Survey aka. usgs) donnant l’accès à ces images satellites avec l’identifiant d’entité.</span></p><p><span>Nous affinons la recherche google avec les nouvelles informations récupérées :</span><br>
+<code>"Entity ID" November 1970" "berlin" satellite usgs</code></p><p><span>Un </span><a href="https://historyhub.history.gov/community/military-records/blog/2021/05/21/researching-satellite-photography" target="_blank" rel="noopener"><span>nouveau site</span></a><span> apparaît, nous expliquant comment accéder aux informations des données des satellites militaires.</span></p><div class="alert alert-info">
+<p><span>Même article avec une meilleur présentation trouvé lors de l’épreuve :</span><br>
+<a href="https://www.archives.gov/research/cartographic/aerial-photography/satellite-photography" target="_blank" rel="noopener"><span>https://www.archives.gov/research/cartographic/aerial-photography/satellite-photography</span></a></p>
+</div><p><span>On apprend que les programmes de satellites américain qui nous correspond à nos dates de recherche s’appellent </span><code>CORONA, ARGON, and LANYARD Program, 1959 - 1972</code><span>.</span></p><p><img src="https://i.imgur.com/c0sFHvT.jpg" alt="" loading="lazy"></p><p><span>Rebondissons maintenant sur </span><a href="https://catalog.archives.gov/id/305943" target="_blank" rel="noopener"><span>le lien associé à ces noms de satellite</span></a><span>, on découvre alors le site “National Archives Catalog”.</span></p><p><span>Ce site contient de nombreuses archives de l’état américain, dont de nombreux documents issues de campagnes d’espionages.</span></p><div class="alert alert-info">
+<p><span>Le site vaut le coup d’œil, on y trouve notamment des </span><a href="https://catalog.archives.gov/search?q=*:*&amp;f.parentNaId=590&amp;f.level=series&amp;sort=naIdSort%20asc&amp;f.materialsType=sound" target="_blank" rel="noopener"><span>écoutes d’appels téléphoniques de personnes d’intérêts des années 1940-1980</span></a><span> que l’on peut consulter librement.</span></p>
+</div><p><span>L’épreuve semble toucher à sa fin, cependant l’enregistrement de l’archive rend public uniquement deux photographies : celles des villes de Moscou et de San Francisco.</span></p><p><img src="https://i.imgur.com/XamOxAY.png" alt="" loading="lazy"></p><p><span>Aïe, coup dur pour le joueur français.</span></p><p><span>Après beaucoup de manque de rigueur et de recherche dans le vent sur l’époque des différents programmes de photographie des satellites américains dans la fin du XXIème siècle, notre enquêteur reprend sa lecture de l’article initiale.</span></p><p><span>Très bonne initiative du joueur français (sans compter le retard), car l’article indique comment se servir d’</span><a href="https://earthexplorer.usgs.gov/" target="_blank" rel="noopener"><span>une carte interactive proposée par l’USGS</span></a><span> (tiens, tiens, tiens), permettant de visualiser la terre à partir d’images satellites provenant de différentes campagnes.</span></p><p><span>Encore plus intéressant, l’article explique que les noms des sources de données qui ont été déclassifiées :</span></p><blockquote>
+<p><span>Declass 1 (1996): For CORONA, ARGON, and LANYARD (1960-1972)</span><br>
+<span>Declass 2 (2002): For KH-7 (1963-1967) and KH-9 (1973-1980)</span><br>
+<span>Declass 3 (2013): For KH-9 (1971-1984)</span></p>
+</blockquote><p><span>Et bingo, la source Declass 1 correspond à notre période temporelle, en plus de correspondre au programme satellite vu précédemment.</span></p><p><span>Nous saisissons alors les données dans les différents filtres de recherche, comme indiqué ci-dessous :</span><br>
+<img src="https://i.imgur.com/mXLBVGA.png" alt="" loading="lazy"></p><p><span>On sélectionne la capitale Berlin (première ligne du tableau), ce qui affine encore la recherche.</span></p><p><span>Puis dans la section « Data Sets », on sélectionne la source Declass 1.</span><br>
+<img src="https://i.imgur.com/rMHbeow.png" alt="" loading="lazy"></p><p><span>La recherche est lancée et elle retourne un seul résultat, qui dispose d’un « Entity ID » :</span><br>
+<img src="https://i.imgur.com/defMOro.png" alt="" loading="lazy"></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{DS1112-2107DA031}</code></p>
+</div><div class="alert alert-info">
+<p><span>Pour votre curiosité, voici l’image que nous met à disposition l’USGS :</span></p>
+<p><img src="https://ims.cr.usgs.gov/browse/DIT/1112-2/107D/A/DS1112-2107DA031.jpg" alt="Image satellite de Berlin que nous cherchions durant toute l’épreuve." loading="lazy"></p>
+<p><span>La qualité de l’image est malheureusement mauvaise, il doit sûrement s’agir de l’image de pré-visualisation et non l’image originale. Elle doit être disponible si vous avez la motivation de vous créer un compte à </span><a href="https://earthexplorer.usgs.gov/scene/metadata/full/5e839febdccb64b3/DS1112-2107DA031/" target="_blank" rel="noopener"><span>sur le site d’archive depuis ce lien</span></a><span>.</span></p>
+</div><h3 id="The-artist-300-pts" data-id="The-artist-300-pts"><a class="anchor hidden-xs" href="#The-artist-300-pts" title="The-artist-300-pts"><span class="octicon octicon-link"></span></a><span>The artist 300 pts</span></h3><p><span>Dans cette épreuve il nous est demandé de trouver la signification de la chaîne de caractère </span><code>Untitled Collection #124242633</code><span>.</span></p><p><span>Aucun Dorks direct ou combiné ne permet d’identfier une quelconque piste.</span></p><p><span>Cependant, en saisissant </span><code>Untitled Collection</code><span> dans le moteur de recherche Google, le premier résultat est associé à l’acronyme NFT (Non-Fungible Token) :</span></p><p><img src="https://i.imgur.com/DFbBY4f.png" alt="" loading="lazy"></p><p><span>Or, ces jetons sont bien souvents associés à des œuvres au format dématérialisé, ce qui colle avec le nom de l’épreuve ainsi qu’au pseudo du </span><strong><span>Comptable</span></strong><span> (Cryptoka, visiblement friand de cybersous et potentiellement de DEEP ou </span><em><span>Dispositif d’Enregistrement Électronique Partagé</span></em><span>).</span></p><p><img src="https://i.imgur.com/gOvVZRv.png" alt="" loading="lazy"></p><p><span>En suivant le premier </span><a href="https://opensea.io/assets/0x495f947276749ce646f68ac8c248420045cb7b5e/64847163493844410900544274684431396061940982724456832672617790192307956350977" target="_blank" rel="noopener"><span>lien</span></a><span>, nous arrivons sur une page (d’un moteur de recherche NFT) contenant une chaîne de caractère similaire :</span></p><p><img src="https://i.imgur.com/A2wlWJb.png" alt="" loading="lazy"></p><p><span>Cette chaîne de caractère semble indiquer qu’il s’agit d’un titre standard couplé avec un identifiant à 9 chiffres : </span><code>Untitled Collection #[0-9]{9}</code><span>.</span></p><p><span>Il ne reste plus qu’à rechercher notre identifiant (124242633) dans la barre de recherche de ce moteur de recherche pour retrouver </span><a href="https://opensea.io/assets/0x495f947276749ce646f68ac8c248420045cb7b5e/44802646749922796400786461040155444891134296975032898117616081644789807710209" target="_blank" rel="noopener"><span>l’œuvre de Cryptoka</span></a><span> :</span></p><p><img src="https://i.imgur.com/G8U49lG.png" alt="" loading="lazy"></p><p><span>Ainsi que le drapeau :</span></p><p><img src="https://i.imgur.com/KzZrad5.png" alt="" loading="lazy"></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{NFT_1s_th3_N3xt_Bus1n3ss}</code></p>
+</div><h3 id="Catch’em-all-300-pts" data-id="Catch’em-all-300-pts"><a class="anchor hidden-xs" href="#Catch’em-all-300-pts" title="Catch’em-all-300-pts"><span class="octicon octicon-link"></span></a><span>Catch’em all 300 pts</span></h3><p><span>Dans cette épreuve, il nous est demandé de retrouver des traces d’activités commerciales qu’aurait Cryptoka sur une plateforme de vente en ligne de particulier à particulier.</span></p><p><span>Après quelques recherches (basées sur le nom de Cryptoka : Vontonberg), nous identifions un lien étrange mentionant la mise en vente d’une carte Pokémon rare :</span><br>
+<code>https://www.lacollesurloup.fr/fr/ccdifkshop/enfants/garcons/autres/1448952615-carte-pokemon&amp;usg=AOvVaw0vp7KIURoqA1WeoASv8EOS</code><span>.</span></p><p><span>Ce lien pointe sur le site de la commune de La Colle-sur-Loup, ce qui ne colle pas avec une plateforme qui mettrais en vente ce type de bien.</span></p><p><span>Par ailleurs, ce lien ne redirige pas vers une </span><a href="https://www.sepwalk.com/search/1448952615-carte-pokemon" target="_blank" rel="noopener"><span>page</span></a><span> de mise en vente de carte Pokémon :</span></p><p><img src="https://i.imgur.com/C92H4Lf.png" alt="" loading="lazy"></p><p><span>Il est donc probable que ce lien redirigeait en réalité vers une autre plateforme, prenons le lien d’origine et isolons la partie statique de l’URL via la requête Dorks : </span><code>inurl:"/enfants/garcons/autres/"</code></p><p><img src="https://i.imgur.com/iNxFiQ1.png" alt="" loading="lazy"></p><p><span>Il semblerait que ce lien pointait à l’origine vers la plateforme </span><em><span>Vinted</span></em><span>, ce qui colle avec la description (vente de particulier à particulier).</span></p><p><span>Recherchons M. Vontonberg sur la plateforme </span><em><span>Vinted</span></em><span> :</span></p><p><img src="https://i.imgur.com/qk6wWqE.png" alt="" loading="lazy"></p><p><span>Il semblerait que Cryptoka a bien mis en vente une </span><a href="https://www.vinted.fr/enfants/garcons/autres/143875952-carte-pokemon-mega-oniglali-ex-full-art" target="_blank" rel="noopener"><span>carte Pokémon</span></a><span> sur ce site :</span></p><p><img src="https://i.imgur.com/1dHillC.png" alt="" loading="lazy"></p><p><span>Il ne nous reste plus qu’à consulter qu’à consulter son </span><a href="https://www.vinted.fr/member/74341873-vontonberg" target="_blank" rel="noopener"><span>profil</span></a><span> :</span></p><p><img src="https://i.imgur.com/qJvATy2.png" alt="" loading="lazy"></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{P0k3m0n_1s_Bus1n3ss}</code></p>
+</div><h3 id="Deeper-400-pts" data-id="Deeper-400-pts"><a class="anchor hidden-xs" href="#Deeper-400-pts" title="Deeper-400-pts"><span class="octicon octicon-link"></span></a><span>Deeper 400 pts</span></h3><p><span>Peu de d’information nous permettant d’établir une piste solide était renseignée dans la consigne de cette épreuve.</span></p><p><span>Néanmoins, quelques éléments nous permettaient de nous aiguiller :</span></p><ul>
+<li><span>Une mention spéciale était ajoutée à la fin de la consigne nous invitant à ne pas “cliquer partout”, suggérant que nous pourrions tomber sur du contenu illicite.</span></li>
+<li><span>Cryptoka utiliserait un moyen d’échanger de l’information. Il est peu probable qu’il s’agisse d’une messagerie instantanée étant donné que nous devons trouver ces informations en sources ouvertes (même s’il est par exemple possible de trouver des canaux Telegram). Nous émettons donc l’hypothèse qu’il s’agit d’un collodrôme (ex : Pastebin).</span></li>
+</ul><p><span>Nous avons quand même tenté d’identfier des canaux Telegram qui pourraient coller à la description (Cryptoka aurait des activités commerciales louches), sans succès.</span></p><p><span>Partant de ces éléments, il est probable que ces informations se trouvent sur un des Internet Sombre, prenons le plus connu : Tor.</span></p><p><span>Nous allons utiliser un moteur de recherche indexant une bonne quantité de nœuds (ici Phobos) afin de </span><a href="http://phobosxilamwcg75xt22id7aywkzol6q6rfl2flipcqoc4e4ahima5id.onion/search?query=paste" target="_blank" rel="noopener"><span>rechercher des collodrômes</span></a><span> :</span></p><p><img src="https://i.imgur.com/hMCp3ss.png" alt="" loading="lazy"></p><p><span>Le troisième lien nous dirige vers </span><em><a href="http://depasteon6cqgrykzrgya52xglohg5ovyuyhte3ll7hzix7h5ldfqsyd.onion/" target="_blank" rel="noopener"><span>DeepPaste</span></a></em><span> qui en plus de nous permettre de faire des recherches dans les informations mises en ligne possède un nom qui colle avec le nom de cette épreuve :</span></p><p><img src="https://i.imgur.com/RQWbGYq.png" alt="" loading="lazy"></p><p><span>Tentons donc des mots clés.</span></p><p><span>Le nom </span><em><span>Cryptoka</span></em><span> ne semble pas fonctionner et il est peu probable que M. Vontonberg prenne le risque d’utiliser son vrai nom sur ce type de plateforme.</span></p><p><span>La consigne évoque les </span><em><span>activités commerciales louches de Cryptoka</span></em><span>, s’il s’agit de la revente d’informations confidentielles (qui pour le coup ne sont pas si confidentielles) à travers Manipar il serait judicieux de </span><a href="http://depasteon6cqgrykzrgya52xglohg5ovyuyhte3ll7hzix7h5ldfqsyd.onion/show.php?keyword=Manipar" target="_blank" rel="noopener"><span>creuser cette piste</span></a><span> :</span></p><p><img src="https://i.imgur.com/QoFnUCV.png" alt="" loading="lazy"></p><p><span>Effectivement, Cryptoka semble utiliser </span><em><span>DeepPaste</span></em><span> pour faire la </span><a href="http://depasteon6cqgrykzrgya52xglohg5ovyuyhte3ll7hzix7h5ldfqsyd.onion/show.php?md5=6e4a0913c84a225e1fe17368fe1f7bc8" target="_blank" rel="noopener"><span>promotion</span></a><span> de son activité de revente d’informations :</span></p><p><img src="https://i.imgur.com/y3Aj7sN.png" alt="" loading="lazy"></p><pre><code>Hi, I'm Karl, aka Cryptoka.
+
+To be honest, I just wanted to say that Manipar is one of the biggest confidential information business.
+If you pay us, we can give you any information you want. 
+
+Military plans, bank accounts, medical documents.. we know everything.
+
+flag{M4n1p4r_d4rk_bus1n3ss}
+</code></pre><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{M4n1p4r_d4rk_bus1n3ss}</code></p>
+</div><h3 id="Dig-the-past-400-pts" data-id="Dig-the-past-400-pts"><a class="anchor hidden-xs" href="#Dig-the-past-400-pts" title="Dig-the-past-400-pts"><span class="octicon octicon-link"></span></a><span>Dig the past 400 pts</span></h3><div class="alert alert-info">
+<p><span>In the middle of your investigation, your coworker arrives urgently in your office because he needs you.</span></p>
+<p><span>He is working on a complex case, and he received this strange message:</span><br>
+<em><span>“Remember when Kermit did his show in that cafeteria, back in January 2004? The sentinel talked about it…</span><br>
+<span>Nevermind, the source will show up on kermit’s birthday. Be there on time, please!”</span></em><span>. We think that you could find this “kermit”,</span><br>
+<span>and his birthday, so you can go back quickly on the accountant case…</span></p>
+<p><span>Format : </span><strong><span>Flag{mm-dd}</span></strong></p>
+</div><p><span>Cette épreuve est complexe car l’artiste que nous cherchons possède un nom de scène similaire à celui de Kermit la peluche grenouille.</span></p><p><img src="https://i.imgur.com/sqlqokh.png" alt="" loading="lazy"></p><p><span>Dans ce genre de cas, chaque recherche est polluée par de faux positifs dû à la popularité de l’homonyme.</span></p><p><span>Il nous est toujours possible d’exclure des termes clés comme « ventriloque » en ajoutant le caractère « - » collé au début du mot.</span><br>
+<span>Cependant, ce n’est pas avec cette astuce que nous avons résolu le défi.</span></p><p><span>Pas spécialement de méthodologie à connaître, juste besoin de trouver les bons mots clés et les bons filtres.</span></p><p><span>Les axes de recherche ont été :</span></p><ul>
+<li><strong><span>Kermit ventriloque</span></strong><span> qui a été écarté car trop d’acteurs ventriloques différents ont interprétés ce personnage, donc trop de chances de faux positifs (après une tentative sur l’interprète </span><a href="https://muppet.fandom.com/wiki/Don_Reardon" target="_blank" rel="noopener"><span>Don Reardon</span></a><span>)</span></li>
+<li><strong><span>Associer Kermit avec le pseudonyme DonGru</span></strong><span>, en supposant que Don correspondait au diminutif Donald. Cette idée provenait de l’axe de recherche précédente avec Donald Reardon.</span></li>
+<li><strong><span>The sentinel la série et le film.</span></strong><span> L’hypothèse a été écarté lorsque Neticien a mentionné le fait qu’il s’agissait sûrement d’un journal.</span></li>
+</ul><p><span>En cherchant avec les mots clés « The sentinel january 2004 » et en filtrant par dates sur le mois de Janvier et Février 2004, on finit par trouver </span><a href="https://news.google.com/newspapers?nid=DGpvO1n63MYC" target="_blank" rel="noopener"><span>un journal intitulé “Sentinel”</span></a><span>.</span></p><p><span>En feuilletant les pages du </span><a href="https://news.google.com/newspapers?nid=DGpvO1n63MYC&amp;dat=20040123&amp;printsec=frontpage&amp;hl=fr" target="_blank" rel="noopener"><span>journal du mois de Janvier</span></a><span>, on trouve l’article que nous cherchions:</span></p><p><img src="https://i.imgur.com/iODj8NM.png" alt="" loading="lazy"></p><p><span>En dessous de l’image du comédien Kermit, on obtient son nom et prénom : </span><code>Kermit Apio</code><span>.</span></p><p><span>En réalisant une recherche rapide, on obtient </span><a href="https://buzzlearn.com/kermet-apio/" target="_blank" rel="noopener"><span>un site</span></a><span> qui nous donne de nombreuses informations sur l’artiste :</span></p><ul>
+<li><strong><span>Full Name</span></strong><span>: Kermet Apio</span></li>
+<li><strong><span>Occupation</span></strong><span>: Comedian</span></li>
+<li><strong><span>Age</span></strong><span>: 54</span></li>
+<li><strong><span>Date of Birth</span></strong><span>: July 2, 1967</span></li>
+<li><strong><span>Place of Birth</span></strong><span>: Honolulu, United States</span></li>
+<li><strong><span>Star Sign</span></strong><span>: Cancer</span></li>
+<li><strong><span>Country</span></strong><span>: United States</span></li>
+<li><strong><span>Gender</span></strong><span>: Male</span></li>
+</ul><p><span>Grâce à sa date de naissance, on peut valider le drapeau en indiquant le drapeau au format </span><code>Flag{MM-DD}</code></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{07-02}</code></p>
+</div><h2 id="The-Wanderer" data-id="The-Wanderer"><a class="anchor hidden-xs" href="#The-Wanderer" title="The-Wanderer"><span class="octicon octicon-link"></span></a><span>The Wanderer</span></h2><p><span>Cette section détaillera l’ensemble des étapes pour rassembler des informations sur le membre de Manipar surnommé </span><strong><span>Le Vagabond</span></strong><span>.</span></p><h3 id="Indoor-200-pts" data-id="Indoor-200-pts"><a class="anchor hidden-xs" href="#Indoor-200-pts" title="Indoor-200-pts"><span class="octicon octicon-link"></span></a><span>Indoor 200 pts</span></h3><p><span>Il nous est demandé d’identifier la localisation du lieu depuis lequel a été prise la photo identifiée dans l’épreuve </span><code>Resources</code><span>.</span></p><p><img src="https://i.imgur.com/uOm1yyb.png" alt="" loading="lazy"></p><p><span>Un simple </span><code>strings</code><span> de la photo permet d’identifier des métadonnées EXIF en en-tête du fichier :</span></p><pre><code class="xml hljs"><div class="wrapper"><div class="gutter linenumber"><span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span></div><div class="code"><span class="hljs-tag">&lt;<span class="hljs-name">x:xmpmeta</span> <span class="hljs-attr">xmlns:x</span>=<span class="hljs-string">"adobe:ns:meta/"</span> <span class="hljs-attr">x:xmptk</span>=<span class="hljs-string">"XMP Core 6.0.0"</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-name">rdf:RDF</span> <span class="hljs-attr">xmlns:rdf</span>=<span class="hljs-string">"http://www.w3.org/1999/02/22-rdf-syntax-ns#"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">rdf:Description</span> <span class="hljs-attr">rdf:about</span>=<span class="hljs-string">""</span>
+            <span class="hljs-attr">xmlns:exif</span>=<span class="hljs-string">"http://ns.adobe.com/exif/1.0/"</span>
+            <span class="hljs-attr">xmlns:tiff</span>=<span class="hljs-string">"http://ns.adobe.com/tiff/1.0/"</span>&gt;</span>
+         <span class="hljs-tag">&lt;<span class="hljs-name">exif:GPSVersionID</span>&gt;</span>2.3.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">exif:GPSVersionID</span>&gt;</span>
+         <span class="hljs-tag">&lt;<span class="hljs-name">exif:GPSLongitude</span>&gt;</span>11,23.0793E<span class="hljs-tag">&lt;/<span class="hljs-name">exif:GPSLongitude</span>&gt;</span>
+         <span class="hljs-tag">&lt;<span class="hljs-name">exif:PixelXDimension</span>&gt;</span>346<span class="hljs-tag">&lt;/<span class="hljs-name">exif:PixelXDimension</span>&gt;</span>
+         <span class="hljs-tag">&lt;<span class="hljs-name">exif:GPSLongitudeRef</span>&gt;</span>E<span class="hljs-tag">&lt;/<span class="hljs-name">exif:GPSLongitudeRef</span>&gt;</span>
+         <span class="hljs-tag">&lt;<span class="hljs-name">exif:GPSLatitudeRef</span>&gt;</span>N<span class="hljs-tag">&lt;/<span class="hljs-name">exif:GPSLatitudeRef</span>&gt;</span>
+         <span class="hljs-tag">&lt;<span class="hljs-name">exif:GPSLatitude</span>&gt;</span>59,7.681N<span class="hljs-tag">&lt;/<span class="hljs-name">exif:GPSLatitude</span>&gt;</span>
+         <span class="hljs-tag">&lt;<span class="hljs-name">exif:PixelYDimension</span>&gt;</span>768<span class="hljs-tag">&lt;/<span class="hljs-name">exif:PixelYDimension</span>&gt;</span>
+         <span class="hljs-tag">&lt;<span class="hljs-name">tiff:ResolutionUnit</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">tiff:ResolutionUnit</span>&gt;</span>
+         <span class="hljs-tag">&lt;<span class="hljs-name">tiff:XResolution</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">tiff:XResolution</span>&gt;</span>
+         <span class="hljs-tag">&lt;<span class="hljs-name">tiff:YResolution</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">tiff:YResolution</span>&gt;</span>
+         <span class="hljs-tag">&lt;<span class="hljs-name">tiff:Orientation</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">tiff:Orientation</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">rdf:Description</span>&gt;</span>
+   <span class="hljs-tag">&lt;/<span class="hljs-name">rdf:RDF</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">x:xmpmeta</span>&gt;</span>
+</div></div></code></pre><p><strong><span>Coordonnées :</span></strong><span> </span><code>59°7.681'N,11°23.0793'E</code></p><p><span>Une fois les coordonnées saisies dans Google Maps, il semblerait que la photo ait été prise à </span><strong><span>Halden</span></strong><span> en Norvège.</span></p><p><img src="https://i.imgur.com/Xb9lu8b.png" alt="" loading="lazy"></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{Halden}</code></p>
+</div><h3 id="Tourism-200-pts" data-id="Tourism-200-pts"><a class="anchor hidden-xs" href="#Tourism-200-pts" title="Tourism-200-pts"><span class="octicon octicon-link"></span></a><span>Tourism 200 pts</span></h3><p><span>Dans cette épreuve, il nous est demandé de retrouver le </span><strong><span>nom</span></strong><span> du lieu depuis lequel la photo ci-dessous a été prise :</span></p><p><img src="https://i.imgur.com/vKfjjRe.jpg" alt="" loading="lazy"></p><p><span>La précédente épreuve exploitait la présence de coordonnées GPS dans des métadonnées EXIF, il est donc peu probable que ce même mécanisme soit réutilisé.</span></p><p><span>Dans le doute, faisont une petite vérification :</span></p><pre><code class="bash hljs"><div class="wrapper"><div class="gutter linenumber"><span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span></div><div class="code">SYSTEM@SYSTEM:~/nope$ exiftool building.png
+ExifTool Version Number         : 11.88
+File Name                       : building.png
+Directory                       : .
+File Size                       : 1128 kB
+File Modification Date/Time     : 2021:12:04 14:42:10+01:00
+File Access Date/Time           : 2021:12:05 22:15:02+01:00
+File Inode Change Date/Time     : 2021:12:04 14:42:10+01:00
+File Permissions                : rw-rw-r--
+File Type                       : PNG
+File Type Extension             : png
+MIME Type                       : image/png
+Image Width                     : 770
+Image Height                    : 625
+Bit Depth                       : 8
+Color Type                      : RGB with Alpha
+Compression                     : Deflate/Inflate
+Filter                          : Adaptive
+Interlace                       : Noninterlaced
+SRGB Rendering                  : Perceptual
+Gamma                           : 2.2
+Pixels Per Unit X               : 3779
+Pixels Per Unit Y               : 3779
+Pixel Units                     : meters
+Image Size                      : 770x625
+Megapixels                      : 0.481
+</div></div></code></pre><p><span>Evidemment, aucune coordonnée GPS.</span></p><p><span>La qualité du cliché est relativement faible mais possède suffisament d’élements distinctifs (facade du bâtiment) pour qu’une recherche d’image inversée puisse fonctionner.</span></p><p><span>Certains moteurs de recherche s’appuient sur des modèles de reconnaissance d’image qui semblent plus spécialisés sur certains types d’images.</span></p><p><img src="https://i.imgur.com/53bEIdU.png" alt="" loading="lazy"></p><p><span>Dans notre cas il est recommandé d’utiliser les modèles de Google et/ou Yandex, j’ai souvent de bons résultats avec Yandex, tentons d’abord celui-ci.</span></p><p><img src="https://i.imgur.com/E4nUNU9.jpg" alt="" loading="lazy"></p><p><a href="https://yandex.com/images/search?rpt=imageview&amp;url=https%3A%2F%2Favatars.mds.yandex.net%2Fget-images-cbir%2F1367916%2FXaNoCjOnj23cEKChxhulNw3403%2Forig&amp;cbir_id=1367916%2FXaNoCjOnj23cEKChxhulNw3403" target="_blank" rel="noopener"><span>Recherche Yandex</span></a></p><p><span>Bingo ! Une </span><a href="https://yandex.com/images/search?cbir_page=similar&amp;pos=7&amp;url=https%3A%2F%2Favatars.mds.yandex.net%2Fget-images-cbir%2F1367916%2FXaNoCjOnj23cEKChxhulNw3403%2Forig&amp;cbir_id=1367916%2FXaNoCjOnj23cEKChxhulNw3403&amp;img_url=https%3A%2F%2Fkateinkbh.files.wordpress.com%2F2011%2F07%2Fdsc_4584-edit.jpg&amp;rpt=imageview" target="_blank" rel="noopener"><span>facade similaire</span></a><span> est visible dans l’onglet </span><strong><span>Similar images</span></strong><span> (7ème en partant du haut).</span></p><p><em><span>La mention </span><strong><span>The image source is outdated or unavailable</span></strong><span> est dû au fait que nous avons revisualisé le résultat de cette recherche plusieurs jours après l’épreuve</span></em></p><p><span>Cette photo nous amène sur un </span><a href="https://kateinkbh.wordpress.com/" target="_blank" rel="noopener"><span>blog</span></a><span> qui nous permet d’identifier ce bâtiment.</span></p><p><span>Il s’agit du château </span><strong><span>Koldinghus</span></strong><span> situé au Danemark.</span></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{Koldinghus}</code></p>
+</div><h3 id="Find-the-road-200-pts" data-id="Find-the-road-200-pts"><a class="anchor hidden-xs" href="#Find-the-road-200-pts" title="Find-the-road-200-pts"><span class="octicon octicon-link"></span></a><span>Find the road 200 pts</span></h3><p><span>Cette fois-ci, l’épreuve se corse légèrement, on nous demande de retrouver le nom de la </span><strong><span>rue</span></strong><span> depuis laquelle le cliché ci-dessous a été pris :</span></p><p><img src="https://i.imgur.com/iYmGeRF.png" alt="" loading="lazy"></p><p><span>Bon, éliminons d’office les EXIF et la recherche inversée, la présence du filigrane </span><em><span>Google</span></em><span> dans le coin supérieur gauche de la photo nous suggérant que nous allons nous lancer dans une manche de </span><strong><span>Geoguessr</span></strong><span> :</span></p><p><img src="https://i.imgur.com/9GATCTY.png" alt="" loading="lazy"></p><p><span>Deux bâtiments singuliers retiennent mon attention :</span></p><ol>
+<li><span>Un bâtiment ressemblant à une gare.</span></li>
+</ol><p><span>Celui-ci expose une devanture sur lequel semble être inscrit </span><em><span>Hauptbahnkof</span></em><span>.</span></p><p><img src="https://i.imgur.com/mzfVy23.png" alt="" loading="lazy"></p><p><span>Bon, après une recherche, il s’agit du mot </span><em><span>Hauptbahnhof</span></em><span> (avec tous ces pixels qui jouent au Twister ça n’était pas évident).</span></p><p><span>On distingue aussi un logo </span><em><span>DB</span></em><span>, tentons donc une recherche </span><code>"Hauptbahnhof DB"</code><span> :</span></p><p><img src="https://i.imgur.com/nCDR8aI.jpg" alt="" loading="lazy"></p><p><span>Ces images semblent indiquer (logo au dessus d’une gare et sur un train) qu’il s’agirait d’une entreprise ferrovière privée allemande (DB étant l’acronyme de </span><em><span>Deutsche Bahn</span></em><span>).</span></p><ol start="2">
+<li><span>Un bâtiment ressemblant à un hôtel.</span></li>
+</ol><p><span>Ce batiment expose lui aussi une devanture sur lequel est inscrit deux mots :</span></p><p><img src="https://i.imgur.com/7sPUdqI.png" alt="" loading="lazy"></p><p><span>Le 1er est le mot </span><em><span>ESSEN</span></em><span> qui d’après les quelques restes de mes cours d’allemands correspond au verbe </span><em><span>manger</span></em><span>.</span></p><p><img src="https://i.imgur.com/ePxKwds.png" alt="" loading="lazy"><br>
+<em><span>Hein ?</span></em></p><p><span>Le deuxième mot est masqué par des œils-de-bœuf (oui, on dit œils et pas yeux) et n’a pas l’air réellement exploitable.</span></p><p><span>Pourquoi écrire </span><em><span>MANGER</span></em><span> au dessus de ce qui semble être un hôtel ?</span></p><p><span>Il aurait été plus adéquat d’y écrire </span><em><span>DORMIR</span></em><span> (ou </span><em><span>JOUER AU TWISTER</span></em><span>) ?</span></p><p><span>Tout simplement parce qu’une ville allemande s’appelle </span><em><span>MANGER</span></em><span> (logique) :</span></p><p><img src="https://i.imgur.com/T1vJ4rn.png" alt="" loading="lazy"></p><p><span>Il ne reste plus qu’à tenter </span><code>Essen Hauptbahnhof</code><span> dans Google Maps :</span></p><p><img src="https://i.imgur.com/3E4hY7B.png" alt="" loading="lazy"></p><p><span>Et de passer en vision véhicule :</span></p><p><img src="https://i.imgur.com/L8fIDNG.jpg" alt="" loading="lazy"></p><p><span>Pour retrouver le </span><a href="https://www.google.com/maps/@51.4523709,7.0143672,3a,75y,253.02h,91.69t/data=!3m6!1e1!3m4!1sRvaF4KwIJ31jtDExy1745w!2e0!7i13312!8i6656?hl=en" target="_blank" rel="noopener"><span>lieu</span></a><span> pris en photo depuis la rue </span><strong><span>Hollestraße</span></strong><span> de la ville d’Essen en allemagne.</span></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{Hollestraße}</code></p>
+</div><h3 id="On-the-road-again-200-pts" data-id="On-the-road-again-200-pts"><a class="anchor hidden-xs" href="#On-the-road-again-200-pts" title="On-the-road-again-200-pts"><span class="octicon octicon-link"></span></a><span>On the road again 200 pts</span></h3><p><span>Un nouveau cliché nous est soumis pour analyse, avec cette fois-ci un environnement rural.</span></p><p><span>On nous demande de retrouver le nom du lieu (ville/village) le plus proche de l’emplacement depuis lequel le cliché a été pris.</span></p><p><span>Au premier abord, ce manque d’éléments sur lesquels il serait possible de pivoter semble rajouter de la difficulté à cette épreuve.</span></p><p><span>Pourtant, cela limite drastiquement les pistes à explorer et par extension les fausses pistes (surtout que contrairement à un cas réel de ROSO, cette épreuve est forcément réalisable).</span></p><p><span>Vous connaissez la chanson, décomposons le problème :</span></p><p><img src="https://i.imgur.com/oMkUF2u.png" alt="" loading="lazy"></p><ol>
+<li><span>Un panneau de promotion pour la sécurité routière</span></li>
+</ol><p><span>Ce panneau est au centre de l’image et attire forcément directement notre attention.</span></p><p><span>Le slogan </span><em><span>LA VITESSE TUE</span></em><span> semble être lié à une campagne de sensibilisation à la sécurité routière.</span></p><p><span>Sur la base du slogan, il est envisageable de retrouver quel organisme a initié cette campagne et quelle zone géographique elle couvre.</span></p><p><img src="https://i.imgur.com/Kjucvpc.png" alt="" loading="lazy"></p><p><span>Et effectivement, en rechercheant </span><code>"la vitesse tue" "panneau"</code><span> via la recherche d’images du moteur Google, on identifie une image similaire au panneau :</span></p><p><img src="https://i.imgur.com/C8vErzK.jpg" alt="" loading="lazy"></p><p><span>La qualité de </span><a href="https://pasdevoiture.wordpress.com/2013/10/14/toujours-plus-vite/" target="_blank" rel="noopener"><span>l’image</span></a><span> étant bien meilleure, nous pouvons y lire : </span><em><span>Le gouvernement du Grand-Duché du Luxembourg</span></em><span>.</span></p><p><img src="https://i.imgur.com/VU15bRh.png" alt="" loading="lazy"></p><ol start="2">
+<li><span>Un panneau de direction</span></li>
+</ol><p><span>Deux débuts de noms de lieux sont inscrits sur ce panneau :</span></p><ul>
+<li><span>VICH</span></li>
+<li><span>BISS</span></li>
+</ul><p><img src="https://i.imgur.com/wh2NV8k.png" alt="" loading="lazy"></p><p><span>Le Luxembourg n’ayant pas une superficie importante, un recoupement des noms de lieux luxembourgeois avec ces indices devrait réduire notre zone de recherche.</span></p><p><span>En utilisant cette liste Wikipédia des </span><a href="https://fr.wikipedia.org/wiki/Liste_des_communes_du_Luxembourg" target="_blank" rel="noopener"><span>noms de communes luxembourgeoises</span></a><span> nous savons désormais (via la magie du CTRL+F) que ces deux lieux sont :</span></p><ul>
+<li><span>Vichten</span></li>
+<li><span>Bissen</span></li>
+</ul><p><span>Il nous suffit donc de passer en caméra véhicule Google dans cette zone relativement restreinte et de chercher ce fameux panneau :</span></p><p><img src="https://i.imgur.com/V1XZEy9.png" alt="" loading="lazy"></p><p><span>Après quelques minutes, nous retrouvons cette </span><a href="https://www.google.com/maps/@49.7758917,6.0853911,3a,16.1y,200.58h,87.57t/data=!3m9!1e1!3m7!1sEajjORf8J0ftVPvDNlTSlQ!2e0!7i13312!8i6656!9m2!1b1!2i56" target="_blank" rel="noopener"><span>intersection</span></a><span> à proximité du lieu-dit </span><strong><span>Roost</span></strong><span>.</span></p><p><img src="https://i.imgur.com/U4el55c.jpg" alt="" loading="lazy"></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{Roost}</code></p>
+</div><h3 id="Fly-300-pts" data-id="Fly-300-pts"><a class="anchor hidden-xs" href="#Fly-300-pts" title="Fly-300-pts"><span class="octicon octicon-link"></span></a><span>Fly 300 pts</span></h3><p><strong><span>Fly</span></strong><span> est l’épreuve du chemin </span><strong><span>The Wanderer</span></strong><span> qui nous aura pris le plus de temps, nous avons manuellement recherché le lieu bien qu’une technique « semi-automatique » permettait d’accélérer la recherche.</span></p><p><span>Le but de cette épreuve était d’identifier le lieu pris sur la photo satellite ci-dessous :</span></p><p><img src="https://i.imgur.com/VMiAYRC.png" alt="" loading="lazy"></p><p><span>Dans un premier temps, identifions les points clés présents sur cette image :</span></p><ol>
+<li><span>Une piste et des marquages au sol</span></li>
+</ol><p><span>Deux pistes perpendiculaires (péremptoires ?) ainsi qu’un marquage au sol sont nettements visibles à droite de l’image.</span></p><p><span>Cette piste n’a pas l’air d’être faite de bitume mais plutôt de terre ou d’herbe.</span></p><ol start="2">
+<li><span>Des bâtiments</span></li>
+</ol><p><span>Au centre de l’image, nous pouvons identifier des bâtiments qui ressemblent à un groupement de hangars.</span></p><p><span>Nous pouvons aussi relever la présence d’une forme ronde au milieu d’un carré de végétation.</span></p><p><img src="https://i.imgur.com/v294QDS.png" alt="" loading="lazy"></p><ol start="3">
+<li><span>Un petit avion</span></li>
+</ol><p><span>Proche des bâtiments, il est possible d’identifier un petit avion.</span></p><p><img src="https://i.imgur.com/occcyAv.png" alt="" loading="lazy"></p><p><span>Une fois ces éléments mis ensembles, il est possible d’émettre l’hypothèse qu’il s’agit de la photo d’un petit aérodrome (hangars, la piste n’est pas en dur &amp; présence d’un petit avion).</span></p><p><span>La forme particulière de la piste ainsi que des constructions nous permettra de reconnaitre plus facilement le lieu dans nos recherches.</span></p><p><span>D’après la consigne, ce lieu est situé dans l’Est de la France.</span></p><p><span>Grâce à une </span><a href="https://www.google.com/maps/d/u/0/viewer?mid=1HRVyeIJvNvLrVxaCrExPLrxQWqg&amp;ll=40.69062906365695%2C10.12627331571509&amp;z=5" target="_blank" rel="noopener"><span>liste</span></a><span> des aérodromes de France, nous avons pû commencer nos recherches :</span></p><p><img src="https://i.imgur.com/ykWdItp.jpg" alt="" loading="lazy"></p><p><span>Etant donné que le dernier lieu visité par DonGru était au Luxembourg, nous avons commencé par chercher des aérodromes proches de la frontière, sans succès.</span></p><p><span>Après plusieurs dizaines de minutes de recherche, nous avons décidé de rechercher un peu plus au sud et nous avons fini par tomber sur </span><a href="https://www.google.com/maps/place/Aerodrome+of+Til-Ch%C3%A2tel/@47.5456953,5.2075626,613m/data=!3m1!1e3!4m5!3m4!1s0x47ed42409274ac3b:0x995c3d1a2fc11526!8m2!3d47.5445936!4d5.2064453" target="_blank" rel="noopener"><span>l’aérodrome de Til-Chatel</span></a><span>.</span></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{Til-Châtel}</code></p>
+</div><p><strong><span>Bonus</span></strong></p><p><span>Pendant l’écriture de ce rapport, la résolution de cette épreuve nous a parrue quelque peu chaotique (un peu comme des pixels qui jouent au Twister).</span></p><p><span>En effet, en quelque minutes il est possible de rédiger un petit script qui importe un fichier de coordonnées, supprime ceux qui ne sont pas dans l’Est de la France et qui prend des captures d’écran d’un navigateur sur Google Maps :</span></p><pre><code class="python hljs"><div class="wrapper"><div class="gutter linenumber"><span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span></div><div class="code"><span class="hljs-keyword">import</span> geopandas <span class="hljs-keyword">as</span> gpd
+<span class="hljs-keyword">import</span> fiona
+<span class="hljs-keyword">import</span> gmplot
+<span class="hljs-keyword">import</span> time
+<span class="hljs-keyword">import</span> os 
+
+<span class="hljs-keyword">from</span> selenium <span class="hljs-keyword">import</span> webdriver
+
+<span class="hljs-comment"># Init</span>
+<span class="hljs-comment">## CONST</span>
+tmp_file = <span class="hljs-string">"tmp_map.html"</span>
+<span class="hljs-comment">## GeoPandas ajout du convertisseur de fichier KML vers GeoDataframe</span>
+gpd.io.file.fiona.drvsupport.supported_drivers[<span class="hljs-string">'KML'</span>] = <span class="hljs-string">'rw'</span>
+<span class="hljs-comment">## Selenium </span>
+<span class="hljs-comment">## /!\ ne pas oublier d'installer le pilote associé</span>
+driver = webdriver.Firefox()
+<span class="hljs-comment">## OS</span>
+working_dir = os.getcwd()
+
+
+<span class="hljs-comment"># On charge le fichier de coordonnées</span>
+dataframe = gpd.read_file(<span class="hljs-string">'fly.kml'</span>, driver=<span class="hljs-string">'KML'</span>)
+<span class="hljs-comment"># On retire les points en dessous d'une latitude de 2.5 (à l'ouest de la France)</span>
+dataframe_est = dataframe[dataframe[<span class="hljs-string">"geometry"</span>].x &gt; <span class="hljs-number">2.5</span>]
+<span class="hljs-keyword">del</span> dataframe
+
+
+<span class="hljs-comment"># Itération sur les points dans l'Est de la France</span>
+<span class="hljs-keyword">for</span> index, row <span class="hljs-keyword">in</span> dataframe_est.iterrows():
+    gmap_tmp = gmplot.GoogleMapPlotter(row[<span class="hljs-string">"geometry"</span>].y,      <span class="hljs-comment"># Longitude</span>
+                                       row[<span class="hljs-string">"geometry"</span>].x,      <span class="hljs-comment"># Latitude</span>
+                                       <span class="hljs-number">17</span>,                     <span class="hljs-comment"># On zoom un peu</span>
+                                       map_type=<span class="hljs-string">"satellite"</span>)   <span class="hljs-comment"># On force le rendu satellite</span>
+    gmap_tmp.draw(tmp_file)
+    driver.get(<span class="hljs-string">f"file://<span class="hljs-subst">{working_dir}</span>/<span class="hljs-subst">{tmp_file}</span>"</span>)
+    time.sleep(<span class="hljs-number">3</span>)
+    driver.save_screenshot(<span class="hljs-string">f"<span class="hljs-subst">{working_dir}</span>/FLY/<span class="hljs-subst">{row.Name}</span>.png"</span>)
+</div></div></code></pre><p><span>L’avantage de ce mode de fonctionnement est qu’étant donné qu’on utilise le pilote Gecko en mode graphique, il est possible de visualiser la fenêtre de navigateur ouverte par Selenium ainsi que la photo de cette épreuve sur un autre écran pour identifier bien plus efficacement l’aérodrome :</span></p><p><img src="https://i.imgur.com/9jbGwVl.jpg" alt="" loading="lazy"></p><p><span>Il est fort probable qu’il y ai des solutions bien plus optimales pour résoudre cette épreuve mais ce script servira sûrement pour d’autres CTF :-).</span></p><h3 id="The-Statue-200-pts" data-id="The-Statue-200-pts"><a class="anchor hidden-xs" href="#The-Statue-200-pts" title="The-Statue-200-pts"><span class="octicon octicon-link"></span></a><span>The Statue 200 pts</span></h3><p><span>Dans cette épreuve il nous est demandé de retrouver le lieu depuis lequel la photo ci-dessous a été prise :</span></p><p><img src="https://i.imgur.com/Lphwxpr.png" alt="" loading="lazy"></p><p><span>Trois éléments semblent importants sur cette image.</span></p><ol>
+<li><span>Une plante</span></li>
+</ol><p><span>Une plante est visible au second plan de cette image.</span></p><p><img src="https://i.imgur.com/je7TgAW.png" alt="" loading="lazy"></p><p><span>Il est parfois possible de restreindre une zone de recherche en se basant sur la végétation.</span></p><p><span>Malheureusement, en se basant sur </span><a href="https://identify.plantnet.org/fr/the-plant-list/species/Cycas%20revoluta%20Thunb./data" target="_blank" rel="noopener"><span>un site</span></a><span> qui permet d’identifier le type d’une plante depuis une photo, il semblerait que cette plante (Cycas du Japon) pousse un peu partout sur le globe :</span></p><p><img src="https://i.imgur.com/1FGhR95.png" alt="" loading="lazy"></p><ol start="2">
+<li><span>Une villa ?</span></li>
+</ol><p><span>Un bâtiment ressemblant à une villa est visible à l’arrière plan de cette photo.</span></p><p><span>Il s’agit là aussi d’une fausse piste, la photo étant assez sombre elle donne un aspect uniforme à ce qui est en réalité un ensemble de bâtiments distincts.</span></p><p><img src="https://i.imgur.com/kxx8E65.png" alt="" loading="lazy"></p><ol start="3">
+<li><span>La statue</span></li>
+</ol><p><span>Le troisième point est bien plus intéressant.</span></p><p><img src="https://i.imgur.com/umX4Aor.png" alt="" loading="lazy"></p><p><span>La statue pourrait être une représentation du </span><em><span>Petit Prince de Saint-Exupéry</span></em><span>, plusieurs éléments confirment cette hypothèse :</span></p><ul>
+<li><span>Les cheveux ébourifés;</span></li>
+<li><span>L’expression et l’aspect du visage (points en guise d’yeux, un air ébahi);</span></li>
+<li><span>Les habits (noeud papillon et ensemble);</span></li>
+<li><span>La pose.</span></li>
+</ul><p><img src="https://i.imgur.com/FR4z5pV.png" alt="" loading="lazy"></p><p><span>Basons notre recherche sur cette fameuse statue, en tapant </span><code>"statue" "petit prince" "france"</code><span> il est possible d’identifier une pose similaire (coin inférieur gauche) sur une photo d’une statue du Petit Prince :</span></p><p><img src="https://i.imgur.com/7t90xiU.jpg" alt="" loading="lazy"></p><p><span>En fouillant sur </span><a href="https://petit-prince-collection.com/lang/album.php?lang=fr" target="_blank" rel="noopener"><span>le site</span></a><span> hébergeant cette photo, il est possible d’identfier dans </span><a href="https://petit-prince-collection.com/images/album/large/pavalat-les-flots.jpg" target="_blank" rel="noopener"><span>l’URL</span></a><span> </span><code>https://petit-prince-collection.com/images/album/large/pavalat-les-flots.jpg</code><span> le nom d’une ville depuis laquelle la photo a potentiellement été prise.</span></p><p><span>En se rendant à Pavalas-les-Flots depuis Google Maps, nous retrouvons bien le rond point sur lequel est exposé cette statue :</span></p><p><img src="https://i.imgur.com/6CYEAyZ.jpg" alt="" loading="lazy"></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{Palavas-les-Flots}</code></p>
+</div><h3 id="Further-500-pts" data-id="Further-500-pts"><a class="anchor hidden-xs" href="#Further-500-pts" title="Further-500-pts"><span class="octicon octicon-link"></span></a><span>Further 500 pts</span></h3><p><span>L’épreuve nous demande de trouver la prochaine destination de notre voyageur. Il nous est aussi indiqué que nous devons nous baser sur toutes les informations que nous avons récupéré jusqu’à maintenant.</span></p><p><span>Commençons par inscrire l’ensemble des lieux où nous avons identifié notre cible durant les épreuves précédentes sur une carte :</span></p><p><img src="https://i.imgur.com/lqETMTq.png" alt="" loading="lazy"></p><p><span>La trajectoire de notre voyageur se déplace tout droit vers son point de rendez-vous, comme indiqué dans le message de Cryptoka à DonGru.</span></p><p><span>En zoomant sur la zone de la prochaine potentielle destination, on tombe sur l’archipel des Baléares.</span></p><p><img src="https://i.imgur.com/NFt6peC.png" alt="" loading="lazy"></p><p><span>Durant l’épreuve « Where are you? », on apprenait que la blogueuse Ema Peetars aka Chainburst avait été en voyage erasmus à Ibiza avec ses trois meilleurs amis sur une de ses publications Facebook.</span></p><p><span>Cette fois-ci sur le profil VKontakt d’Ema, elle indique qu’elle vient d’arriver à l’hôtel Royal plaza.</span></p><p><img src="https://i.imgur.com/ZrkFh71.png" alt="" loading="lazy"></p><p><span>Cet hôtel se situe à Ibiza, ce qui vient recouper la première information présente sur son profil Facebook.</span></p><p><span>Enfin, la section du message de Cryptoka à DonGru </span><code>make sure C. will be there on time</code><span> fait référence à Chainburst, ce qui veut dire que le lieu de rendez-vous semble être à Ibiza.</span></p><p><span>Nous essayons cette hypothèse et obtenons la validation de l’épreuve.</span></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{Ibiza}</code></p>
+</div><h2 id="The-meeting-300-pts" data-id="The-meeting-300-pts"><a class="anchor hidden-xs" href="#The-meeting-300-pts" title="The-meeting-300-pts"><span class="octicon octicon-link"></span></a><span>The meeting 300 pts</span></h2><p><span>Cette épreuve nous demande de revenir sur l’ensemble des informations que nous avons récolté au cours des épreuves précédentes, afin de trouver les informations suivantes :</span></p><ul>
+<li><span>la ville du rendez-vous</span></li>
+<li><span>le lieu du rendez-vous</span></li>
+<li><span>la date du rendez-vous</span></li>
+</ul><p><span>Avec les trois thématiques de cette épreuve, on comprend alors que chaque thème nous apporte une réponse.</span></p><p><span>Nous avons déjà déduit la ville et le lieu dans l’épreuve précédente.</span></p><p><span>Cependant, la date reste encore une énigme.</span></p><p><span>Dans un premier temps, nous avons pensé qu’il s’agissait du résultat de l’épreuve «&nbsp;Dig&nbsp;the&nbsp;past&nbsp;».</span></p><p><span>Cependant la soumission du résultat </span><code>Flag{Ibiza|Royal plaza|2021-07-02}</code><span>  est refusée.</span></p><p><span>Notre seconde hypothèse se basait sur la date de téléversement du fichier TODO.txt et au message qu’il contient.</span></p><p><span>En partant du principe que DonGru ait lu le message le jour où le fichier a été téléversé, et en se basant sur ce qu’indique le message suivant :</span><br>
+<code>DonGru, you know where to go. Be there in 5 days, we have an agreement.</code><br>
+<img src="https://i.imgur.com/d6037Kd.png" alt="" loading="lazy"></p><p><span>On peut réaliser le calcul suivant :</span><br>
+<span>25 Novembre 2021 + 5 jours = 30 Novembre 2021</span></p><p><span>La soumission du résultat </span><code>Flag{Ibiza|Royal plaza|2021-11-30}</code><span> nous est aussi refusée, contredisant ainsi notre seconde hypothèse.</span></p><p><span>Nous avons alors remis en question notre méthode de recherche.</span></p><p><span>Les deux premiers indices semblait provenir d’un thème respectif :</span></p><ul>
+<li><span>The Wanderer -&gt; Ibiza</span></li>
+<li><span>The Blogger -&gt; Royal plaza</span></li>
+<li><span>The Accountant -&gt; ???</span></li>
+</ul><p><span>En suivant cette logique, nous avons commencé à passer au peigne fin l’ensemble des informations récupérées sur le thème du comptable.</span></p><p><span>C’est là qu’un élément nous a alors sauté aux yeux.</span></p><p><span>Le compte Vinted de Karl VonTonberg aka Cryptoka dispose d’une description indiquant la phrase suivante :</span><br>
+<code>Please ! Do not buy me anything on 04 dec. 2021. I will be off.</code></p><p><span>Karl fait sûrement référence à la date de rendez-vous, à laquelle il ne sera pas disponible.</span></p><p><span>Nous testons cette nouvelle hypothèse, et soulagement, elle s’avère être bonne.</span></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{Ibiza|Royal plaza|2021-12-04}</code></p>
+</div><div class="alert alert-info">
+<p><span>Cette épreuve permettait de soumettre uniquement 5 réponses, d’où le soulagement de l’avoir enfin validé.</span></p>
+</div><h2 id="The-boss" data-id="The-boss"><a class="anchor hidden-xs" href="#The-boss" title="The-boss"><span class="octicon octicon-link"></span></a><span>The boss</span></h2><h3 id="Frame-100-pts" data-id="Frame-100-pts"><a class="anchor hidden-xs" href="#Frame-100-pts" title="Frame-100-pts"><span class="octicon octicon-link"></span></a><span>Frame 100 pts</span></h3><p><span>Cette épreuve nous demande d’analyser une vidéo pour y trouver une message caché.</span></p><p><span>En réalisant des poses régulières dans la vidéo, on arrive à trouver trois morceaux de drapeau :</span></p><p><img src="https://i.imgur.com/l1b1SyV.png" alt="" loading="lazy"></p><p><code>3very_</code></p><p><img src="https://i.imgur.com/ORJ1Brg.png" alt="" loading="lazy"></p><p><code>flag{An4lyz3</code></p><img src="https://i.imgur.com/wgR9r9N.png" width="300px"><p><code>Fr4m3}</code></p><p><span>En mettant bout à bout ces trois morceaux, on obtient le drapeau final :</span></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{An4lyz3_3very_Fr4m3}</code></p>
+</div><div class="alert alert-info">
+<p><img src="https://i.imgur.com/bpHiXi0.png" alt="" loading="lazy"></p>
+<p><span>Note potentiellement utile pour la suite.</span></p>
+</div><h3 id="Jason-200-pts" data-id="Jason-200-pts"><a class="anchor hidden-xs" href="#Jason-200-pts" title="Jason-200-pts"><span class="octicon octicon-link"></span></a><span>Jason 200 pts</span></h3><p><span>En complément des morceux de drapeau, il est possible d’apercevoir des identificateurs d’ensembles de services (SSID) :</span></p><p><img src="https://i.imgur.com/W3cp2kp.png" alt="" loading="lazy"></p><p><span>L’objectif de cette épreuve est de retrouvrer l’adresse MAC du point d’accès </span><strong><span>ManiparWifi</span></strong><span>.</span></p><p><span>Il existe un outil qui cartographie des réseaux Wi-Fi : </span><a href="https://wigle.net" target="_blank" rel="noopener"><span>WiGLE</span></a><span>.</span></p><p><span>Ce service permet notamment de retrouver des points d’accès Wi-Fi en filtrant sur plusieurs critères tel que le </span><a href="" target="_blank" rel="noopener"><span>SSID</span></a><span>, nous permettant ainsi de retrouver l’adresse MAC de ce point d’accès : </span><code>2A:AC:50:E8:35:62</code><span>.</span></p><p><img src="https://i.imgur.com/TVTradp.png" alt="" loading="lazy"></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{2A:AC:50:E8:35:62}</code></p>
+</div><h3 id="Source-200-pts" data-id="Source-200-pts"><a class="anchor hidden-xs" href="#Source-200-pts" title="Source-200-pts"><span class="octicon octicon-link"></span></a><span>Source 200 pts</span></h3><p><span>On nous indique dans l’énoncé qu’un nouveau membre a été découvert. Son pseudonyme est </span><code>IntelBender</code><span>. On apprend qu’il s’agit d’une personne maîtrisant les sujets d’informatique.</span></p><p><span>Naturellement, nous utilisons l’outil </span><a href="https://whatsmyname.app/" target="_blank" rel="noopener"><span>WhatsMyName</span></a><span> pour trouver les comptes associés à ce pseudonyme et on obtient :</span></p><p><img src="https://i.imgur.com/t1pu8Qq.png" alt="" loading="lazy"></p><ul>
+<li><span>Un </span><a href="https://github.com/intelbender" target="_blank" rel="noopener"><span>compte GitHub</span></a><span>, une plateforme de partage de code source d’application.</span></li>
+<li><span>Un </span><a href="https://keybase.io/IntelBender" target="_blank" rel="noopener"><span>compte Keybase</span></a><span>, une plateforme permettant de signer ses appareils en utilisant une clé gpg.</span></li>
+</ul><p><span>Le compte d’</span><code>intelbender</code><span> possède un seul dépôt de code public intitulé </span><a href="https://github.com/intelbender/contact" target="_blank" rel="noopener"><span>«&nbsp;contact&nbsp;»</span></a><span>, qui contient le drapeau que nous cherchons, dans le fichier </span><code>README.md</code><span> affiché par défaut sur github.</span></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{G1thub_is_th3_pl4ce_t0_B3}</code></p>
+</div><h3 id="Trebel-bass-ut-base-200-pts" data-id="Trebel-bass-ut-base-200-pts"><a class="anchor hidden-xs" href="#Trebel-bass-ut-base-200-pts" title="Trebel-bass-ut-base-200-pts"><span class="octicon octicon-link"></span></a><span>Trebel, bass, ut base 200 pts</span></h3><p><span>Comme expliqué précédemment, nous avons trouvé en plus du compte GitHub, </span><a href="https://keybase.io/IntelBender" target="_blank" rel="noopener"><span>un compte KeyBase</span></a><span>.</span></p><p><span>La description de ce compte présente le drapeau :</span></p><div class="alert alert-success">
+<p><strong><span>Drapeau</span></strong><br>
+<code>Flag{IntelBender_1s_0n_K3ybase}</code></p>
+</div><h3 id="Decrypt-age-400-pts" data-id="Decrypt-age-400-pts"><a class="anchor hidden-xs" href="#Decrypt-age-400-pts" title="Decrypt-age-400-pts"><span class="octicon octicon-link"></span></a><span>Decrypt age 400 pts</span></h3><p><span>Le challenge lit les deux challenges précédent.</span></p><p><span>Le dépôt github contient un fichier </span><code>contact.txt</code><span>. En se basant sur les informations du Keybase (en l’occurence la clé publique gpg), l’objectif est de déchiffrer le contenu du fichier contact qui est chiffré.</span></p><p><span>Nous avons rapidement identifié le type de chiffrement en remarquant que le début de chaque message était identique : </span><code>kXR7VktZdyH7rvq</code><span>.</span></p><p><span>En cherchant cette chaîne de caractère sur google </span><code>"kXR7VktZdyH7rvq"</code><span>, on obtenait </span><a href="https://pastebin.com/hQ4BqTkS" target="_blank" rel="noopener"><span>un fichier dans pastebin.com</span></a><span> qui indiquait le chiffrement avec l’entête suivante : </span><code>BEGIN KEYBASE SALTPACK SIGNED MESSAGE.</code></p><p><span>Nous nous sommes alors dirigé vers la documentation de cette méthode de chiffrement : </span><a href="https://saltpack.org/" target="_blank" rel="noopener"><span>https://saltpack.org/</span></a></p><div class="alert alert-warning">
+<p><span>Il nous restait alors moins de 5 minutes avant la fin du CTF.</span></p>
+<p><span>Nous avons essayé d’utiliser l’utilitaire python, mais nous avons échoué à déchiffrer le message dans le temps imparti.</span></p>
+</div><h2 id="Remerciements" data-id="Remerciements"><a class="anchor hidden-xs" href="#Remerciements" title="Remerciements"><span class="octicon octicon-link"></span></a><span>Remerciements</span></h2><p><span>Merci à l’équipe d’organisation de l’HexaCTF et tous les créateurs des challenges.</span></p><p><span>L’ensemble des challenges étaient extrêmement bien agencés, rendant l’immersion bien meilleure par rapport à la majeure partie des autres CTF d’OSINT auxquels nous avons eu l’occasion de participer jusqu’à maintenant.</span></p><p><span>Félicitations pour ça !</span></p><p><span>Cependant, il est  dommage que les énoncés n’aient pas été rendus accessibles après la fin du challenge afin de simplifier la rédaction des participants souhaitant réaliser un rapport écrit.</span></p><p><span>Signé : L’équipe des patatodingos de Cadriciel Malveillant.</span></p><h2 id="Glossaires-" data-id="Glossaires-"><a class="anchor hidden-xs" href="#Glossaires-" title="Glossaires-"><span class="octicon octicon-link"></span></a><span>Glossaires </span><img class="emoji" alt=":baguette_bread:" src="https://cdn.jsdelivr.net/npm/@hackmd/emojify.js@2.1.0/dist/images/basic/baguette_bread.png"></h2><ul>
+<li><a href="https://bitoduc.fr/" target="_blank" rel="noopener"><span>Bitoduc.fr : la référence selon nous-mêmes sur les termes informatiques en français</span></a></li>
+<li><a href="https://www.ssi.gouv.fr/entreprise/glossaire/" target="_blank" rel="noopener"><span>Glossaire | Agence nationale de la sécurité des systèmes d’information</span></a></li>
+</ul><hr><p><a href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"></a><br><span>This work is licensed under a </span><a href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener"><span>Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</span></a><span>.</span></p></div>
+    <div class="ui-toc dropup unselectable hidden-print" style="display:none;">
+        <div class="pull-right dropdown">
+            <a id="tocLabel" class="ui-toc-label btn btn-default" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" title="Table of content">
+                <i class="fa fa-bars"></i>
+            </a>
+            <ul id="ui-toc" class="ui-toc-dropdown dropdown-menu" aria-labelledby="tocLabel">
+                <div class="toc"><ul class="nav">
+<li class=""><a href="#Hexa-OSINT-CTF---Write-up---CadricielMalveillant" title="Hexa OSINT CTF - Write-up - CadricielMalveillant">Hexa OSINT CTF - Write-up - CadricielMalveillant</a><ul class="nav">
+<li><a href="#Introduction" title="Introduction">Introduction</a><ul class="nav">
+<li><a href="#Welcome-10-pts" title="Welcome 10 pts">Welcome 10 pts</a></li>
+<li><a href="#Money-money-money-100-pts" title="Money money money 100 pts">Money money money 100 pts</a></li>
+<li><a href="#Post-100-pts" title="Post 100 pts">Post 100 pts</a></li>
+<li><a href="#Resources-100-pts" title="Resources 100 pts">Resources 100 pts</a></li>
+</ul>
+</li>
+<li><a href="#The-Blogger" title="The Blogger">The Blogger</a><ul class="nav">
+<li><a href="#Hello-world-200-pts" title="Hello world 200 pts">Hello world 200 pts</a></li>
+<li><a href="#Leviosaaa-300-pts" title="Leviosaaa 300 pts">Leviosaaa 300 pts</a></li>
+<li><a href="#Biggest-fan-200-pts" title="Biggest fan 200 pts">Biggest fan 200 pts</a></li>
+<li><a href="#Rename-300-pts" title="Rename 300 pts">Rename 300 pts</a></li>
+<li><a href="#Rolling-in-the-deep-200-pts" title="Rolling in the deep 200 pts">Rolling in the deep 200 pts</a></li>
+<li><a href="#Where-are-you-200-pts" title="Where are you? 200 pts">Where are you? 200 pts</a></li>
+<li><a href="#Men-in-black-300-pts" title="Men in black 300 pts">Men in black 300 pts</a></li>
+<li><a href="#Counter-Strike-300-pts" title="Counter Strike 300 pts">Counter Strike 300 pts</a></li>
+</ul>
+</li>
+<li><a href="#The-Accountant" title="The Accountant">The Accountant</a><ul class="nav">
+<li><a href="#Ship-it-200-pts" title="Ship it 200 pts">Ship it 200 pts</a></li>
+<li><a href="#Pollution-300-pts" title="Pollution 300 pts">Pollution 300 pts</a></li>
+<li><a href="#Keep-an-eye-on-300-pts" title="Keep an eye on 300 pts">Keep an eye on 300 pts</a></li>
+<li><a href="#Next-Business-200-pts" title="Next Business 200 pts">Next Business 200 pts</a></li>
+<li><a href="#The-car-200-pts" title="The car 200 pts">The car 200 pts</a></li>
+<li><a href="#Higher-400-pts" title="Higher 400 pts">Higher 400 pts</a></li>
+<li><a href="#The-artist-300-pts" title="The artist 300 pts">The artist 300 pts</a></li>
+<li><a href="#Catch’em-all-300-pts" title="Catch’em all 300 pts">Catch’em all 300 pts</a></li>
+<li><a href="#Deeper-400-pts" title="Deeper 400 pts">Deeper 400 pts</a></li>
+<li><a href="#Dig-the-past-400-pts" title="Dig the past 400 pts">Dig the past 400 pts</a></li>
+</ul>
+</li>
+<li class=""><a href="#The-Wanderer" title="The Wanderer">The Wanderer</a><ul class="nav">
+<li><a href="#Indoor-200-pts" title="Indoor 200 pts">Indoor 200 pts</a></li>
+<li><a href="#Tourism-200-pts" title="Tourism 200 pts">Tourism 200 pts</a></li>
+<li><a href="#Find-the-road-200-pts" title="Find the road 200 pts">Find the road 200 pts</a></li>
+<li><a href="#On-the-road-again-200-pts" title="On the road again 200 pts">On the road again 200 pts</a></li>
+<li><a href="#Fly-300-pts" title="Fly 300 pts">Fly 300 pts</a></li>
+<li><a href="#The-Statue-200-pts" title="The Statue 200 pts">The Statue 200 pts</a></li>
+<li class=""><a href="#Further-500-pts" title="Further 500 pts">Further 500 pts</a></li>
+</ul>
+</li>
+<li><a href="#The-meeting-300-pts" title="The meeting 300 pts">The meeting 300 pts</a></li>
+<li><a href="#The-boss" title="The boss">The boss</a><ul class="nav">
+<li><a href="#Frame-100-pts" title="Frame 100 pts">Frame 100 pts</a></li>
+<li><a href="#Jason-200-pts" title="Jason 200 pts">Jason 200 pts</a></li>
+<li><a href="#Source-200-pts" title="Source 200 pts">Source 200 pts</a></li>
+<li><a href="#Trebel-bass-ut-base-200-pts" title="Trebel, bass, ut base 200 pts">Trebel, bass, ut base 200 pts</a></li>
+<li><a href="#Decrypt-age-400-pts" title="Decrypt age 400 pts">Decrypt age 400 pts</a></li>
+</ul>
+</li>
+<li><a href="#Remerciements" title="Remerciements">Remerciements</a></li>
+<li><a href="#Glossaires-" title="Glossaires ">Glossaires </a></li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+            </ul>
+        </div>
+    </div>
+    <div id="ui-toc-affix" class="ui-affix-toc ui-toc-dropdown unselectable hidden-print" data-spy="affix" style="top:17px;display:none;" null null>
+        <div class="toc"><ul class="nav">
+<li class=""><a href="#Hexa-OSINT-CTF---Write-up---CadricielMalveillant" title="Hexa OSINT CTF - Write-up - CadricielMalveillant">Hexa OSINT CTF - Write-up - CadricielMalveillant</a><ul class="nav">
+<li class=""><a href="#Introduction" title="Introduction">Introduction</a><ul class="nav">
+<li class=""><a href="#Welcome-10-pts" title="Welcome 10 pts">Welcome 10 pts</a></li>
+<li class=""><a href="#Money-money-money-100-pts" title="Money money money 100 pts">Money money money 100 pts</a></li>
+<li class=""><a href="#Post-100-pts" title="Post 100 pts">Post 100 pts</a></li>
+<li class=""><a href="#Resources-100-pts" title="Resources 100 pts">Resources 100 pts</a></li>
+</ul>
+</li>
+<li class=""><a href="#The-Blogger" title="The Blogger">The Blogger</a><ul class="nav">
+<li class=""><a href="#Hello-world-200-pts" title="Hello world 200 pts">Hello world 200 pts</a></li>
+<li class=""><a href="#Leviosaaa-300-pts" title="Leviosaaa 300 pts">Leviosaaa 300 pts</a></li>
+<li class=""><a href="#Biggest-fan-200-pts" title="Biggest fan 200 pts">Biggest fan 200 pts</a></li>
+<li><a href="#Rename-300-pts" title="Rename 300 pts">Rename 300 pts</a></li>
+<li class=""><a href="#Rolling-in-the-deep-200-pts" title="Rolling in the deep 200 pts">Rolling in the deep 200 pts</a></li>
+<li class=""><a href="#Where-are-you-200-pts" title="Where are you? 200 pts">Where are you? 200 pts</a></li>
+<li class=""><a href="#Men-in-black-300-pts" title="Men in black 300 pts">Men in black 300 pts</a></li>
+<li class=""><a href="#Counter-Strike-300-pts" title="Counter Strike 300 pts">Counter Strike 300 pts</a></li>
+</ul>
+</li>
+<li class=""><a href="#The-Accountant" title="The Accountant">The Accountant</a><ul class="nav">
+<li class=""><a href="#Ship-it-200-pts" title="Ship it 200 pts">Ship it 200 pts</a></li>
+<li class=""><a href="#Pollution-300-pts" title="Pollution 300 pts">Pollution 300 pts</a></li>
+<li class=""><a href="#Keep-an-eye-on-300-pts" title="Keep an eye on 300 pts">Keep an eye on 300 pts</a></li>
+<li class=""><a href="#Next-Business-200-pts" title="Next Business 200 pts">Next Business 200 pts</a></li>
+<li class=""><a href="#The-car-200-pts" title="The car 200 pts">The car 200 pts</a></li>
+<li class=""><a href="#Higher-400-pts" title="Higher 400 pts">Higher 400 pts</a></li>
+<li><a href="#The-artist-300-pts" title="The artist 300 pts">The artist 300 pts</a></li>
+<li class=""><a href="#Catch’em-all-300-pts" title="Catch’em all 300 pts">Catch’em all 300 pts</a></li>
+<li class=""><a href="#Deeper-400-pts" title="Deeper 400 pts">Deeper 400 pts</a></li>
+<li class=""><a href="#Dig-the-past-400-pts" title="Dig the past 400 pts">Dig the past 400 pts</a></li>
+</ul>
+</li>
+<li class=""><a href="#The-Wanderer" title="The Wanderer">The Wanderer</a><ul class="nav">
+<li class=""><a href="#Indoor-200-pts" title="Indoor 200 pts">Indoor 200 pts</a></li>
+<li class=""><a href="#Tourism-200-pts" title="Tourism 200 pts">Tourism 200 pts</a></li>
+<li class=""><a href="#Find-the-road-200-pts" title="Find the road 200 pts">Find the road 200 pts</a></li>
+<li class=""><a href="#On-the-road-again-200-pts" title="On the road again 200 pts">On the road again 200 pts</a></li>
+<li class=""><a href="#Fly-300-pts" title="Fly 300 pts">Fly 300 pts</a></li>
+<li class=""><a href="#The-Statue-200-pts" title="The Statue 200 pts">The Statue 200 pts</a></li>
+<li class=""><a href="#Further-500-pts" title="Further 500 pts">Further 500 pts</a></li>
+</ul>
+</li>
+<li class=""><a href="#The-meeting-300-pts" title="The meeting 300 pts">The meeting 300 pts</a></li>
+<li class=""><a href="#The-boss" title="The boss">The boss</a><ul class="nav">
+<li class=""><a href="#Frame-100-pts" title="Frame 100 pts">Frame 100 pts</a></li>
+<li><a href="#Jason-200-pts" title="Jason 200 pts">Jason 200 pts</a></li>
+<li class=""><a href="#Source-200-pts" title="Source 200 pts">Source 200 pts</a></li>
+<li><a href="#Trebel-bass-ut-base-200-pts" title="Trebel, bass, ut base 200 pts">Trebel, bass, ut base 200 pts</a></li>
+<li class=""><a href="#Decrypt-age-400-pts" title="Decrypt age 400 pts">Decrypt age 400 pts</a></li>
+</ul>
+</li>
+<li><a href="#Remerciements" title="Remerciements">Remerciements</a></li>
+<li class=""><a href="#Glossaires-" title="Glossaires ">Glossaires </a></li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gist-embed/2.6.0/gist-embed.min.js" integrity="sha256-KyF2D6xPIJUW5sUDSs93vWyZm+1RzIpKCexxElmxl8g=" crossorigin="anonymous" defer></script>
+    <script>
+        var markdown = $(".markdown-body");
+        //smooth all hash trigger scrolling
+        function smoothHashScroll() {
+            var hashElements = $("a[href^='#']").toArray();
+            for (var i = 0; i < hashElements.length; i++) {
+                var element = hashElements[i];
+                var $element = $(element);
+                var hash = element.hash;
+                if (hash) {
+                    $element.on('click', function (e) {
+                        // store hash
+                        var hash = this.hash;
+                        if ($(hash).length <= 0) return;
+                        // prevent default anchor click behavior
+                        e.preventDefault();
+                        // animate
+                        $('body, html').stop(true, true).animate({
+                            scrollTop: $(hash).offset().top
+                        }, 100, "linear", function () {
+                            // when done, add hash to url
+                            // (default click behaviour)
+                            window.location.hash = hash;
+                        });
+                    });
+                }
+            }
+        }
+
+        smoothHashScroll();
+        var toc = $('.ui-toc');
+        var tocAffix = $('.ui-affix-toc');
+        var tocDropdown = $('.ui-toc-dropdown');
+        //toc
+        tocDropdown.click(function (e) {
+            e.stopPropagation();
+        });
+
+        var enoughForAffixToc = true;
+
+        function generateScrollspy() {
+            $(document.body).scrollspy({
+                target: ''
+            });
+            $(document.body).scrollspy('refresh');
+            if (enoughForAffixToc) {
+                toc.hide();
+                tocAffix.show();
+            } else {
+                tocAffix.hide();
+                toc.show();
+            }
+            $(document.body).scroll();
+        }
+
+        function windowResize() {
+            //toc right
+            var paddingRight = parseFloat(markdown.css('padding-right'));
+            var right = ($(window).width() - (markdown.offset().left + markdown.outerWidth() - paddingRight));
+            toc.css('right', right + 'px');
+            //affix toc left
+            var newbool;
+            var rightMargin = (markdown.parent().outerWidth() - markdown.outerWidth()) / 2;
+            //for ipad or wider device
+            if (rightMargin >= 133) {
+                newbool = true;
+                var affixLeftMargin = (tocAffix.outerWidth() - tocAffix.width()) / 2;
+                var left = markdown.offset().left + markdown.outerWidth() - affixLeftMargin;
+                tocAffix.css('left', left + 'px');
+            } else {
+                newbool = false;
+            }
+            if (newbool != enoughForAffixToc) {
+                enoughForAffixToc = newbool;
+                generateScrollspy();
+            }
+        }
+        $(window).resize(function () {
+            windowResize();
+        });
+        $(document).ready(function () {
+            windowResize();
+            generateScrollspy();
+        });
+
+        //remove hash
+        function removeHash() {
+            window.location.hash = '';
+        }
+
+        var backtotop = $('.back-to-top');
+        var gotobottom = $('.go-to-bottom');
+
+        backtotop.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToTop)
+                scrollToTop();
+            removeHash();
+        });
+        gotobottom.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToBottom)
+                scrollToBottom();
+            removeHash();
+        });
+
+        var toggle = $('.expand-toggle');
+        var tocExpand = false;
+
+        checkExpandToggle();
+        toggle.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            tocExpand = !tocExpand;
+            checkExpandToggle();
+        })
+
+        function checkExpandToggle () {
+            var toc = $('.ui-toc-dropdown .toc');
+            var toggle = $('.expand-toggle');
+            if (!tocExpand) {
+                toc.removeClass('expand');
+                toggle.text('Expand all');
+            } else {
+                toc.addClass('expand');
+                toggle.text('Collapse all');
+            }
+        }
+
+        function scrollToTop() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: 0
+            }, 100, "linear");
+        }
+
+        function scrollToBottom() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: $(document.body)[0].scrollHeight
+            }, 100, "linear");
+        }
+    </script>
+</body>
+
+</html>
