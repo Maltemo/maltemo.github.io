@@ -25,6 +25,7 @@ let display_write_ups_tab = (sort_function) => {
     .forEach((write_up) => {
         let tr_tag = document.createElement("tr");
         let td_category_tag = create_text_td(write_up.challenge_type);
+        let td_ctf = create_text_td(write_up.ctf);
         let td_title_tag = create_content_td(
             create_link(
                 `${write_up.title}`,
@@ -35,6 +36,7 @@ let display_write_ups_tab = (sort_function) => {
         let td_release_date_tag = create_text_td(`${write_up.date.getFullYear()}/${write_up.date.getMonth()+1}/${write_up.date.getDate()}`);
 
         tr_tag.appendChild(td_category_tag);
+        tr_tag.appendChild(td_ctf);
         tr_tag.appendChild(td_title_tag);
         tr_tag.appendChild(td_release_date_tag);
         table_tbody_tag.appendChild(tr_tag);
