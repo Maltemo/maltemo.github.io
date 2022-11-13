@@ -1,0 +1,25 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>
+      <![CDATA[maltemo.github.io]]>
+    </title>
+    <description>
+      <![CDATA[maltemo.github.io]]>
+    </description>
+    <link>https://maltemo.github.io</link>
+    <lastBuildDate>Sun, 13 Nov 2022 16:13:06 GMT</lastBuildDate>
+    <atom:link href="https://maltemo.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>
+        <![CDATA[opti_clavier]]>
+      </title>
+      <link>https://maltemo.github.io/blog-posts/opti_clavier.html</link>
+      <pubDate>Thu, 10 Nov 2022 23:56:11 GMT</pubDate>
+    </item>
+
+  </channel>
+</rss>
