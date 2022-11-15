@@ -104,12 +104,12 @@ const write_up_list = [
         points : 50
     },
     {
-	title : "Dox the grinch",
-	challenge_type : "OSINT",
-	tags : ["GoogleDork","SocialNetworks"],
-	ctf : "x-masCTF",
-	date : new Date(2019,11,20),
-	points : 250
+        title : "Dox the grinch",
+        challenge_type : "OSINT",
+        tags : ["GoogleDork","SocialNetworks"],
+        ctf : "x-masCTF",
+        date : new Date(2019,11,20),
+        points : 250
     },{
         title : "Traverxec",
         challenge_type : "Pentest",
@@ -199,3 +199,6 @@ const template_write_up_object = {
         date : "",
         points : 0
 };
+
+exports.blog_posts_list = blog_posts_list
+exports.write_up_list = write_up_list

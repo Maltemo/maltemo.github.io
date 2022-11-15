@@ -1,16 +1,17 @@
-const fs = require('node:fs')
-const path = require('node:path')
+const fs = require("node:fs");
+const path = require("node:path");
+const { blog_posts_list, write_up_list } = require("./assets/js/list");
 
-console.log('[·] Starting RSS feed generation...')
+console.log("[·] Starting RSS feed generation...");
 
 const config = {
-  title: 'maltemo.github.io',
-  description: 'maltemo.github.io',
-  link: 'https://maltemo.github.io',
-  blogDirectoryUrl: 'https://maltemo.github.io/blog-posts',
-  blogDirectoryPath: path.join(__dirname, 'blog-posts'),
-  feedOutput: path.join(__dirname, 'feed.xml')
-}
+  title: "maltemo.github.io",
+  description: "maltemo.github.io",
+  link: "https://maltemo.github.io",
+  blogDirectoryUrl: "https://maltemo.github.io/blog-posts",
+  blogDirectoryPath: path.join(__dirname, "blog-posts"),
+  feedOutput: path.join(__dirname, "feed.xml"),
+};
 
 const createFeedTemplate = (
   posts = ``,
@@ -36,7 +37,7 @@ const createFeedTemplate = (
     ${posts}
   </channel>
 </rss>
-`
+`;
 
 const createPostTemplate = (title, link, pubDate) => `
     <item>
@@ -46,27 +47,34 @@ const createPostTemplate = (title, link, pubDate) => `
       <link>${link}</link>
       <pubDate>${pubDate}</pubDate>
     </item>
-`
+`;
 
-const tap = (x) => { console.log(x); return x }
+const write_ups_rss = write_up_list.map((write_up) =>
+  createPostTemplate(
+    write_up.title,
+    `${config.blogDirectoryUrl}/${
+      write_up.ctf
+    }_${write_up.date.getFullYear()}_${write_up.challenge_type}_${write_up.title
+      .split(" ")
+      .join("_")
+      .replace(/[^\w\s]/gi, "")}.html`,
+    write_up.date.toUTCString()
+  )
+);
 
-fs.promises.readdir(config.blogDirectoryPath)
-  .then(postFiles => (
-    postFiles.map(file => ({
-      fileName: file,
-      metadata: fs.statSync(path.join(config.blogDirectoryPath, file))
-    })))
+const blog_posts_rss = blog_posts_list.map((blog_post) =>
+  createPostTemplate(
+    blog_post.title,
+    `${config.blogDirectoryUrl}/${blog_post.url}`,
+    blog_post.date.toUTCString()
   )
-  // .then(tap)
-  .then(async postFiles => {
-    return createFeedTemplate(
-    postFiles.map(post => createPostTemplate(
-      post.fileName.split('.')[0],
-      `${config.blogDirectoryUrl}/${post.fileName}`,
-      (new Date(post.metadata.birthtime)).toUTCString())
-    ))
-  }
+);
+
+fs.promises
+  .writeFile(
+    config.feedOutput,
+    createFeedTemplate([...write_ups_rss, ...blog_posts_rss])
   )
-  .then(feedTemplate => fs.promises.writeFile(config.feedOutput, feedTemplate))
-  .then(_ => console.log(`[+] new feed created at ${config.feedOutput}`))
-  .catch(e => console.error('[!] oupsi, something went wrong!', e))
+  .then((_) => console.log(`[+] new feed created at ${config.feedOutput}`))
+  .catch((e) => console.error("[!] oupsi, something went wrong!", e));
+
