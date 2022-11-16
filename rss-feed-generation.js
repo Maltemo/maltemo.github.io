@@ -19,8 +19,7 @@ const createFeedTemplate = (
   title = config.title,
   description = config.description,
   link = config.link
-) => `
-<?xml version="1.0" encoding="UTF-8"?>
+) => `<?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/"
   xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
@@ -73,7 +72,7 @@ const blog_posts_rss = blog_posts_list.map((blog_post) =>
 fs.promises
   .writeFile(
     config.feedOutput,
-    createFeedTemplate([...write_ups_rss, ...blog_posts_rss])
+    createFeedTemplate([...write_ups_rss, ...blog_posts_rss].join(""))
   )
   .then((_) => console.log(`[+] new feed created at ${config.feedOutput}`))
   .catch((e) => console.error("[!] oupsi, something went wrong!", e));
