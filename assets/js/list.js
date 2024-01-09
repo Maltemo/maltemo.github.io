@@ -180,6 +180,13 @@ const write_up_list = [
         ctf : "HexaCTF",
         date : new Date(2021,11,26),
         points : 8060
+    },{
+        title : "i see no vulnerability fixed",
+        challenge_type: "Web",
+        tags: ["XSS"],
+        ctf: "pingCTF",
+        date : new Date(2023,11,9),
+        points : 200
     }
 ];
 
