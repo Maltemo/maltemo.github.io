@@ -50,4 +50,4 @@ select_tag.addEventListener("change", function(){
 })
 
 /* Main */
-display_write_ups_tab(sort_alphabeticaly_challenge_type)
+display_write_ups_tab(sort_desc_date)
