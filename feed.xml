@@ -9,7 +9,7 @@
         </description>
         <link>https://maltemo.github.io</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>"Tue, 12 Mar 2024 00:02:24 "</lastBuildDate>
+        <lastBuildDate>"Thu, 14 Mar 2024 00:09:12 "</lastBuildDate>
         <atom:link href="https://maltemo.github.io/feed.xml" rel="self" type="application/rss+xml" />
         <item>
         <title>
@@ -192,6 +192,13 @@
         </title>
         <link>https://maltemo.github.io/blog-posts/opti_clavier.html</link>
         <pubDate>Wed, 03 Nov 2021 00:00:00 UTC</pubDate>
+    </item>
+    <item>
+        <title>
+            <![CDATA[XSS in HackMD - How can a CTF challenge make you unintentionally discover a vulnerability]]>
+        </title>
+        <link>https://maltemo.github.io/blog-posts/XSS_in_HackMD.html</link>
+        <pubDate>Thu, 14 Mar 2024 00:00:00 UTC</pubDate>
     </item>
     
     </channel>

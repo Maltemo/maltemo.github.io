@@ -195,6 +195,11 @@ const blog_posts_list = [
         "title" : "Optimisation de mon utilisation du clavier",
         "date" : new Date(2021,10,3),
         "url" : "opti_clavier.html"
+    },
+    {
+        "title" : "XSS in HackMD - How can a CTF challenge make you unintentionally discover a vulnerability",
+        "date" : new Date(2024,02,14),
+        "url" : "XSS_in_HackMD.html"
     }
 ];
 
