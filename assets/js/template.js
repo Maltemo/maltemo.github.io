@@ -13,8 +13,8 @@ let tabs = [
         url: "blog_posts.html"
     },
     {
-        name: "Contact",
-        url: "contact.html"
+        name: "Talks",
+        url: "talks.html"
     },
 ]
 let navigation = document.getElementById("navigation");

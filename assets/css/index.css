@@ -98,6 +98,13 @@ a.wu_link{
     width : 5em;
 }
 
+.talk_additional_details{
+    font-size: 120%;
+}
+
+.remove_bullets{
+     list-style-type: none;
+}
 
 @media only screen and (max-width: 768px) {
   /* For mobile phones: */
