@@ -119,4 +119,9 @@ a.wu_link{
     .picture_link img {
         width: 5em;
     }
+
+    .youtube{
+        width: auto;
+        height: auto;
+    }
 }
